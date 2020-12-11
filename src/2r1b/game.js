@@ -19,10 +19,10 @@ module.exports = {
     },
     addPlayer: function(socket) {
         const role = getRandomRole();
-        socket.emit('setRole', role);
+        socket.emit('setRole', roles[11]);
     },
     removePlayer: function(socket) {
-        
+
     }
 };
 

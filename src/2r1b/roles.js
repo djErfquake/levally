@@ -2,13 +2,13 @@ module.exports = [
     {
         name: 'Bomber',
         team: 'red',
-        power: 'At the end of the game, everyone in your room /dies/. You and the red team win if the |President| dies.',
+        power: 'At the end of the game, everyone in your room dies. You and the red team win if the President dies.',
         mandatory: true
     },
     {
         name: 'President',
         team: 'blue',
-        power: "At the end of the game, everyone in the same room as the |Bomber| /dies/. You and the blue team win if you don't die.",
+        power: "At the end of the game, everyone in the same room as the Bomber dies. You and the blue team win if you don't die.",
         mandatory: true
     },
     // {
@@ -25,13 +25,13 @@ module.exports = [
     {
         name: 'Ahab',
         team: 'grey',
-        power: 'You win if |Moby| dies and you do not.',
+        power: 'You win if Moby dies and you do not.',
         associated: 'Moby'
     },
     {
         name: 'Moby',
         team: 'grey',
-        power: 'You win if |Ahab| dies and you do not.',
+        power: 'You win if Ahab dies and you do not.',
         associated: 'Ahab'
     },
     {
@@ -48,42 +48,43 @@ module.exports = [
     {
         name: 'Born Leader',
         team: 'grey',
-        power: "You win if you are a room's /leader/ at the end of the game",
+        power: "You win if you are a room's leader at the end of the game",
     },
     {
         name: 'Decoy',
         team: 'grey',
-        power: 'You win if the |Sniper| shoots you at the end of the last round.',
+        power: 'You win if the Sniper shoots you at the end of the last round.',
         associated: 'Sniper,Target'
     },
     {
         name: 'Paper',
         team: 'grey',
-        power: 'You win if you are in the same room as the |Rock|, but a different room than |Scissors| at the end of the game.',
+        power: 'You win if you are in the same room as the Rock, but a different room than Scissors at the end of the game.',
         associated: 'Rock,Scissors'
     },
     {
         name: 'Rock',
         team: 'grey',
-        power: 'You win if you are in the same room as the |Scissors|, but a different room than |Paper| at the end of the game.',
+        power: 'You win if you are in the same room as the Scissors, but a different room than Paper at the end of the game.',
         associated: 'Paper,Scissors'
     },
     {
         name: 'Scissors',
         team: 'grey',
-        power: 'You win if you are in the same room as the |Paper|, but a different room than |Rock| at the end of the game.',
+        power: 'You win if you are in the same room as the Paper, but a different room than Rock at the end of the game.',
         associated: 'Paper,Rock'
     },
     {
-        name: 'Sniper',
+        // name: 'Sniper',
+        name: 'Sniper President',
         team: 'grey',
-        power: 'At the end of the last round, before players reveal their roles, you must publically announce which player you are shooting. The selected player does not need to be in the same room ast you. You win if the player you selected is the |Target|. Whichever player you choose /dies/, which may impact other roles.',
+        power: 'At the end of the last round, before players reveal their roles, you must publically announce which player you are shooting. The selected player does not need to be in the same room ast you. You win if the player you selected is the Target. Whichever player you choose dies, which may impact other roles.',
         associated: 'Target,Decoy'
     },
     {
         name: 'Target',
         team: 'grey',
-        power: 'You win if the |Sniper| does not shoot you at the end of the last round.',
+        power: 'You win if the Sniper does not shoot you at the end of the last round.',
         associated: 'Sniper,Decoy'
     },
     {

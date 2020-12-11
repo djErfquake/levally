@@ -13,7 +13,8 @@
     "polka": "next",
     "sirv": "^1.0.0",
     "socket.io": "^2.2.0",
-    "socket.io-client": "^2.2.0"
+    "socket.io-client": "^2.2.0",
+    "sveltejs-tippy": "^3.0.0"
   },
   "devDependencies": {
     "sapper": "^0.28.0",
