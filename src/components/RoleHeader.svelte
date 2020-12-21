@@ -3,6 +3,7 @@
         https://flatuicolors.com/palette/ca
         https://www.shapedivider.app/
     */
+    import TimeBar from './TimeBar.svelte';
 
     export let role;
 
@@ -20,6 +21,8 @@
 </script>
 
 <main>
+    <TimeBar start=true duration=3/>
+
     <div class="name-color" style="background-color: {colors[role.team]};">
         <div class="name">{role.name}</div>
     </div>

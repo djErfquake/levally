@@ -1,6 +1,6 @@
 let roomServer = require('../game/rooms');
 let roles = require('./roles');
-let definitions = require('./roles');
+let definitions = require('./definitions');
 
 
 let initialized = false;

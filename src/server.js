@@ -10,6 +10,7 @@ const dev = NODE_ENV === 'development';
 const server = http.createServer();
 
 import game2r1b from './2r1b/game';
+import rpg from './rpg/initiative';
 
 polka({server}) // You can also use Express
 	.use(
@@ -24,7 +25,8 @@ polka({server}) // You can also use Express
 
 
 const GAMES = {
-	"2R1B": "Two Rooms and a Boom"
+	"TWOROOMS": "Two Rooms and a Boom",
+	"RPG": "RPG Initiative Tracker"
 };
 
 let sockets = {};
@@ -34,13 +36,21 @@ const removeSocket = function(socket) { delete sockets[socket.id]; console.log(`
 io(server).on('connection', function(socket) {
 	addSocket(socket);
 	socket.on('disconnect', function() { 
-		if (socket.game && socket.game == GAMES["2R1B"]) { game2r1b.removePlayer(socket); }
+		if (socket.game) {
+			if (socket.game == GAMES.TWOROOMS) { game2r1b.removePlayer(socket); }
+			// else if (socket.game == GAMES.RPG) { rpg.removePlayer(socket); }
+		} 
 		removeSocket(socket);
 	});
 
 	socket.on('init2R1B', function() {
 		game2r1b.init();
-		socket.game = GAMES["2R1B"];
+		socket.game = GAMES.TWOROOMS;
 		game2r1b.addPlayer(socket);
+	});
+
+	socket.on('initRPG', function() {
+		rpg.init();
+		socket.game = GAMES.RPG;
 	});
 });
