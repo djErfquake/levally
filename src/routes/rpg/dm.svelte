@@ -3,6 +3,7 @@
     import CharacterStats from "../../components/rpg/CharacterStats.svelte";
     import AddMonster from "../../components/rpg/AddMonster.svelte";
     import monsters from '../../rpg/monsters.js';
+
     let monsterValues = Object.values(monsters).map(function(m) { return { label: m.name, value: m} });
 
     let encounter = [];
@@ -15,6 +16,49 @@
 
 
 
+    function rollDie(sides) { return Math.floor(Math.random() * sides) + 1; }
+    function rollCheck(mod) { return rollDie(20) + mod; }
+    function parseAndRollDice(dice) {
+        let numDice = '';
+        let dieSides = '';
+        let plusAmount = '';
+        for (let i = 0; i < dice.length; i++) {
+            const letter = dice.charAt(i);
+            if (typeof(numDice) != 'number') {
+                if (letter == 'd') {
+                    numDice = parseInt(numDice);
+                } else {
+                    numDice += letter
+                }
+                continue;
+            }
+            if (typeof(dieSides) != 'number') {
+                if (letter == '+') {
+                    dieSides = parseInt(dieSides);
+                } else {
+                    dieSides += letter
+                }
+
+                if (i == dice.length - 1) {
+                    dieSides = parseInt(dieSides);
+                }
+                continue;
+            }
+            if (typeof(plusAmount) != 'number') {
+                plusAmount += letter
+                if (i == dice.length - 1) {
+                    plusAmount = parseInt(plusAmount);
+                }
+            }
+        }
+
+        let rollingTotal = 0;
+        for (let i = 0; i < numDice; i++) {
+            rollingTotal += rollDie(dieSides);
+        }
+        rollingTotal += plusAmount;
+        return rollingTotal;
+    }
 
     function addCharacter(event) {
         let character = event.detail;
@@ -50,7 +94,7 @@
     </div>
 
     <div class="character-adder">
-        <AddMonster monsters={monsterValues} on:addCharacter={addCharacter} />
+        <AddMonster monsters={monsterValues} roll={parseAndRollDice} rollCheck={rollCheck} on:addCharacter={addCharacter} />
     </div>
 </main>
 

@@ -1,10 +1,12 @@
 <script>
-    import Select from 'svelte-select';
+    import Select from 'svelte-select'; // https://github.com/rob-balfre/svelte-select
     import { createEventDispatcher } from 'svelte';
     const dispatch = createEventDispatcher();
 
     export let monsters;
     console.log('monsters', monsters);
+    export let roll;
+    export let rollCheck;
     
     let firstMonster = monsters.length > 0 ? monsters[0] : null;
     let selectedMonster = null;
@@ -17,8 +19,8 @@
         if (!selectedMonster) return;
         console.log("adding ", selectedMonster);
 
-        let hp = 12;
-        let initiative = 15;
+        let hp = roll(selectedMonster.hp);
+        let initiative = rollCheck(selectedMonster.dex);
 
         dispatch('addCharacter', { name: selectedMonster.name, hp: hp, initiative: initiative, statuses: [] });
     }
