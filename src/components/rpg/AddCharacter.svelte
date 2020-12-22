@@ -7,7 +7,7 @@
     let initiative = 0;
     let characterAdded = false;
     function addCharacter() {
-        dispatch('addCharacter', { name: name, hp: hp, initiative: initiative });
+        dispatch('addCharacter', { name: name, hp: hp, initiative: initiative, statuses: [] });
         characterAdded = true;
     }
 
@@ -15,7 +15,7 @@
     function removeHP() { hp--; updateCharacter(); }
     function updateCharacter() {
         console.log('updating character', hp);
-        dispatch('updateCharacter', { name: name, hp: hp, initiative: initiative });
+        dispatch('updateCharacter', { name: name, hp: hp, initiative: initiative, statuses: [] });
     }
 
 </script>

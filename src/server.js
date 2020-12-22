@@ -52,5 +52,6 @@ io(server).on('connection', function(socket) {
 	socket.on('initRPG', function() {
 		rpg.init();
 		socket.game = GAMES.RPG;
+		rpg.registerSocket(socket);
 	});
 });

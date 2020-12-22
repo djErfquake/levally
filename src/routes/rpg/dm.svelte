@@ -1,7 +1,9 @@
 <script>
     import io from "socket.io-client";
     import CharacterStats from "../../components/rpg/CharacterStats.svelte";
-    import AddCharacter from "../../components/rpg/AddCharacter.svelte";
+    import AddMonster from "../../components/rpg/AddMonster.svelte";
+    import monsters from '../../rpg/monsters.js';
+    let monsterValues = Object.values(monsters).map(function(m) { return { label: m.name, value: m} });
 
     let encounter = [];
 
@@ -48,7 +50,7 @@
     </div>
 
     <div class="character-adder">
-        <AddCharacter on:addCharacter={addCharacter} on:updateCharacter={updateCharacter}/>
+        <AddMonster monsters={monsterValues} on:addCharacter={addCharacter} />
     </div>
 </main>
 
