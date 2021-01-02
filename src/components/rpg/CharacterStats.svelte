@@ -1,19 +1,33 @@
 <script>
+    import { createEventDispatcher } from 'svelte';
+    const dispatch = createEventDispatcher();
 
-    export let name;
-    export let hp;
-    export let isPC;
-    export let showHPs = false;
+    export let character;
+    export let dmView = false;
 
-    const displayHP = isPC || showHPs ? hp : "?";
+    $: displayHP = character.isPC || dmView ? character.hp : "?";
 
+    function addHP() { character.hp++; updateCharacter(); }
+    function removeHP() { character.hp--; updateCharacter(); }
+    function kill() { dispatch('killCharacter', character.id); }
+    function updateCharacter() {
+        console.log('updating character', character.hp);
+        dispatch('updateCharacter', character );
+    }
 
 </script>
 
 
 <main>
-    <div class="stat">{@html name}</div>
-    <div class="stat">{@html displayHP}</div>
+    <div class="stat">{@html character.initiative}</div>
+    <div class="stat">{@html character.name}</div>
+    <div class="stat">{@html displayHP}
+        {#if dmView}
+        <button on:click={addHP}>+</button> 
+        <button on:click={removeHP}>-</button>
+        <button on:click={kill}>Kill</button>
+        {/if}
+    </div>
 </main>
 
 

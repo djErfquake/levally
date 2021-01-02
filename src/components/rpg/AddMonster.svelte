@@ -1,11 +1,12 @@
 <script>
     import Select from 'svelte-select'; // https://github.com/rob-balfre/svelte-select
-    import { createEventDispatcher } from 'svelte';
+    import generator from '../../utilities/generator.js';
+    import dice from '../../rpg/dice.js';
     const dispatch = createEventDispatcher();
+    import { createEventDispatcher } from 'svelte';
+
 
     export let monsters;
-    export let roll;
-    export let rollCheck;
     
     let firstMonster = monsters.length > 0 ? monsters[0] : null;
     let selectedMonster = null;
@@ -18,10 +19,16 @@
         if (!selectedMonster) return;
         console.log("adding ", selectedMonster);
 
-        let hp = roll(selectedMonster.hp);
-        let initiative = rollCheck(selectedMonster.dex);
+        const character = {
+            name: selectedMonster.name,
+            hp: dice.parseAndRollDice(selectedMonster.hp),
+            initiative: dice.rollCheck(selectedMonster.dex),
+            id: generator.guid(),
+            statuses: [],
+            isPC: false
+        };
 
-        dispatch('addCharacter', { name: selectedMonster.name, hp: hp, initiative: initiative, statuses: [], isPC: false });
+        dispatch('addCharacter', character);
     }
 
 </script>

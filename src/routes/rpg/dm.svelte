@@ -2,110 +2,92 @@
     import io from "socket.io-client";
     import CharacterStats from "../../components/rpg/CharacterStats.svelte";
     import AddMonster from "../../components/rpg/AddMonster.svelte";
+    import AddCharacter from "../../components/rpg/AddCharacter.svelte";
     import monsters from '../../rpg/monsters.js';
+    
 
     let monsterValues = Object.values(monsters).map(function(m) { return { label: m.name, value: m} });
 
+    let characters = [];
     let encounter = [];
 
     const socket = io();
     socket.emit('initRPG');
     socket.on('update', function(data) {
-        encounter = [...data];
+        characters = [...data];
+        mapEncounter();
     });
     socket.emit('catchup');
     socket.on('catchup', function(data) {
-        encounter = [...data];
+        characters = [...data];
+        mapEncounter();
     });
-
-
-
-    function rollDie(sides) { return Math.floor(Math.random() * sides) + 1; }
-    function rollCheck(mod) { return rollDie(20) + mod; }
-    function parseAndRollDice(dice) {
-        let numDice = '';
-        let dieSides = '';
-        let plusAmount = '';
-        for (let i = 0; i < dice.length; i++) {
-            const letter = dice.charAt(i);
-            if (typeof(numDice) != 'number') {
-                if (letter == 'd') {
-                    numDice = parseInt(numDice);
-                } else {
-                    numDice += letter
-                }
-                continue;
-            }
-            if (typeof(dieSides) != 'number') {
-                if (letter == '+') {
-                    dieSides = parseInt(dieSides);
-                } else {
-                    dieSides += letter
-                }
-
-                if (i == dice.length - 1) {
-                    dieSides = parseInt(dieSides);
-                }
-                continue;
-            }
-            if (typeof(plusAmount) != 'number') {
-                plusAmount += letter
-                if (i == dice.length - 1) {
-                    plusAmount = parseInt(plusAmount);
-                }
-            }
-        }
-
-        let rollingTotal = 0;
-        for (let i = 0; i < numDice; i++) {
-            rollingTotal += rollDie(dieSides);
-        }
-        rollingTotal += plusAmount;
-        return rollingTotal;
-    }
 
     function addCharacter(event) {
         let character = event.detail;
         console.log("added character: ", character);
-        encounter.push(character);
-        encounter = encounter.sort((a, b) => b.initiative - a.initiative);
+        characters.push(character);
+        characters = characters.sort((a, b) => b.initiative - a.initiative);
+        mapEncounter();
 
-        socket.emit('update', encounter);
+        socket.emit('update', characters);
     }
 
     function updateCharacter(event) {
         let character = event.detail;
+        const changed = characters.findIndex(c => c.id = character.id);
         console.log("updated character: ", character);
-        const changed = encounter.findIndex(c => c.name = character.name);
-        encounter[changed] = character;
-        console.log('encounter', encounter);
+        characters[changed] = character;
+        mapEncounter();
 
-        socket.emit('update', encounter);
+        socket.emit('update', characters);
+    }
+
+    function killCharacter(event) {
+        let characterId = event.detail;
+        const killedIndex = characters.findIndex(c => c.id = characterId);
+        console.log(`killed ${characters[killedIndex].name}`);
+        characters.splice(killedIndex, 1);
+        mapEncounter();
+        socket.emit('update', characters);
     }
 
     function reset() {
         socket.emit('reset');
     }
 
-    const initiativeHeaders = {
-        name: "<b>Name</b>",
-        hp: "<b>Hit Points</b>",
-        isPC: true,
-        showHPs: true
+    function mapEncounter() {
+        encounter = characters.map(c => {
+            return { character: c, dmView: true }
+        });
+        // console.log('encounter', encounter);
+    }
+
+    const headers = {
+        character: {
+            initiative: "<b>Initiative</b>",
+            name: "<b>Name</b>",
+            hp: "<b>Hit Points</b>",
+            isPC: true
+        }
     };
 </script>
 
 
 <main>
     <div class="encounter">
-        <CharacterStats {...initiativeHeaders}/>
-        {#each encounter as character}
-        <CharacterStats name={character.name} hp={character.hp} isPC={character.isPC} showHPs={true} />
+        <CharacterStats {...headers}/>
+        {#each encounter as e}
+        <CharacterStats {...e} on:killCharacter={killCharacter}/>
         {/each}
     </div>
 
     <div class="character-adder">
-        <AddMonster monsters={monsterValues} roll={parseAndRollDice} rollCheck={rollCheck} on:addCharacter={addCharacter} />
+        <AddMonster monsters={monsterValues} on:addCharacter={addCharacter} />
+    </div>
+
+    <div class="character-adder">
+        <AddCharacter on:addCharacter={addCharacter} on:updateCharacter={updateCharacter}/>
     </div>
 
     <div class="character-adder">
