@@ -35,6 +35,13 @@
     main {
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-around;
+        justify-content: space-evenly;
+    }
+
+    .stat {
+        flex-grow: 1;
+        text-align: center;
+        align-self: center;
+        width: 33%;
     }
 </style>
