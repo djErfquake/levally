@@ -21,6 +21,8 @@ module.exports = {
             if (typeof(dieSides) != 'number') {
                 if (letter == '+') {
                     dieSides = parseInt(dieSides);
+                } else if (letter == '-') {
+                    dieSides = parseInt(dieSides) * -1;
                 } else {
                     dieSides += letter
                 }

@@ -35,7 +35,7 @@
 
     function updateCharacter(event) {
         let character = event.detail;
-        const changed = characters.findIndex(c => c.id = character.id);
+        const changed = characters.findIndex(c => c.id == character.id);
         console.log("updated character: ", character);
         characters[changed] = character;
         mapEncounter();
@@ -45,7 +45,7 @@
 
     function killCharacter(event) {
         let characterId = event.detail;
-        const killedIndex = characters.findIndex(c => c.id = characterId);
+        const killedIndex = characters.findIndex(c => c.id == characterId);
         console.log(`killed ${characters[killedIndex].name}`);
         characters.splice(killedIndex, 1);
         mapEncounter();
