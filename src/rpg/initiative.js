@@ -20,9 +20,5 @@ module.exports = {
         socket.on('catchup', function() {
             socket.emit('catchup', encounter);
         });
-        socket.on('reset', function() {
-            encounter = [];
-            socket.broadcast.emit('update', encounter);
-        });
     }
 };

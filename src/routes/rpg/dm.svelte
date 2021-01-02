@@ -29,8 +29,7 @@
         characters.push(character);
         characters = characters.sort((a, b) => b.initiative - a.initiative);
         mapEncounter();
-
-        socket.emit('update', characters);
+        updateServer();
     }
 
     function updateCharacter(event) {
@@ -39,8 +38,7 @@
         console.log("updated character: ", character);
         characters[changed] = character;
         mapEncounter();
-
-        socket.emit('update', characters);
+        updateServer();
     }
 
     function killCharacter(event) {
@@ -49,11 +47,13 @@
         console.log(`killed ${characters[killedIndex].name}`);
         characters.splice(killedIndex, 1);
         mapEncounter();
-        socket.emit('update', characters);
+        updateServer();
     }
 
     function reset() {
-        socket.emit('reset');
+        characters.length = 0;
+        mapEncounter();
+        updateServer();
     }
 
     function mapEncounter() {
@@ -61,6 +61,10 @@
             return { character: c, dmView: true }
         });
         // console.log('encounter', encounter);
+    }
+
+    function updateServer() {
+        socket.emit('update', characters);
     }
 
     const headers = {
@@ -78,7 +82,7 @@
     <div class="encounter">
         <CharacterStats {...headers}/>
         {#each encounter as e}
-        <CharacterStats {...e} on:killCharacter={killCharacter}/>
+        <CharacterStats {...e} on:updateCharacter={updateCharacter} on:killCharacter={killCharacter}/>
         {/each}
     </div>
 
@@ -87,7 +91,7 @@
     </div>
 
     <div class="character-adder">
-        <AddCharacter on:addCharacter={addCharacter} on:updateCharacter={updateCharacter}/>
+        <AddCharacter on:addCharacter={addCharacter} on:updateCharacter={updateCharacter} dmView={true}/>
     </div>
 
     <div class="character-adder">
@@ -100,6 +104,7 @@
     main {
         color: #333;
         width: 85vw;
+        margin: auto;
     }
 
     .encounter {

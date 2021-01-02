@@ -1,8 +1,11 @@
 <script>
+    import generator from '../../utilities/generator.js';
     import { createEventDispatcher } from 'svelte';
     const dispatch = createEventDispatcher();
 
-    import generator from '../../utilities/generator.js';
+    export let dmView = false;
+    let characterAdded = false;
+    $: hideCharacterCreation = !dmView && characterAdded;
     
     let character = {
         name: '',
@@ -12,7 +15,6 @@
         isPC: true,
         id: generator.guid()
     };
-    let characterAdded = false;
     function addCharacter() {
         dispatch('addCharacter', character);
         characterAdded = true;
@@ -29,7 +31,7 @@
 
 
 <main>
-    <!-- {#if !characterAdded} -->
+    {#if !hideCharacterCreation}
     <div class="stat-section">
         <div>Character Name</div>
         <input id="char_name" type="text" bind:value={character.name}/>
@@ -45,13 +47,13 @@
     <div class="stat-section">
         <button on:click={addCharacter}>Add Character</button> 
     </div>
-    <!-- {:else}
+    {:else}
     <div class="stat-section">
         <div>HP</div>
         <button on:click={addHP}>+</button> 
         <button on:click={removeHP}>-</button> 
     </div>
-    {/if} -->
+    {/if}
 </main>
 
 
