@@ -4,7 +4,6 @@
     const dispatch = createEventDispatcher();
 
     export let monsters;
-    console.log('monsters', monsters);
     export let roll;
     export let rollCheck;
     
@@ -22,7 +21,7 @@
         let hp = roll(selectedMonster.hp);
         let initiative = rollCheck(selectedMonster.dex);
 
-        dispatch('addCharacter', { name: selectedMonster.name, hp: hp, initiative: initiative, statuses: [] });
+        dispatch('addCharacter', { name: selectedMonster.name, hp: hp, initiative: initiative, statuses: [], isPC: false });
     }
 
 </script>

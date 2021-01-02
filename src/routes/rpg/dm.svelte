@@ -11,7 +11,11 @@
     const socket = io();
     socket.emit('initRPG');
     socket.on('update', function(data) {
-        encounter = [...data, data.length + 1];
+        encounter = [...data];
+    });
+    socket.emit('catchup');
+    socket.on('catchup', function(data) {
+        encounter = [...data];
     });
 
 
@@ -65,36 +69,47 @@
         console.log("added character: ", character);
         encounter.push(character);
         encounter = encounter.sort((a, b) => b.initiative - a.initiative);
+
+        socket.emit('update', encounter);
     }
 
     function updateCharacter(event) {
         let character = event.detail;
         console.log("updated character: ", character);
-        setCharacter(character);
+        const changed = encounter.findIndex(c => c.name = character.name);
+        encounter[changed] = character;
+        console.log('encounter', encounter);
+
+        socket.emit('update', encounter);
     }
 
-    function setCharacter(character) {
-        for (let i = 0; i < encounter.length; i++) {
-            if (encounter[i].name == character.name) {
-                encounter[i] = character;
-                break;
-            }
-        }
+    function reset() {
+        socket.emit('reset');
     }
 
+    const initiativeHeaders = {
+        name: "<b>Name</b>",
+        hp: "<b>Hit Points</b>",
+        isPC: true,
+        showHPs: true
+    };
 </script>
 
 
 <main>
-
     <div class="encounter">
+        <CharacterStats {...initiativeHeaders}/>
         {#each encounter as character}
-        <CharacterStats {...character}/>
+        <CharacterStats name={character.name} hp={character.hp} isPC={character.isPC} showHPs={true} />
         {/each}
     </div>
 
     <div class="character-adder">
         <AddMonster monsters={monsterValues} roll={parseAndRollDice} rollCheck={rollCheck} on:addCharacter={addCharacter} />
+    </div>
+
+    <div class="character-adder">
+        <button on:click={reset}>Reset</button>
     </div>
 </main>
 

@@ -2,15 +2,18 @@
 
     export let name;
     export let hp;
-    export let statuses;
+    export let isPC;
+    export let showHPs = false;
+
+    const displayHP = isPC || showHPs ? hp : "?";
 
 
 </script>
 
 
 <main>
-    <div class="stat">{name}</div>
-    <div class="stat">{hp}</div>
+    <div class="stat">{@html name}</div>
+    <div class="stat">{@html displayHP}</div>
 </main>
 
 

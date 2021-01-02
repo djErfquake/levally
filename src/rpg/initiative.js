@@ -1,5 +1,8 @@
 let monsters = require('./monsters');
 
+let encounter = [];
+
+
 let initialized = false;
 module.exports = {
     monsters: monsters,
@@ -10,7 +13,15 @@ module.exports = {
         initialized = true;
     },
     registerSocket: function(socket) {
-        socket.on('update', function(encounter) {
+        socket.on('update', function(data) {
+            encounter = data;
+            socket.broadcast.emit('update', encounter);
+        });
+        socket.on('catchup', function() {
+            socket.emit('catchup', encounter);
+        });
+        socket.on('reset', function() {
+            encounter = [];
             socket.broadcast.emit('update', encounter);
         });
     }
