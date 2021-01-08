@@ -1,4 +1,6 @@
 <script>
+    import Button from './Button.svelte';
+    import Header from './SectionHeader.svelte';
     import Select from 'svelte-select'; // https://github.com/rob-balfre/svelte-select
     import generator from '../../utilities/generator.js';
     import dice from '../../rpg/dice.js';
@@ -38,12 +40,14 @@
 
 
 <main>
-    <div class="stat-section select">
-        <div>Monster Name</div>
-        <Select items={monsters} {groupBy} on:select={selectMonster}></Select>
-    </div>
-    <div class="stat-section">
-        <button on:click={addMonster}>Add Monster</button> 
+    <Header text={`Add Monster`}></Header>
+    <div class="components">
+        <div class="stat-section select">
+            <Select items={monsters} {groupBy} on:select={selectMonster}></Select>
+        </div>
+        <div class="stat-section">
+            <Button onClick={addMonster} text={`Add Monster`}></Button> 
+        </div>
     </div>
 </main>
 
@@ -51,13 +55,16 @@
 <style>
     main {
         display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
     }
 
-    button {
-        height: 100%;
+    .components {
+        display: flex;
     }
 
     .select {
+        width: 30vw;
         --border: 3px solid #475F94;
 		--borderRadius: 10px;
 		--placeholderColor: #475F94;

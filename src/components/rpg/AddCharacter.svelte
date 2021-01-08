@@ -1,4 +1,6 @@
 <script>
+    import Button from './Button.svelte';
+    import Header from './SectionHeader.svelte';
     import generator from '../../utilities/generator.js';
     import { createEventDispatcher } from 'svelte';
     const dispatch = createEventDispatcher();
