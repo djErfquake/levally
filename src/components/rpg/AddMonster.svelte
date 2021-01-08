@@ -24,6 +24,7 @@
             name: selectedMonster.name,
             hp: dice.parseAndRollDice(selectedMonster.hp),
             initiative: dice.rollCheck(selectedMonster.dex),
+            link: selectedMonster.link,
             description: '',
             statuses: [],
             isPC: false

@@ -18,12 +18,19 @@
         dispatch('characterClicked', character.id);
     }
 
+    function openLink(link) {
+        if (dmView && link) { window.open(link, '_blank'); }
+    }
+
 </script>
 
 
 <main class:selected="{character.selected}" on:click={characterClicked}>
     <div class="stat">{@html character.initiative}</div>
-    <div class="stat">{@html character.name}</div>
+    <div class="stat" on:click={() => openLink(character.link)}>
+        {#if !character.isPC}👹{/if}
+        {@html character.name}
+    </div>
     <div class="stat">{@html displayHP}
         {#if dmView}
         <button on:click={addHP}>+</button> 
