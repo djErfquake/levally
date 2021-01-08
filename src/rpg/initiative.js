@@ -1,3 +1,8 @@
+/*
+    color palette: https://colors.lol/whacking
+
+*/
+
 let monsters = require('./monsters');
 
 let encounter = [];

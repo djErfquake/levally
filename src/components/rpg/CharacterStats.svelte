@@ -25,8 +25,8 @@
 </script>
 
 
-<main class:selected="{character.selected}" on:click={characterClicked}>
-    <div class="stat">{@html character.initiative}</div>
+<main class:selected="{character.selected}">
+    <div class="stat" on:click={characterClicked}>{@html character.initiative}</div>
     <div class="stat" on:click={() => openLink(character.link)}>
         {#if !character.isPC}👹{/if}
         {@html character.name}
@@ -56,7 +56,6 @@
     }
 
     .selected {
-        color: white;
-        background-color: darkgreen;
+        background-color: #FDDC5C;
     }
 </style>

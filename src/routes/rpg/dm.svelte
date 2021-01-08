@@ -6,7 +6,7 @@
     import monsters from '../../rpg/monsters.js';
     
 
-    let monsterValues = Object.values(monsters).map(function(m) { return { label: m.name, value: m} });
+    let monsterValues = Object.values(monsters).map(function(m) { return { label: m.name, value: m, group: m.group} });
 
     let characters = [];
     let encounter = [];
@@ -57,7 +57,7 @@
         const previousStatus = characters[characterIndex].selected;
         characters.forEach(c => { c.selected = false; });
         characters[characterIndex].selected = !previousStatus;
-        selectedCharacterIndex = characterIndex;
+        selectedCharacterIndex = characters[characterIndex].selected ? characterIndex : null;
         mapEncounter();
     }
 
@@ -82,7 +82,9 @@
     }
 
     function updateServer() {
+        if (selectedCharacterIndex != null) { characters[selectedCharacterIndex].selected = false; }
         socket.emit('update', characters);
+        if (selectedCharacterIndex != null) { characters[selectedCharacterIndex].selected = true; }
     }
 
     const headers = {
@@ -136,7 +138,8 @@
 
 <style>
     main {
-        color: #333;
+        /* color: #333; */
+        color: #343837;
         width: 85vw;
         margin: auto;
     }

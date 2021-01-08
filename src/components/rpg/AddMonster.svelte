@@ -8,7 +8,8 @@
 
     export let monsters;
     
-    let firstMonster = monsters.length > 0 ? monsters[0] : null;
+    const groupBy = (item) => item.group;
+    const firstMonster = monsters.length > 0 ? monsters[0] : null;
     let selectedMonster = null;
 
     function selectMonster(event) {
@@ -37,9 +38,9 @@
 
 
 <main>
-    <div class="stat-section">
+    <div class="stat-section select">
         <div>Monster Name</div>
-        <Select items={monsters} on:select={selectMonster}></Select>
+        <Select items={monsters} {groupBy} on:select={selectMonster}></Select>
     </div>
     <div class="stat-section">
         <button on:click={addMonster}>Add Monster</button> 
@@ -52,11 +53,19 @@
         display: flex;
     }
 
-    .stat-section {
-        padding: 30px;
-    }
-
     button {
         height: 100%;
+    }
+
+    .select {
+        --border: 3px solid #475F94;
+		--borderRadius: 10px;
+		--placeholderColor: #475F94;
+        --itemIsActiveBG: #475F94;
+        --borderFocusColor: #475F94;
+    }
+
+    .stat-section {
+        padding: 30px;
     }
 </style>
