@@ -20,10 +20,11 @@
         console.log("adding ", selectedMonster);
 
         const character = {
+            id: generator.guid(),
             name: selectedMonster.name,
             hp: dice.parseAndRollDice(selectedMonster.hp),
             initiative: dice.rollCheck(selectedMonster.dex),
-            id: generator.guid(),
+            description: '',
             statuses: [],
             isPC: false
         };

@@ -10,6 +10,7 @@
 
     let characters = [];
     let encounter = [];
+    let selectedCharacterIndex = null;
 
     const socket = io();
     socket.emit('initRPG');
@@ -43,9 +44,26 @@
 
     function killCharacter(event) {
         let characterId = event.detail;
-        const killedIndex = characters.findIndex(c => c.id == characterId);
-        console.log(`killed ${characters[killedIndex].name}`);
-        characters.splice(killedIndex, 1);
+        const characterIndex = characters.findIndex(c => c.id == characterId);
+        console.log(`killed ${characters[characterIndex].name}`);
+        characters.splice(characterIndex, 1);
+        mapEncounter();
+        updateServer();
+    }
+
+    function characterClicked(event) {
+        let characterId = event.detail;
+        const characterIndex = characters.findIndex(c => c.id == characterId);
+        const previousStatus = characters[characterIndex].selected;
+        characters.forEach(c => { c.selected = false; });
+        characters[characterIndex].selected = !previousStatus;
+        selectedCharacterIndex = characterIndex;
+        mapEncounter();
+    }
+
+    function renameCharacter(event) {
+        characters.forEach(c => { c.selected = false; });
+        selectedCharacterIndex = null;
         mapEncounter();
         updateServer();
     }
@@ -79,24 +97,40 @@
 
 
 <main>
-    <div class="encounter">
-        <CharacterStats {...headers}/>
-        {#each encounter as e}
-        <CharacterStats {...e} on:updateCharacter={updateCharacter} on:killCharacter={killCharacter}/>
-        {/each}
-    </div>
+    <section class='section-encounter'>
+        <div class="encounter">
+            <CharacterStats {...headers}/>
+            {#each encounter as e}
+            <CharacterStats {...e} on:updateCharacter={updateCharacter} on:killCharacter={killCharacter} on:characterClicked={characterClicked} />
+            {/each}
+        </div>
+    </section>
 
-    <div class="character-adder">
-        <AddMonster monsters={monsterValues} on:addCharacter={addCharacter} />
-    </div>
+    {#if selectedCharacterIndex != null}
+    <section class='section-selector-controls'>
+        <div class="character-adder">
+            <div>Rename Character</div>
+            <input type="text" bind:value={characters[selectedCharacterIndex].name}/>
+            <button on:click={renameCharacter}>Rename</button> 
+        </div>
+    </section>
+    {/if}
 
-    <div class="character-adder">
-        <AddCharacter on:addCharacter={addCharacter} on:updateCharacter={updateCharacter} dmView={true}/>
-    </div>
+    <section class='section-adder'>
+        <div class="character-adder">
+            <AddMonster monsters={monsterValues} on:addCharacter={addCharacter} />
+        </div>
 
-    <div class="character-adder">
-        <button on:click={reset}>Reset</button>
-    </div>
+        <div class="character-adder">
+            <AddCharacter on:addCharacter={addCharacter} on:updateCharacter={updateCharacter} dmView={true}/>
+        </div>
+    </section>
+
+    <section class='section-encounter-controls'>
+        <div class="character-adder">
+            <button on:click={reset}>Reset</button>
+        </div>
+    </section>
 </main>
 
 

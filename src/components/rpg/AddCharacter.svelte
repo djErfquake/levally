@@ -8,12 +8,12 @@
     $: hideCharacterCreation = !dmView && characterAdded;
     
     let character = {
+        id: generator.guid(),
         name: '',
         hp: 0,
         initiative: 0,
         statuses: [],
-        isPC: true,
-        id: generator.guid()
+        isPC: true
     };
     function addCharacter() {
         dispatch('addCharacter', character);

@@ -11,14 +11,17 @@
     function removeHP() { character.hp--; updateCharacter(); }
     function kill() { dispatch('killCharacter', character.id); }
     function updateCharacter() {
-        console.log('updating character', character.hp);
         dispatch('updateCharacter', character );
+    }
+
+    function characterClicked() {
+        dispatch('characterClicked', character.id);
     }
 
 </script>
 
 
-<main>
+<main class:selected="{character.selected}" on:click={characterClicked}>
     <div class="stat">{@html character.initiative}</div>
     <div class="stat">{@html character.name}</div>
     <div class="stat">{@html displayHP}
@@ -43,5 +46,10 @@
         text-align: center;
         align-self: center;
         width: 33%;
+    }
+
+    .selected {
+        color: white;
+        background-color: darkgreen;
     }
 </style>
