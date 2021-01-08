@@ -8,6 +8,6 @@
 
 <style>
     div {
-        font-weight: 800;
+        font-weight: 600;
     }
 </style>

@@ -1,4 +1,5 @@
 <script>
+    import Button from './Button.svelte';
     import { createEventDispatcher } from 'svelte';
     const dispatch = createEventDispatcher();
 
@@ -33,9 +34,9 @@
     </div>
     <div class="stat">{@html displayHP}
         {#if dmView}
-        <button on:click={addHP}>+</button> 
-        <button on:click={removeHP}>-</button>
-        <button on:click={kill}>Kill</button>
+        <Button onClick={addHP} text={`+`}></Button> 
+        <Button onClick={removeHP} text={`-`}></Button> 
+        <Button onClick={kill} text={`Kill`}></Button> 
         {/if}
     </div>
 </main>

@@ -1,5 +1,6 @@
 <script>
     import io from "socket.io-client";
+    import Button from '../../components/rpg/Button.svelte';
     import CharacterStats from "../../components/rpg/CharacterStats.svelte";
     import AddMonster from "../../components/rpg/AddMonster.svelte";
     import AddCharacter from "../../components/rpg/AddCharacter.svelte";
@@ -113,7 +114,7 @@
         <div class="character-adder">
             <div>Rename Character</div>
             <input type="text" bind:value={characters[selectedCharacterIndex].name}/>
-            <button on:click={renameCharacter}>Rename</button> 
+            <Button onClick={renameCharacter} text={`Rename`} />
         </div>
     </section>
     {/if}
@@ -130,7 +131,7 @@
 
     <section class='section-encounter-controls'>
         <div class="character-adder">
-            <button on:click={reset}>Reset</button>
+            <Button onClick={reset} text={`Reset`} />
         </div>
     </section>
 </main>
@@ -152,5 +153,10 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: space-around;
+    }
+
+    input {
+        border: 3px solid #475F94;
+        border-radius: 6px;
     }
 </style>

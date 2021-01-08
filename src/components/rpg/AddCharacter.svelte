@@ -34,26 +34,29 @@
 
 <main>
     {#if !hideCharacterCreation}
-    <div class="stat-section">
-        <div>Character Name</div>
-        <input id="char_name" type="text" bind:value={character.name}/>
-    </div>
-    <div class="stat-section">
-        <div >HP</div>
-        <input id="hp" type="number" min="1" bind:value={character.hp}/>
-    </div>
-    <div class="stat-section">
-        <div>Initiative</div>
-        <input id="initiative" type="number" min="1" bind:value={character.initiative}/>
-    </div>
-    <div class="stat-section">
-        <button on:click={addCharacter}>Add Character</button> 
+    <Header text={`Add Character`}></Header>
+    <div class="components">
+        <div class="stat-section">
+            <Header text={`Name`}></Header>
+            <input id="char_name" type="text" bind:value={character.name}/>
+        </div>
+        <div class="stat-section">
+            <Header text={`HP`}></Header>
+            <input id="hp" type="number" min="1" bind:value={character.hp}/>
+        </div>
+        <div class="stat-section">
+            <Header text={`Initiative`}></Header>
+            <input id="initiative" type="number" min="1" bind:value={character.initiative}/>
+        </div>
+        <div class="stat-section">
+            <Button onClick={addCharacter} text={`Add Character`}></Button> 
+        </div>
     </div>
     {:else}
-    <div class="stat-section">
-        <div>HP</div>
-        <button on:click={addHP}>+</button> 
-        <button on:click={removeHP}>-</button> 
+    <Header text={`HP`}></Header>
+    <div>
+        <Button onClick={addHP} text={`+`}></Button> 
+        <Button onClick={removeHP} text={`-`}></Button> 
     </div>
     {/if}
 </main>
@@ -62,13 +65,25 @@
 <style>
     main {
         display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+    }
+
+    .components {
+        display: flex;
     }
 
     .stat-section {
         padding: 30px;
     }
 
-    button {
-        height: 100%;
+    input {
+        border: 3px solid #475F94;
+        border-radius: 6px;
     }
+
+    input:focus {
+        border-color: #475F94;
+    }
+
 </style>

@@ -74,7 +74,7 @@
 
 <style>
     main {
-        color: #333;
+        color: #343837;
         width: 85vw;
         margin: auto;
     }
