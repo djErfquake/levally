@@ -4,6 +4,7 @@
 
     export let text;
     export let onClick = null;
+    export let width = "auto";
     let hovering = false;
 
     function enter() { hovering = true; }
@@ -12,18 +13,12 @@
 </script>
 
 
-<main>
+<main style="width: {width};">
     <div class="button" class:hover="{hovering}" on:mouseenter={enter} on:mouseleave={leave} on:click={click}>{@html text}</div>
 </main>
 
 
 <style>
-    main {
-        /* height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center; */
-    }
 
     .button {
         margin: 0 0.3em 0.3em 0;

@@ -34,39 +34,45 @@
 
 <main>
     {#if !hideCharacterCreation}
-    <Header text={`Add Character`}></Header>
-    <div class="components">
-        <div class="stat-section">
-            <Header text={`Name`}></Header>
-            <input id="char_name" type="text" bind:value={character.name}/>
-        </div>
-        <div class="stat-section">
-            <Header text={`HP`}></Header>
-            <input id="hp" type="number" min="1" bind:value={character.hp}/>
-        </div>
-        <div class="stat-section">
-            <Header text={`Initiative`}></Header>
-            <input id="initiative" type="number" min="1" bind:value={character.initiative}/>
-        </div>
-        <div class="stat-section">
-            <Button onClick={addCharacter} text={`Add Character`}></Button> 
+    <div class="add-character">
+        <Header text={`Add Character`}></Header>
+        <div class="components">
+            <div class="stat-section">
+                <Header text={`Name`}></Header>
+                <input id="char_name" type="text" bind:value={character.name}/>
+            </div>
+            <div class="stat-section">
+                <Header text={`HP`}></Header>
+                <input id="hp" type="number" min="1" bind:value={character.hp}/>
+            </div>
+            <div class="stat-section">
+                <Header text={`Initiative`}></Header>
+                <input id="initiative" type="number" min="1" bind:value={character.initiative}/>
+            </div>
+            <div class="stat-section">
+                <Button onClick={addCharacter} text={`Add Character`}></Button> 
+            </div>
         </div>
     </div>
     {:else}
     <Header text={`HP`}></Header>
-    <div>
-        <Button onClick={addHP} text={`+`}></Button> 
-        <Button onClick={removeHP} text={`-`}></Button> 
+    <div class="hp-buttons">
+        <Button onClick={addHP} width={`45px`} text={`+`}></Button> 
+        <Button onClick={removeHP} width={`45px`} text={`-`}></Button> 
     </div>
     {/if}
 </main>
 
 
 <style>
-    main {
+    .add-character {
         display: flex;
         flex-wrap: wrap;
         flex-direction: column;
+    }
+
+    .hp-buttons {
+        display: flex;
     }
 
     .components {
