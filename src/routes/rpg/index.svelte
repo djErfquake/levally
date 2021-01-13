@@ -68,11 +68,12 @@
 
     const headers = {
         character: {
-            initiative: "<b>Initiative</b>",
-            name: "<b>Name</b>",
-            hp: "<b>Hit Points</b>",
+            initiative: "Initiative",
+            name: "Name",
+            hp: "Hit Points",
             isPC: true
-        }
+        },
+        isHeader: true
     };
 </script>
 
@@ -90,7 +91,9 @@
     </div>
 
     {#if encounter.turnId == characterId}
-    <Button onClick={characterTurnDone} text={`Turn Done`} />
+    <div class="character-adder">
+        <Button onClick={characterTurnDone} text={`Turn Done`}/>
+    </div>
     {/if}
 </main>
 
@@ -103,7 +106,14 @@
     }
 
     .encounter {
-        padding: 30px;
+        margin: 30px;
+        border-style: solid;
+        border-width: 3px;
+        border-color: #475F94;
+    }
+
+    .encounter:last-child {
+        margin-bottom: 50px;
     }
 
     .character-adder {

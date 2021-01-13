@@ -5,6 +5,7 @@
 
     export let character;
     export let dmView = false;
+    export let isHeader = false;
 
     $: displayHP = character.isPC || dmView ? character.hp : "?";
 
@@ -26,7 +27,7 @@
 </script>
 
 
-<main class:selected="{dmView && character.selected}" class:turn-done="{character.turnStatus == 'DONE'}">
+<main class:selected="{dmView && character.selected}" class:turn-done="{character.turnStatus == 'DONE'}" class:header="{isHeader}">
     <div class="stat" on:click={characterClicked}>{@html character.initiative}</div>
     <div class="stat" on:click={() => openLink(character.link)}>
         {#if !character.isPC}👹{/if}
@@ -49,6 +50,15 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: space-evenly;
+    }
+
+    .header {
+        border-style: solid;
+        border-width: 2px;
+        background-color: #475F94;
+        color: white;
+        font-size: 1.5em;
+        font-weight: 600;
     }
 
     .stat {

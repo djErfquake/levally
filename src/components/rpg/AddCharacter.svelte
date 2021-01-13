@@ -36,7 +36,7 @@
 <main>
     {#if !hideCharacterCreation}
     <div class="add-character">
-        <Header text={`Add Character`}></Header>
+        <!-- <Header text={`Add Character`}></Header> -->
         <div class="components">
             <div class="stat-section">
                 <Header text={`Name`}></Header>
@@ -56,7 +56,7 @@
         </div>
     </div>
     {:else}
-    <Header text={`HP`}></Header>
+    <!-- <Header text={`HP`}></Header> -->
     <div class="hp-buttons">
         <Button onClick={addHP} width={`45px`} text={`+`}></Button> 
         <Button onClick={removeHP} width={`45px`} text={`-`}></Button> 

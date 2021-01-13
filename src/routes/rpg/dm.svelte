@@ -117,7 +117,8 @@
             name: "<b>Name</b>",
             hp: "<b>Hit Points</b>",
             isPC: true
-        }
+        },
+        isHeader: true
     };
 </script>
 
@@ -175,7 +176,14 @@
     }
 
     .encounter {
-        padding: 30px;
+        margin: 30px;
+        border-style: solid;
+        border-width: 3px;
+        border-color: #475F94;
+    }
+
+    .encounter:last-child {
+        margin-bottom: 50px;
     }
 
     .character-adder {
