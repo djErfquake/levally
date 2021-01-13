@@ -1,126 +1,126 @@
 module.exports = {
     apprenticeWizard: {
         name: "Apprentice Wizard",
-        link: "https://5e.tools/bestiary/apprentice-wizard-vgm.html",
+        link: "https://5e.tools/bestiary.html#apprentice%20wizard_vgm",
         hp: "2d8",
         dex: 0,
-        group: 'People'
+        group: 'Humanoid'
     },
     bandit: {
         name: "Bandit",
-        link: "https://www.aidedd.org/dnd/monstres.php?vo=bandit",
+        link: "https://5e.tools/bestiary.html#bandit_mm",
         hp: "2d8+2",
         dex: 1,
-        group: 'People'
+        group: 'Humanoid'
     },
     deepGnome: {
         name: "Deep Gnome",
-        link: "https://www.aidedd.org/dnd/monstres.php?vo=deep-gnome-svirfneblin",
+        link: "https://5e.tools/bestiary.html#deep%20gnome%20(svirfneblin)_mm",
         hp: "3d6+6",
         dex: 2,
-        group: 'People'
+        group: 'Humanoid'
     },
     duergar: {
         name: "Duergar",
-        link: "https://www.aidedd.org/dnd/monstres.php?vo=duergar",
+        link: "https://5e.tools/bestiary.html#duergar_mm",
         hp: "4d8+8",
         dex: 0,
-        group: 'People'
+        group: 'Humanoid'
     },
     gazer: {
         name: "Gazer",
-        link: "https://www.aidedd.org/dnd/monstres.php?vo=gazer",
+        link: "https://5e.tools/bestiary.html#gazer_vgm",
         hp: "3d4+6",
         dex: 3,
         group: 'Monster'
     },
     goblin: {
         name: "Goblin",
-        link: "https://www.aidedd.org/dnd/monstres.php?vo=goblin",
+        link: "https://5e.tools/bestiary.html#goblin_mm",
         hp: "2d6",
         dex: 2,
         group: 'Monster'
     },
     grayOoze: {
         name: "Gray Ooze",
-        link: "https://www.aidedd.org/dnd/monstres.php?vo=gray-ooze",
+        link: "https://5e.tools/bestiary.html#gray%20ooze_mm",
         hp: "3d8+9",
         dex: -2,
         group: 'Monster'
     },
     guard: {
         name: "Guard",
-        link: "https://www.aidedd.org/dnd/monstres.php?vo=guard",
+        link: "https://5e.tools/bestiary.html#guard_mm",
         hp: "2d8+2",
         dex: 1,
-        group: 'People'
+        group: 'Humanoid'
     },
     intellectDevourer: {
         name: "Intellect Devourer",
-        link: "https://online.anyflip.com/duex/ixpz/mobile/index.html#p=192",
+        link: "https://5e.tools/bestiary.html#intellect%20devourer_mm",
         hp: "6d4+5",
         dex: 2,
         group: 'Monster'
     },
     kenku: {
         name: "Kenku",
-        link: "https://www.aidedd.org/dnd/monstres.php?vo=kenku",
+        link: "https://5e.tools/bestiary.html#kenku_mm",
         hp: "3d8",
         dex: 3,
         group: 'Monster'
     },
     rat: {
         name: "Rat",
-        link: "https://www.aidedd.org/dnd/monstres.php?vo=rat",
+        link: "https://5e.tools/bestiary.html#rat_mm",
         hp: "1d4-1",
         dex: 0,
-        group: 'Animal'
+        group: 'Beast'
     },
     stirges: {
         name: "Stirge",
-        link: "https://www.aidedd.org/dnd/monstres.php?vo=stirge",
+        link: "https://5e.tools/bestiary.html#stirge_mm",
         hp: "1d4",
         dex: 3,
-        group: 'Monster'
+        group: 'Beast'
     },
     troll: {
         name: "Troll",
-        link: "https://www.aidedd.org/dnd/monstres.php?vo=troll",
+        link: "https://5e.tools/bestiary.html#troll_mm",
         hp: "8d10+40",
         dex: 1,
         group: 'Monster'
     },
     veteran: {
         name: "Veteran",
-        link: "https://www.aidedd.org/dnd/monstres.php?vo=veteran",
+        link: "https://5e.tools/bestiary.html#veteran_mm",
         hp: "9d8+18",
         dex: 1,
-        group: 'People'
+        group: 'Humanoid'
     },
     wererat: {
         name: "Wererat",
-        link: "https://www.aidedd.org/dnd/monstres.php?vo=wererat",
+        link: "https://5e.tools/bestiary.html#wererat_mm",
         hp: "6d8+6",
         dex: 2,
         group: 'Monster'
     },
     yagra: {
         name: "Yagra Stonefist",
-        link: "https://www.aidedd.org/dnd/monstres.php?vo=thug",
+        link: "https://5e.tools/bestiary.html#thug_mm",
         hp: "5d8+10",
         dex: 0,
         group: 'Character'
     },
     durnan: {
         name: "Durnan",
-        link: "https://5e.tools/adventure.html#WDH,12,durnan",
+        link: "https://5e.tools/bestiary.html#durnan_wdh",
         hp: "17d8+68",
         dex: 2,
         group: 'Character'
     },
     nihiloor: {
         name: "Nihiloor",
-        link: "https://5e.tools/adventure.html#WDH,12,nihiloor",
+        link: "https://5e.tools/bestiary.html#nihiloor_wdh",
         hp: "13d8+13",
         dex: 1,
         group: 'Character'
