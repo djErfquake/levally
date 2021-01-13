@@ -2,49 +2,68 @@
     import io from "socket.io-client";
     import CharacterStats from "../../components/rpg/CharacterStats.svelte";
     import AddCharacter from "../../components/rpg/AddCharacter.svelte";
+    import Button from '../../components/rpg/Button.svelte';
 
-    let characters = [];
-    let encounter = [];
+    let encounter = { characters: [] , turnId: 0 };
+    let initiative = [];
+    let characterId = null;
 
     const socket = io();
     socket.emit('initRPG');
     socket.on('update', function(data) {
-        characters = [...data];
+        encounter = data;
         mapEncounter();
     });
     socket.emit('catchup');
     socket.on('catchup', function(data) {
-        characters = [...data];
+        encounter = data;
         mapEncounter();
     });
 
     function addCharacter(event) {
         let character = event.detail;
         console.log("added character: ", character);
-        characters.push(character);
-        characters = characters.sort((a, b) => b.initiative - a.initiative);
+        characterId = character.id;
+        encounter.characters.push(character);
+        encounter.characters = encounter.characters.sort((a, b) => b.initiative - a.initiative);
         mapEncounter();
         updateServer();
     }
 
     function updateCharacter(event) {
         let character = event.detail;
-        const changed = characters.findIndex(c => c.id == character.id);
+        const changed = encounter.characters.findIndex(c => c.id == character.id);
         console.log("updated character: ", character);
-        characters[changed] = character;
+        encounter.characters[changed] = character;
+        mapEncounter();
+        updateServer();
+    }
+
+    function characterTurnDone(event) {
+        const characterIndex =  encounter.characters.findIndex(c => c.id == characterId)
+        encounter.characters[characterIndex].turnStatus = "DONE";
         mapEncounter();
         updateServer();
     }
 
     function mapEncounter() {
-        encounter = characters.map(c => {
+        for (let i = 0; i < encounter.characters.length; i++) {
+            let character = encounter.characters[i];
+            if (character.turnStatus != "DONE") {
+                encounter.turnId = character.id;
+                break;
+            }
+        }
+        initiative = encounter.characters.map(c => {
             return { character: c, dmView: false }
         });
         // console.log('encounter', encounter);
+        console.log("characterId", characterId);
+        console.log("encounter.turnId", encounter.turnId);
     }
 
     function updateServer() {
-        socket.emit('update', characters);
+        socket.emit('update', encounter);
     }
 
     const headers = {
@@ -61,7 +80,7 @@
 <main>
     <div class="encounter">
         <CharacterStats {...headers} />
-        {#each encounter as e}
+        {#each initiative as e}
         <CharacterStats {...e} />
         {/each}
     </div>
@@ -69,6 +88,10 @@
     <div class="character-adder">
         <AddCharacter on:addCharacter={addCharacter} on:updateCharacter={updateCharacter} dmView={false}/>
     </div>
+
+    {#if encounter.turnId == characterId}
+    <Button onClick={characterTurnDone} text={`Turn Done`} />
+    {/if}
 </main>
 
 

@@ -15,6 +15,7 @@
         hp: 0,
         initiative: 0,
         statuses: [],
+        turnStatus: "NOT_YET",
         isPC: true
     };
     function addCharacter() {

@@ -26,17 +26,19 @@
 </script>
 
 
-<main class:selected="{character.selected}">
+<main class:selected="{dmView && character.selected}" class:turn-done="{character.turnStatus == 'DONE'}">
     <div class="stat" on:click={characterClicked}>{@html character.initiative}</div>
     <div class="stat" on:click={() => openLink(character.link)}>
         {#if !character.isPC}👹{/if}
         {@html character.name}
     </div>
-    <div class="stat">{@html displayHP}
+    <div class="stat hp">{@html displayHP}
         {#if dmView}
-        <Button onClick={addHP} text={`+`}></Button> 
-        <Button onClick={removeHP} text={`-`}></Button> 
-        <Button onClick={kill} text={`Kill`}></Button> 
+        <div class="hp-buttons">
+            <Button onClick={addHP} text={`+`} width={`45px`}></Button> 
+            <Button onClick={removeHP} text={`-`} width={`45px`}></Button> 
+            <Button onClick={kill} text={`Kill`} width={`60px`}></Button> 
+        </div>
         {/if}
     </div>
 </main>
@@ -58,5 +60,26 @@
 
     .selected {
         background-color: #FDDC5C;
+    }
+
+    .turn-done {
+        color: white;
+        background-color: #FA4224;
+    }
+
+    .hp {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .hp-buttons {
+        margin-left: 10px;
+        margin-top: 5px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
     }
 </style>

@@ -30,6 +30,7 @@
             link: selectedMonster.link,
             description: '',
             statuses: [],
+            turnStatus: "NOT_YET",
             isPC: false
         };
 

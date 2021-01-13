@@ -5,7 +5,13 @@
 
 let monsters = require('./monsters');
 
-let encounter = [];
+const turnStatuses = { READY: "READY", ACTIVE: "ACTIVE", DONE: "DONE" };
+
+let encounter = {
+    characters: [],
+    turnId: 0   
+};
+
 
 
 let initialized = false;
@@ -20,6 +26,7 @@ module.exports = {
     registerSocket: function(socket) {
         socket.on('update', function(data) {
             encounter = data;
+
             socket.broadcast.emit('update', encounter);
         });
         socket.on('catchup', function() {
@@ -27,3 +34,13 @@ module.exports = {
         });
     }
 };
+
+
+/*
+TODO: 
+- update urls
+- make table header row look better
+- done status
+
+
+*/
