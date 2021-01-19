@@ -104,13 +104,6 @@ module.exports = {
         dex: 2,
         group: 'Monster'
     },
-    yagra: {
-        name: "Yagra Stonefist",
-        link: "https://5e.tools/bestiary.html#thug_mm",
-        hp: "5d8+10",
-        dex: 0,
-        group: 'Character'
-    },
     durnan: {
         name: "Durnan",
         link: "https://5e.tools/bestiary.html#durnan_wdh",
@@ -118,11 +111,25 @@ module.exports = {
         dex: 2,
         group: 'Character'
     },
+    grumshar: {
+        name: "Grum'shar",
+        link: "https://5e.tools/bestiary.html#grum'shar_wdh",
+        hp: "2d8",
+        dex: 0,
+        group: 'Character'
+    },
     nihiloor: {
         name: "Nihiloor",
         link: "https://5e.tools/bestiary.html#nihiloor_wdh",
         hp: "13d8+13",
         dex: 1,
+        group: 'Character'
+    },
+    yagra: {
+        name: "Yagra Stonefist",
+        link: "https://5e.tools/bestiary.html#thug_mm",
+        hp: "5d8+10",
+        dex: 0,
         group: 'Character'
     }
 };
