@@ -15,7 +15,7 @@
     let selectedMonster = null;
 
     function selectMonster(event) {
-        selectedMonster = event.detail.value;
+        selectedMonster = JSON.parse(JSON.stringify(event.detail.value));
     }
 
     function addMonster(event) {
@@ -45,6 +45,10 @@
     <div class="components">
         <div class="stat-section select">
             <Select items={monsters} {groupBy} on:select={selectMonster}></Select>
+            {#if selectedMonster}
+                <Header text={`Alternate Name`}></Header>
+                <input type="text" bind:value={selectedMonster.name}/>
+            {/if}
         </div>
         <div class="stat-section">
             <Button onClick={addMonster} text={`Add Monster`}></Button> 
@@ -75,5 +79,10 @@
 
     .stat-section {
         padding: 30px;
+    }
+
+    input {
+        border: 3px solid #475F94;
+        border-radius: 6px;
     }
 </style>
