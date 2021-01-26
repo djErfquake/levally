@@ -140,9 +140,10 @@
     {#if selectedCharacterIndex != null}
     <section class='section-selector-controls'>
         <div class="character-adder">
-            <div>Rename Character</div>
+            <div>Update Character</div>
+            <input type="number" bind:value={encounter.characters[selectedCharacterIndex].initiative}/>
             <input type="text" bind:value={encounter.characters[selectedCharacterIndex].name}/>
-            <Button onClick={renameCharacter} text={`Rename`} />
+            <Button onClick={renameCharacter} text={`Update`} />
             <Button onClick={toggleCharacterTurn} text={`Turn Done`} />
         </div>
     </section>
