@@ -44,11 +44,11 @@
             </div>
             <div class="stat-section">
                 <Header text={`HP`}></Header>
-                <input id="hp" type="number" min="1" bind:value={character.hp}/>
+                <input id="hp" class="number-input" type="number" min="1" bind:value={character.hp}/>
             </div>
             <div class="stat-section">
                 <Header text={`Initiative`}></Header>
-                <input id="initiative" type="number" min="1" bind:value={character.initiative}/>
+                <input id="initiative" class="number-input" type="number" min="1" bind:value={character.initiative}/>
             </div>
             <div class="stat-section">
                 <Button onClick={addCharacter} text={`Add Character`}></Button> 
@@ -66,18 +66,27 @@
 
 
 <style>
+    main {
+        width: 100%;
+    }
+
     .add-character {
         display: flex;
         flex-wrap: wrap;
         flex-direction: column;
+        justify-content: center;
     }
 
     .hp-buttons {
         display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
     }
 
     .components {
         display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
     }
 
     .stat-section {
@@ -91,6 +100,10 @@
 
     input:focus {
         border-color: #475F94;
+    }
+
+    .number-input {
+        width: 40px;
     }
 
 </style>

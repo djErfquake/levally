@@ -20,6 +20,20 @@ module.exports = {
         dex: 2,
         group: 'Humanoid'
     },
+    doppelganger: {
+        name: "DoppelGanger",
+        link: "https://5e.tools/bestiary.html#doppelganger_mm",
+        hp: "8d8+16",
+        dex: 4,
+        group: 'Humanoid'
+    },
+    drowGunslinger: {
+        name: "Drow Gunslinger",
+        link: "https://5e.tools/bestiary.html#drow%20gunslinger_wdh",
+        hp: "13d8+26",
+        dex: 4,
+        group: 'Humanoid'
+    },
     duergar: {
         name: "Duergar",
         link: "https://5e.tools/bestiary.html#duergar_mm",
@@ -83,6 +97,13 @@ module.exports = {
         dex: 3,
         group: 'Beast'
     },
+    swashbuckler: {
+        name: "Swashbuckler",
+        link: "https://5e.tools/bestiary.html#swashbuckler_vgm",
+        hp: "12d8+12",
+        dex: 4,
+        group: 'Humanoid'
+    },
     troll: {
         name: "Troll",
         link: "https://5e.tools/bestiary.html#troll_mm",
@@ -103,6 +124,20 @@ module.exports = {
         hp: "6d8+6",
         dex: 2,
         group: 'Monster'
+    },
+    victoroCassalanter: {
+        name: "Victoro Cassalanter",
+        link: "https://5e.tools/bestiary.html#victoro%20cassalanter_wdh",
+        hp: "15d8+30",
+        dex: 1,
+        group: 'Character'
+    },
+    ammaliaCassalanter: {
+        name: "Ammalia Cassalanter",
+        link: "https://5e.tools/bestiary.html#ammalia%20cassalanter_wdh",
+        hp: "10d8",
+        dex: 2,
+        group: 'Character'
     },
     durnan: {
         name: "Durnan",
