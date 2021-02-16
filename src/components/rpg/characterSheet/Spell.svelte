@@ -1,0 +1,138 @@
+<script>
+    export let name;
+    export let level;
+    export let castingTime;
+    export let range;
+    export let components;
+    export let duration;
+    export let school;
+    // export let effect;
+    // export let icon;
+    export let description;
+    export let colors = [ '#FDDC5C', '#fe7231'];
+
+    $: levelText = level == 0 ? "Cantrip" : `Level ${level}`;
+    $: descriptionText = `<p>${description.replace(/\n{2,}/g, '</p><p>').replace(/\|ul\|/g, '<ul><li>').replace(/\|\/ul\|/g, '</li></ul>').replace(/\|li\|/g, '</li><li>')}</p>`;
+    $: componentsText = components.join(' ');
+
+</script>
+
+
+<main>
+    <div class="card">
+        <div class="title" style="background-color: {colors[0]};">
+            <!-- <div class="icon" style="background-image: url({icon});"></div> -->
+            <div class="name">{name}</div>
+            <div class="level-text">{levelText}</div>
+        </div>
+        <div class="description">{@html descriptionText}</div>
+        <div class="stats" style="background-color: {colors[1]};">
+            <div class="stat">
+                <div class="stat-key">DURATION</div>
+                <div class="stat-value">{duration}</div>
+            </div>
+            <div class="stat">
+                <div class="stat-key">CASTING TIME</div>
+                <div class="stat-value">{castingTime}</div>
+            </div>
+            <div class="stat">
+                <div class="stat-key">SCHOOL</div>
+                <div class="stat-value">{school}</div>
+            </div>
+            <div class="stat">
+                <div class="stat-key">COMPONENTS</div>
+                <div class="stat-value">{componentsText}</div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<style>
+    .card {
+        position: relative;
+
+        width: 350px;
+        min-height: 400px;
+
+        background-color: rgb(240, 240, 240);
+        box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.5), 0 0px 0 1px rgba(10, 10, 10, 0.02);
+
+        border-radius: 13px;
+
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+
+    }
+
+    .title {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        width: 100%;
+        background-color: #FDDC5C;
+        justify-content: center;
+        align-items: center;
+        border-radius: 13px 13px 0 0;
+        text-align: center;
+    }
+
+    /* .icon {
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        width: 35px;
+        height: 35px;
+        background-repeat: no-repeat;
+        background-size: cover;
+    } */
+
+    .name {
+        font-size: 1.8em;
+        font-weight: 600;
+        width: 100%;
+    }
+
+    .level-text {
+        font-weight: 600;
+    }
+
+    .description {
+        padding: 15px 20px;
+    }
+
+    .stats {
+        width: 100%;
+        height: 100px;
+        background-color: #fe7231;
+        border-radius: 0 0 13px 13px;
+
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .stat {
+        width: 50%;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        color: white;
+    }
+
+    .stat-key {
+        font-size: 0.8em;
+        font-weight: 600;
+    }
+
+    .stat-value {
+        font-size: 0.8em;
+    }
+    
+
+</style>

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "compression": "^1.7.1",
+    "js-base64": "^3.6.0",
     "polka": "^1.0.0-next.11",
     "sirv": "^1.0.0",
     "socket.io": "^2.2.0",
