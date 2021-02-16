@@ -17,6 +17,19 @@
 		const { slug } = page.params;
         characterSheet = JSON.parse(decode(slug));
         console.log('characterSheet', characterSheet);
+
+        /*
+            const cs = {"spells":["all"]}; // all eyJzcGVsbHMiOlsiYWxsIl19
+            const cs = {"spells":[2,3,1,4,5,6]}; // carolyn eyJzcGVsbHMiOlsyLDMsMSw0LDUsNl19
+            const cs = {"spells":[7,8,9,10,1]}; // rose eyJzcGVsbHMiOls3LDgsOSwxMCwxXX0
+            const encoded = btoa(JSON.stringify(cs));
+            console.log("encode", encoded);
+            console.log("decode", atob(encoded));
+
+            https://www.base64encode.org/
+            Carolyn: http://localhost:3000/rpg/eyJzcGVsbHMiOlsyLDMsMSw0LDUsNl19
+
+        */
 	}
 
     const socket = io();

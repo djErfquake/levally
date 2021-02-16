@@ -43,12 +43,21 @@
                 <div class="stat-key">COMPONENTS</div>
                 <div class="stat-value">{componentsText}</div>
             </div>
+            <div class="stat">
+                <div class="stat-key">RANGE</div>
+                <div class="stat-value">{range}</div>
+            </div>
         </div>
     </div>
 </main>
 
 
 <style>
+    main {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
     .card {
         position: relative;
 
@@ -63,6 +72,7 @@
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
+        margin-bottom: 20px;
 
     }
 
@@ -104,7 +114,7 @@
 
     .stats {
         width: 100%;
-        height: 100px;
+        height: 130px;
         background-color: #fe7231;
         border-radius: 0 0 13px 13px;
 

@@ -4,7 +4,12 @@
     // console.log('spells', spells);
     
     export let characterSpells;
-    // console.log(spells[characterSpells[0]]);
+    let spellsByLevel = [];
+
+    if (characterSpells.length > 0 && characterSpells[0] == "all") {
+        characterSpells = Object.keys(spellHelper.spells);
+    }
+    console.log("characterSpells", characterSpells);
 
     characterSpells = characterSpells.map(s => {
         let spell = spellHelper.spells[s];
@@ -13,12 +18,31 @@
         return spell;
     });
 
+    // sort spells by level
+    let spellLevel = 0;
+    let foundSpellAtLevel = true;
+    while (foundSpellAtLevel) {
+        const spellsAtLevel = characterSpells.filter(s => s.level == spellLevel);
+        if (spellsAtLevel.length > 0) {
+            spellsByLevel.push(spellsAtLevel);
+        }
+        else {
+            foundSpellAtLevel = false;
+        }
+
+        spellLevel++;
+    }
+
 </script>
 
 
 <main>
-    {#each characterSpells as spell}
+    {#each spellsByLevel as levelSpells}
+    <div class="spell-level-row">
+        {#each levelSpells as spell}
         <SpellComponent {...spell} />
+        {/each}
+    </div>
     {/each}
 </main>
 
@@ -26,9 +50,15 @@
 <style>
     main {
         display: flex;
-        justify-content: space-evenly;
+        flex-direction: column;
+    }
+
+    .spell-level-row {
+        display: flex;
+        justify-content: center;
         flex-wrap: wrap;
         width: 100%;
+        padding-bottom: 30px;
     }
 
 </style>
