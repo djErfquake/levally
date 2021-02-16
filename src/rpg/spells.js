@@ -6,17 +6,18 @@ module.exports = {
         Cold: [ '#C4FCF0', '#77BDDA'],
         Control: [ '#FFE7FF', '#7A4E81'],
         Bludgeoning: [ '#CEF6FF', '#0089BE'],
-        Communication: [ '#FFA196', '#FF8766'],
+        Communication: [ '#C7FCEC', '#00C7A5'],
         Utility: [ '#FBC905', '#4C2E00' ],
         Restrained: [ '#FFEFCA', '#7E7666' ],
         Radiant: [ '#FFD170', '#BF5847' ],
         Creation: [ '#00ECD4', '#438FD6'],
         Buff: [ '#FFE7FF', '#726CB0'],
-
+        Prone: [ '#CFFBE2', '#394B41'],
+        
+        Shapechanging: [ '#FDDC5C', '#fe7231'],
         Necrotic: [ '#FDDC5C', '#fe7231'],
         Fire: [ '#FDDC5C', '#fe7231'],
         Detection: [ '#FDDC5C', '#fe7231'],
-        Shapechanging: [ '#FDDC5C', '#fe7231'],
         Charm: [ '#FDDC5C', '#fe7231'],
         Teleportation: [ '#FDDC5C', '#fe7231'],
         Force: [ '#FDDC5C', '#fe7231'],
@@ -142,6 +143,66 @@ module.exports = {
             effect: "Buff",
             icon: "https://www.dndbeyond.com/content/1-0-1436-0/skins/waterdeep/images/spell-schools/35/evocation.png",
             description: "You bless up to three creatures of your choice within range. Whenever a target makes an attack roll or a saving throw before the spell ends, the target can roll a d4 and add the number rolled to the attack roll or saving throw.\n\nAt Higher Levels. When you cast this spell using a spell slot of 2nd level or higher, you can target one additional creature for each slot level above 1st."
+        },
+        11: {
+            name: "Minor Illusion",
+            level: 0,
+            castingTime: "1 action",
+            range: "30 ft, 5 ft cube",
+            components: ["S", "M"],
+            duration: "1 Minute",
+            school: "Illusion",
+            effect: "Control",
+            icon: "https://www.dndbeyond.com/content/1-0-1436-0/skins/waterdeep/images/spell-schools/35/evocation.png",
+            description: "You create a sound or an image of an object within range that lasts for the duration. The illusion also ends if you dismiss it as an action or cast this spell again.\n\nIf you create a sound, its volume can range from a whisper to a scream. It can be your voice, someone else's voice, a lion's roar, a beating of drums, or any other sound you choose. The sound continues unabated throughout the duration, or you can make discrete sounds at different times before the spell ends.\n\nIf you create an image of an object--such as a chair, muddy footprints, or a small chest--it must be no larger than a 5-foot cube. The image can't create sound, light, smell, or any other sensory effect. Physical interaction with the image reveals it to be an illusion, because things can pass through it.\n\nIf a creature uses its action to examine the sound or image, the creature can determine that it is an illusion with a successful Intelligence (Investigation) check against your spell save DC. If a creature discerns the illusion for what it is, the illusion becomes faint to the creature."
+        },
+        12: {
+            name: "Prestidigitation",
+            level: 0,
+            castingTime: "1 action",
+            range: "10 ft",
+            components: ["V", "S"],
+            duration: "1 Hour",
+            school: "Transmutation",
+            effect: "Utility",
+            icon: "https://www.dndbeyond.com/content/1-0-1436-0/skins/waterdeep/images/spell-schools/35/evocation.png",
+            description: "This spell is a minor magical trick that novice spellcasters use for practice. You create one of the following magical effects within range:|ul|You create an instantaneous, harmless sensory effect, such as a shower of sparks, a puff of wind, faint musical notes, or an odd odor.|li|You instantaneously light or snuff out a candle, a torch, or a small campfire.|li|You instantaneously clean or soil an object no larger than 1 cubic foot.|li|You chill, warm, or flavor up to 1 cubic foot of nonliving material for 1 hour.|li|You make a color, a small mark, or a symbol appear on an object or a surface for 1 hour.|li|You create a nonmagical trinket or an illusory image that can fit in your hand and that lasts until the end of your next turn.|li|If you cast this spell multiple times, you can have up to three of its non-instantaneous effects active at a time, and you can dismiss such an effect as an action.|/ul|"
+        },
+        13: {
+            name: "Mage Hand",
+            level: 0,
+            castingTime: "1 action",
+            range: "30 ft",
+            components: ["V", "S"],
+            duration: "1 Minute",
+            school: "Conjuration",
+            effect: "Utility",
+            icon: "https://www.dndbeyond.com/content/1-0-1436-0/skins/waterdeep/images/spell-schools/35/evocation.png",
+            description: "A spectral, floating hand appears at a point you choose within range. The hand lasts for the duration or until you dismiss it as an action. The hand vanishes if it is ever more than 30 feet away from you or if you cast this spell again.\n\nYou can use your action to control the hand. You can use the hand to manipulate an object, open an unlocked door or container, stow or retrieve an item from an open container, or pour the contents out of a vial. You can move the hand up to 30 feet each time you use it.\n\nThe hand can't attack, activate magic items, or carry more than 10 pounds."
+        },
+        14: {
+            name: "Hideous Laughter",
+            level: 1,
+            castingTime: "1 action",
+            range: "30 ft",
+            components: ["V", "S", "M"],
+            duration: "1 Minute",
+            school: "Enchantment",
+            effect: "Prone",
+            icon: "https://www.dndbeyond.com/content/1-0-1436-0/skins/waterdeep/images/spell-schools/35/evocation.png",
+            description: "A creature of your choice that you can see within range perceives everything as hilariously funny and falls into fits of laughter if this spell affects it. The target must succeed on a Wisdom saving throw or fall prone, becoming incapacitated and unable to stand up for the duration. A creature with an Intelligence score of 4 or less isn't affected.\n\nAt the end of each of its turns, and each time it takes damage, the target can make another Wisdom saving throw. The target has advantage on the saving throw if it's triggered by damage. On a success, the spell ends."
+        },
+        15: {
+            name: "Silent Image",
+            level: 1,
+            castingTime: "1 action",
+            range: "60 ft, 15ft cube",
+            components: ["V", "S", "M"],
+            duration: "10 Minutes",
+            school: "Illusion",
+            effect: "Control",
+            icon: "https://www.dndbeyond.com/content/1-0-1436-0/skins/waterdeep/images/spell-schools/35/evocation.png",
+            description: "You create the image of an object, a creature, or some other visible phenomenon that is no larger than a 15-foot cube. The image appears at a spot within range and lasts for the duration. The image is purely visual; it isn't accompanied by sound, smell, or other sensory effects.\n\nYou can use your action to cause the image to move to any spot within range. As the image changes location, you can alter its appearance so that its movements appear natural for the image. For example, if you create an image of a creature and move it, you can alter the image so that it appears to be walking.\n\nPhysical interaction with the image reveals it to be an illusion, because things can pass through it. A creature that uses its action to examine the image can determine that it is an illusion with a successful Intelligence (Investigation) check against your spell save DC. If a creature discerns the illusion for what it is, the creature can see through the image."
         }
     }
 };

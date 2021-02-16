@@ -22,6 +22,7 @@
             const cs = {"spells":["all"]}; // all eyJzcGVsbHMiOlsiYWxsIl19
             const cs = {"spells":[2,3,1,4,5,6]}; // carolyn eyJzcGVsbHMiOlsyLDMsMSw0LDUsNl19
             const cs = {"spells":[7,8,9,10,1]}; // rose eyJzcGVsbHMiOls3LDgsOSwxMCwxXX0
+            const cs = {"spells":[11,12,13,14,15,4]}; // am eyJzcGVsbHMiOls3LDgsOSwxMCwxXX0
             const encoded = btoa(JSON.stringify(cs));
             console.log("encode", encoded);
             console.log("decode", atob(encoded));
