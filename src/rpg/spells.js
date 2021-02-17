@@ -254,6 +254,78 @@ module.exports = {
             effect: "Debuff",
             icon: "https://www.dndbeyond.com/content/1-0-1436-0/skins/waterdeep/images/spell-schools/35/evocation.png",
             description: "Up to three creatures of your choice that you can see within range must make Charisma saving throws. Whenever a target that fails this saving throw makes an attack roll or a saving throw before the spell ends, the target must roll a d4 and subtract the number rolled from the attack roll or saving throw.\n\nAt Higher Levels. When you cast this spell using a spell slot of 2nd level or higher, you can target one additional creature for each slot level above 1st."
+        },
+        20: {
+            name: "Fire Bolt",
+            level: "cantrip",
+            castingTime: "1 action",
+            range: "120 ft",
+            components: ["V", "S"],
+            duration: "Instantaneouse",
+            school: "Evocation",
+            effect: "Fire",
+            icon: "https://www.dndbeyond.com/content/1-0-1436-0/skins/waterdeep/images/spell-schools/35/evocation.png",
+            description: "You hurl a mote of fire at a creature or object within range. Make a ranged spell attack against the target. On a hit, the target takes 1d10 fire damage. A flammable object hit by this spell ignites if it isn't being worn or carried.\n\nThis spell's damage increases by 1d10 when you reach 5th level (2d10), 11th level (3d10), and 17th level (4d10)."
+        },
+        21: {
+            name: "Jump",
+            level: "1",
+            castingTime: "1 action",
+            range: "Touch",
+            components: ["V", "S", "M"],
+            duration: "1 Minute",
+            school: "Transmutation",
+            effect: "Movement",
+            icon: "https://www.dndbeyond.com/content/1-0-1436-0/skins/waterdeep/images/spell-schools/35/evocation.png",
+            description: "You touch a creature. The creature's jump distance is tripled until the spell ends."
+        },
+        22: {
+            name: "Comprehend Languages",
+            level: "1",
+            castingTime: "1 action",
+            range: "Self",
+            components: ["V", "S", "M"],
+            duration: "1 Hour",
+            school: "Divination",
+            effect: "Social",
+            icon: "https://www.dndbeyond.com/content/1-0-1436-0/skins/waterdeep/images/spell-schools/35/evocation.png",
+            description: "For the duration, you understand the literal meaning of any spoken language that you hear. You also understand any written language that you see, but you must be touching the surface on which the words are written. It takes about 1 minute to read one page of text.\n\nThis spell doesn't decode secret messages in a text or a glyph, such as an arcane sigil, that isn't part of a written language."
+        },
+        23: {
+            name: "Disguise Self",
+            level: "1",
+            castingTime: "1 action",
+            range: "Self",
+            components: ["V", "S"],
+            duration: "1 Hour",
+            school: "Illusion",
+            effect: "Shapechanging",
+            icon: "https://www.dndbeyond.com/content/1-0-1436-0/skins/waterdeep/images/spell-schools/35/evocation.png",
+            description: "You make yourself--including your clothing, armor, weapons, and other belongings on your person--look different until the spell ends or until you use your action to dismiss it. You can seem 1 foot shorter or taller and can appear thin, fat, or in between. You can't change your body type, so you must adopt a form that has the same basic arrangement of limbs. Otherwise, the extent of the illusion is up to you.\n\nThe changes wrought by this spell fail to hold up to physical inspection. For example, if you use this spell to add a hat to your outfit, objects pass through the hat, and anyone who touches it would feel nothing or would feel your head and hair. If you use this spell to appear thinner than you are, the hand of someone who reaches out to touch you would bump into you while it was seemingly still in midair.\n\nTo discern that you are disguised, a creature can use its action to inspect your appearance and must succeed on an Intelligence (Investigation) check against your spell save DC."
+        },
+        24: {
+            name: "Magic Missile",
+            level: "1",
+            castingTime: "1 action",
+            range: "120 feet",
+            components: ["V", "S"],
+            duration: "Instantaneous",
+            school: "Transmutation",
+            effect: "Movement",
+            icon: "https://www.dndbeyond.com/content/1-0-1436-0/skins/waterdeep/images/spell-schools/35/evocation.png",
+            description: "You create three glowing darts of magical force. Each dart hits a creature of your choice that you can see within range. A dart deals 1d4 + 1 force damage to its target. The darts all strike simultaneously, and you can direct them to hit one creature or several.\n\nAt Higher Levels. When you cast this spell using a spell slot of 2nd level or higher, the spell creates one more dart for each slot level above 1st."
+        },
+        25: {
+            name: "Shield",
+            level: "1",
+            castingTime: "1 Reaction",
+            range: "Self",
+            components: ["V", "S"],
+            duration: "1 Round",
+            school: "Abjuration",
+            effect: "Warding",
+            icon: "https://www.dndbeyond.com/content/1-0-1436-0/skins/waterdeep/images/spell-schools/35/evocation.png",
+            description: "An invisible barrier of magical force appears and protects you. Until the start of your next turn, you have a +5 bonus to AC, including against the triggering attack, and you take no damage from magic missile."
         }
     }
 };
