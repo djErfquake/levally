@@ -110,6 +110,7 @@
 
     .description {
         padding: 15px 20px;
+        flex-grow: 1;
     }
 
     .stats {

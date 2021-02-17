@@ -9,7 +9,6 @@
     if (characterSpells.length > 0 && characterSpells[0] == "all") {
         characterSpells = Object.keys(spellHelper.spells);
     }
-    console.log("characterSpells", characterSpells);
 
     characterSpells = characterSpells.map(s => {
         let spell = spellHelper.spells[s];

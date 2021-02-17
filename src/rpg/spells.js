@@ -3,6 +3,7 @@ module.exports = {
         Healing: [ '#ffbcaf', '#cf3759'],
         Thunder: [ '#FDDC5C', '#fe7231'],
         Acid: [ '#A0CA65', '#50AF7A'],
+        Poison: [ '#A0CA65', '#50AF7A'],
         Cold: [ '#C4FCF0', '#77BDDA'],
         Control: [ '#FFE7FF', '#7A4E81'],
         Bludgeoning: [ '#CEF6FF', '#0089BE'],
@@ -16,15 +17,13 @@ module.exports = {
         Prone: [ '#FEFEDF', '#005B4B'],
         Psychic: [ '#FAF8FF', '#726CB0'],
         Charmed: [ '#DC9198', '#BB809A'],
-        
-        Shapechanging: [ '#FDDC5C', '#fe7231'],
-        Necrotic: [ '#FDDC5C', '#fe7231'],
-        Fire: [ '#FDDC5C', '#fe7231'],
-        Detection: [ '#FDDC5C', '#fe7231'],
-        Charm: [ '#FDDC5C', '#fe7231'],
-        Teleportation: [ '#FDDC5C', '#fe7231'],
-        Force: [ '#FDDC5C', '#fe7231'],
-        Deception: [ '#FDDC5C', '#fe7231']
+        Movement: [ '#BCE776', '#008985'],
+        Social: [ '#77BDDA', '#344A53'],
+        Shapechanging: [ '#D5AC89', '#9D7757'],
+        Warding: [ '#FFEBCC', '#2F4858'],
+        Force: [ '#9FAEEB', '#9663A5'],
+        Necrotic: ['#BCE776', '#847743'],
+        Fire: [ '#FD996A', '#BF5847']
     },
     spells: {
         1: {
@@ -257,7 +256,7 @@ module.exports = {
         },
         20: {
             name: "Fire Bolt",
-            level: "cantrip",
+            level: 0,
             castingTime: "1 action",
             range: "120 ft",
             components: ["V", "S"],
@@ -269,7 +268,7 @@ module.exports = {
         },
         21: {
             name: "Jump",
-            level: "1",
+            level: 1,
             castingTime: "1 action",
             range: "Touch",
             components: ["V", "S", "M"],
@@ -281,7 +280,7 @@ module.exports = {
         },
         22: {
             name: "Comprehend Languages",
-            level: "1",
+            level: 1,
             castingTime: "1 action",
             range: "Self",
             components: ["V", "S", "M"],
@@ -293,7 +292,7 @@ module.exports = {
         },
         23: {
             name: "Disguise Self",
-            level: "1",
+            level: 1,
             castingTime: "1 action",
             range: "Self",
             components: ["V", "S"],
@@ -305,19 +304,19 @@ module.exports = {
         },
         24: {
             name: "Magic Missile",
-            level: "1",
+            level: 1,
             castingTime: "1 action",
             range: "120 feet",
             components: ["V", "S"],
             duration: "Instantaneous",
-            school: "Transmutation",
-            effect: "Movement",
+            school: "Evocation",
+            effect: "Force",
             icon: "https://www.dndbeyond.com/content/1-0-1436-0/skins/waterdeep/images/spell-schools/35/evocation.png",
             description: "You create three glowing darts of magical force. Each dart hits a creature of your choice that you can see within range. A dart deals 1d4 + 1 force damage to its target. The darts all strike simultaneously, and you can direct them to hit one creature or several.\n\nAt Higher Levels. When you cast this spell using a spell slot of 2nd level or higher, the spell creates one more dart for each slot level above 1st."
         },
         25: {
             name: "Shield",
-            level: "1",
+            level: 1,
             castingTime: "1 Reaction",
             range: "Self",
             components: ["V", "S"],
@@ -326,6 +325,90 @@ module.exports = {
             effect: "Warding",
             icon: "https://www.dndbeyond.com/content/1-0-1436-0/skins/waterdeep/images/spell-schools/35/evocation.png",
             description: "An invisible barrier of magical force appears and protects you. Until the start of your next turn, you have a +5 bonus to AC, including against the triggering attack, and you take no damage from magic missile."
+        },
+        26: {
+            name: "Dancing Lights",
+            level: 0,
+            castingTime: "1 Action",
+            range: "120 ft",
+            components: ["V", "S", "M"],
+            duration: "1 Minute",
+            school: "Evocation",
+            effect: "Utility",
+            icon: "https://www.dndbeyond.com/content/1-0-1436-0/skins/waterdeep/images/spell-schools/35/evocation.png",
+            description: "You create up to four torch-sized lights within range, making them appear as torches, lanterns, or glowing orbs that hover in the air for the duration. You can also combine the four lights into one glowing vaguely humanoid form of Medium size. Whichever form you choose, each light sheds dim light in a 10-foot radius.\n\nAs a bonus action on your turn, you can move the lights up to 60 feet to a new spot within range. A light must be within 20 feet of another light created by this spell, and a light winks out if it exceeds the spell's range."
+        },
+        27: {
+            name: "Eldritch Blast",
+            level: 0,
+            castingTime: "1 Action",
+            range: "120 ft",
+            components: ["V", "S"],
+            duration: "Instantaneous",
+            school: "Evocation",
+            effect: "Force",
+            icon: "https://www.dndbeyond.com/content/1-0-1436-0/skins/waterdeep/images/spell-schools/35/evocation.png",
+            description: "A beam of crackling energy streaks toward a creature within range. Make a ranged spell attack against the target. On a hit, the target takes 1d10 force damage.\n\nThe spell creates more than one beam when you reach higher levels: two beams at 5th level, three beams at 11th level, and four beams at 17th level. You can direct the beams at the same target or at different ones. Make a separate attack roll for each beam."
+        },
+        28: {
+            name: "Dissonant Whispers",
+            level: 1,
+            castingTime: "1 Action",
+            range: "60 ft",
+            components: ["V"],
+            duration: "Instantaneous",
+            school: "Enchantment",
+            effect: "Psychic",
+            icon: "https://www.dndbeyond.com/content/1-0-1436-0/skins/waterdeep/images/spell-schools/35/evocation.png",
+            description: "You whisper a discordant melody that only one creature of your choice within range can hear, wracking it with terrible pain. The target must make a Wisdom saving throw. On a failed save, it takes 3d6 psychic damage and must immediately use its reaction, if available, to move as far as its speed allows away from you. The creature doesn’t move into obviously dangerous ground, such as a fire or a pit. On a successful save, the target takes half as much damage and doesn’t have to move away. A deafened creature automatically succeeds on the save.\n\nAt Higher Levels. When you cast this spell using a spell slot of 2nd level or higher, the damage increases by 1d6 for each slot level above 1st."
+        },
+        29: {
+            name: "Hellish Rebuke",
+            level: 1,
+            castingTime: "1 Reaction",
+            range: "60 ft",
+            components: ["V", "S"],
+            duration: "Instantaneous",
+            school: "Evocation",
+            effect: "Fire",
+            icon: "https://www.dndbeyond.com/content/1-0-1436-0/skins/waterdeep/images/spell-schools/35/evocation.png",
+            description: "You point your finger, and the creature that damaged you is momentarily surrounded by hellish flames. The creature must make a Dexterity saving throw. It takes 2d10 fire damage on a failed save, or half as much damage on a successful one.\n\nAt Higher Levels. When you cast this spell using a spell slot of 2nd level or higher, the damage increases by 1d10 for each slot level above 1st."
+        },
+        30: {
+            name: "Hex",
+            level: 1,
+            castingTime: "1 Bonus Action",
+            range: "90 ft",
+            components: ["V", "S", "M"],
+            duration: "1 Hour",
+            school: "Enchantment",
+            effect: "Necrotic",
+            icon: "https://www.dndbeyond.com/content/1-0-1436-0/skins/waterdeep/images/spell-schools/35/evocation.png",
+            description: "You place a curse on a creature that you can see within range. Until the spell ends, you deal an extra 1d6 necrotic damage to the target whenever you hit it with an attack. Also, choose one ability when you cast the spell. The target has disadvantage on ability checks made with the chosen ability. If the target drops to 0 hit points before this spell ends, you can use a bonus action on a subsequent turn of yours to curse a new creature. A remove curse cast on the target ends this spell early.\n\nAt Higher Levels. When you cast this spell using a spell slot of 3rd or 4th level, you can maintain your concentration on the spell for up to 8 hours.When you use a spell slot of 5th level or higher, you can maintain your concentration on the spell for up to 24 hours."
+        },
+        31: {
+            name: "Poison Spray",
+            level: 0,
+            castingTime: "1 Action",
+            range: "10 ft",
+            components: ["V", "S"],
+            duration: "Instantaneous",
+            school: "Conjuration",
+            effect: "Poison",
+            icon: "https://www.dndbeyond.com/content/1-0-1436-0/skins/waterdeep/images/spell-schools/35/evocation.png",
+            description: "You extend your hand toward a creature you can see within range and project a puff of noxious gas from your palm. The creature must succeed on a Constitution saving throw or take 1d12 poison damage.\n\nThis spell's damage increases by 1d12 when you reach 5th level (2d12), 11th level (3d12), and 17th level (4d12)."
+        },
+        32: {
+            name: "Animal Friendship",
+            level: 1,
+            castingTime: "1 Action",
+            range: "30 ft",
+            components: ["V", "S", "M"],
+            duration: "24 Hours",
+            school: "Enchantment",
+            effect: "Charmed",
+            icon: "https://www.dndbeyond.com/content/1-0-1436-0/skins/waterdeep/images/spell-schools/35/evocation.png",
+            description: "This spell lets you convince a beast that you mean it no harm. Choose a beast that you can see within range. It must see and hear you. If the beast's Intelligence is 4 or higher, the spell fails. Otherwise, the beast must succeed on a Wisdom saving throw or be charmed by you for the spell's duration. If you or one of your companions harms the target, the spell ends.\n\nAt Higher Levels. When you cast this spell using a spell slot of 2nd level or higher, you can affect one additional beast for each slot level above 1st."
         }
     }
 };
