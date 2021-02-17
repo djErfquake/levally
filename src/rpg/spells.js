@@ -12,7 +12,10 @@ module.exports = {
         Radiant: [ '#FFD170', '#BF5847' ],
         Creation: [ '#00ECD4', '#438FD6'],
         Buff: [ '#FFE7FF', '#726CB0'],
-        Prone: [ '#CFFBE2', '#394B41'],
+        Debuff: [ '#ACA9BB', '#474554'],
+        Prone: [ '#FEFEDF', '#005B4B'],
+        Psychic: [ '#FAF8FF', '#726CB0'],
+        Charmed: [ '#DC9198', '#BB809A'],
         
         Shapechanging: [ '#FDDC5C', '#fe7231'],
         Necrotic: [ '#FDDC5C', '#fe7231'],
@@ -203,6 +206,54 @@ module.exports = {
             effect: "Control",
             icon: "https://www.dndbeyond.com/content/1-0-1436-0/skins/waterdeep/images/spell-schools/35/evocation.png",
             description: "You create the image of an object, a creature, or some other visible phenomenon that is no larger than a 15-foot cube. The image appears at a spot within range and lasts for the duration. The image is purely visual; it isn't accompanied by sound, smell, or other sensory effects.\n\nYou can use your action to cause the image to move to any spot within range. As the image changes location, you can alter its appearance so that its movements appear natural for the image. For example, if you create an image of a creature and move it, you can alter the image so that it appears to be walking.\n\nPhysical interaction with the image reveals it to be an illusion, because things can pass through it. A creature that uses its action to examine the image can determine that it is an illusion with a successful Intelligence (Investigation) check against your spell save DC. If a creature discerns the illusion for what it is, the creature can see through the image."
+        },
+        16: {
+            name: "Vicious Mockery",
+            level: 0,
+            castingTime: "1 action",
+            range: "60 ft",
+            components: ["V"],
+            duration: "Instantaneous",
+            school: "Enchantment",
+            effect: "Psychic",
+            icon: "https://www.dndbeyond.com/content/1-0-1436-0/skins/waterdeep/images/spell-schools/35/evocation.png",
+            description: "You unleash a string of insults laced with subtle enchantments at a creature you can see within range. If the target can hear you (though it need not understand you), it must succeed on a Wisdom saving throw or take 1d4 psychic damage and have disadvantage on the next attack roll it makes before the end of its next turn.\n\nThis spell's damage increases by 1d4 when you reach 5th level (2d4), 11th level (3d4), and 17th level (4d4)."
+        },
+        17: {
+            name: "Healing Word",
+            level: 1,
+            castingTime: "1 bonus action",
+            range: "60 ft",
+            components: ["V"],
+            duration: "Instantaneous",
+            school: "Evocation",
+            effect: "Healing",
+            icon: "https://www.dndbeyond.com/content/1-0-1436-0/skins/waterdeep/images/spell-schools/35/evocation.png",
+            description: "A creature of your choice that you can see within range regains hit points equal to 1d4 + your spellcasting ability modifier. This spell has no effect on undead or constructs.\n\nAt Higher Levels. When you cast this spell using a spell slot of 2nd level or higher, the healing increases by 1d4 for each slot level above 1st."
+        },
+        18: {
+            name: "Charm Person",
+            level: 1,
+            castingTime: "1 action",
+            range: "30 ft",
+            components: ["V", "S"],
+            duration: "1 Hour",
+            school: "Enchantment",
+            effect: "Charmed",
+            icon: "https://www.dndbeyond.com/content/1-0-1436-0/skins/waterdeep/images/spell-schools/35/evocation.png",
+            description: "You attempt to charm a humanoid you can see within range. It must make a Wisdom saving throw, and does so with advantage if you or your companions are fighting it. If it fails the saving throw, it is charmed by you until the spell ends or until you or your companions do anything harmful to it. The charmed creature regards you as a friendly acquaintance. When the spell ends, the creature knows it was charmed by you.\n\nAt Higher Levels. When you cast this spell using a spell slot of 2nd level or higher, you can target one additional creature for each slot level above 1st. The creatures must be within 30 feet of each other when you target them."
+        },
+        19: {
+            name: "Bane",
+            level: 1,
+            castingTime: "1 action",
+            range: "30 ft",
+            components: ["V", "S", "M"],
+            duration: "1 Minute",
+            school: "Enchantment",
+            effect: "Debuff",
+            icon: "https://www.dndbeyond.com/content/1-0-1436-0/skins/waterdeep/images/spell-schools/35/evocation.png",
+            description: "Up to three creatures of your choice that you can see within range must make Charisma saving throws. Whenever a target that fails this saving throw makes an attack roll or a saving throw before the spell ends, the target must roll a d4 and subtract the number rolled from the attack roll or saving throw.\n\nAt Higher Levels. When you cast this spell using a spell slot of 2nd level or higher, you can target one additional creature for each slot level above 1st."
         }
     }
 };
