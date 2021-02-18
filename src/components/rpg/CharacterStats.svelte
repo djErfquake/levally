@@ -6,6 +6,7 @@
     export let character;
     export let dmView = false;
     export let isHeader = false;
+    export let selectedCharacterId = null;
 
     $: displayHP = character.isPC || dmView ? character.hp : "?";
 
@@ -27,7 +28,7 @@
 </script>
 
 
-<main class:selected="{dmView && character.selected}" class:turn-done="{character.turnStatus == 'DONE'}" class:header="{isHeader}">
+<main class:selected="{dmView && character.id == selectedCharacterId}" class:turn-done="{character.turnStatus == 'DONE'}" class:header="{isHeader}">
     <div class="stat" on:click={characterClicked}>{@html character.initiative}</div>
     <div class="stat" on:click={() => openLink(character.link)}>
         {#if !character.isPC}👹{/if}

@@ -11,10 +11,12 @@
 
     const dmSheet = {"spells":["all"]};
     let monsterValues = Object.values(monsters).map(function(m) { return { label: m.name, value: m, group: m.group} });
-
+    
     let encounter = { characters: [] , turnId: 0 };
     let initiative = [];
-    let selectedCharacterIndex = null;
+
+    let selectedCharacterId = null;
+    $: selectedCharacterIndex = selectedCharacterId ? encounter.characters.findIndex(c => c.id == selectedCharacterId) : null;
 
     const socket = io();
     socket.emit('initRPG');
@@ -47,6 +49,7 @@
     }
 
     function killCharacter(event) {
+        selectedCharacterId = null;
         let characterId = event.detail;
         const characterIndex = encounter.characters.findIndex(c => c.id == characterId);
         console.log(`killed ${encounter.characters[characterIndex].name}`);
@@ -56,18 +59,12 @@
     }
 
     function characterClicked(event) {
-        let characterId = event.detail;
-        const characterIndex = encounter.characters.findIndex(c => c.id == characterId);
-        const previousStatus = encounter.characters[characterIndex].selected;
-        encounter.characters.forEach(c => { c.selected = false; });
-        encounter.characters[characterIndex].selected = !previousStatus;
-        selectedCharacterIndex = encounter.characters[characterIndex].selected ? characterIndex : null;
-        mapEncounter();
+        const characterId = event.detail;
+        selectedCharacterId = (selectedCharacterId != characterId) ? characterId : null;
     }
 
     function renameCharacter() {
-        encounter.characters.forEach(c => { c.selected = false; });
-        selectedCharacterIndex = null;
+        selectedCharacterId = null;
         mapEncounter();
         updateServer();
     }
@@ -75,7 +72,7 @@
     function toggleCharacterTurn() {
         const prevStatus = encounter.characters[selectedCharacterIndex].turnStatus;
         encounter.characters[selectedCharacterIndex].turnStatus = prevStatus == "DONE" ? "READY" : "DONE";
-        selectedCharacterIndex = null;
+        selectedCharacterId = null;
         mapEncounter();
         updateServer();
     }
@@ -108,9 +105,7 @@
     }
 
     function updateServer() {
-        if (selectedCharacterIndex != null) { encounter.characters[selectedCharacterIndex].selected = false; }
         socket.emit('update', encounter);
-        if (selectedCharacterIndex != null) { encounter.characters[selectedCharacterIndex].selected = true; }
     }
 
     const headers = {
@@ -134,12 +129,12 @@
         <div class="encounter">
             <CharacterStats {...headers}/>
             {#each initiative as e}
-            <CharacterStats {...e} on:updateCharacter={updateCharacter} on:killCharacter={killCharacter} on:characterClicked={characterClicked} />
+            <CharacterStats {...e} selectedCharacterId={selectedCharacterId} on:updateCharacter={updateCharacter} on:killCharacter={killCharacter} on:characterClicked={characterClicked} />
             {/each}
         </div>
     </section>
 
-    {#if selectedCharacterIndex != null}
+    {#if selectedCharacterId != null}
     <section class='section-selector-controls'>
         <div class="character-adder">
             <div>Update Character</div>
