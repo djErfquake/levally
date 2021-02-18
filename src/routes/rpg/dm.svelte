@@ -1,13 +1,15 @@
 <script>
     import io from "socket.io-client";
+    import { encode, decode } from "js-base64";
     import Button from '../../components/rpg/Button.svelte';
     import FoWMap from '../../components/rpg/map/Map.svelte';
     import CharacterStats from "../../components/rpg/CharacterStats.svelte";
     import AddMonster from "../../components/rpg/AddMonster.svelte";
     import AddCharacter from "../../components/rpg/AddCharacter.svelte";
+    import CharacterSheet from "../../components/rpg/characterSheet/CharacterSheet.svelte";
     import monsters from '../../rpg/monsters.js';
-    
 
+    const dmSheet = {"spells":["all"]};
     let monsterValues = Object.values(monsters).map(function(m) { return { label: m.name, value: m, group: m.group} });
 
     let encounter = { characters: [] , turnId: 0 };
@@ -164,6 +166,10 @@
             <Button onClick={startRound} text={`Start New Round`} />
             <Button onClick={reset} text={`Reset`} />
         </div>
+    </section>
+
+    <section>
+        <CharacterSheet characterSheet={dmSheet}/>
     </section>
 </main>
 
