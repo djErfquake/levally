@@ -1,15 +1,17 @@
 <script>
     import TraitComponent from './Trait.svelte';
-    import traitHelper from '../../../rpg/traits.js';
+    import traits from '../../../rpg/traits.js';
+    import effectColors from '../../../rpg/effects.js';
     
     export let r;
     export let c;
     export let l;
+    export let isDM = false;
 
-    let traits = traitHelper.traits.filter(t => t.level <= l && (t.raceclass == r || t.raceclass == c));
+    let characterTraits = isDM ? traits : traits.filter(t => t.level <= l && (t.raceclass == r || t.raceclass == c));
 
-    traits = traits.map(t => {
-        const colors = traitHelper.effectColors[t.effect];
+    characterTraits = characterTraits.map(t => {
+        const colors = effectColors[t.effect];
         if (colors) { t.colors = colors; }
         return t;
     });
@@ -20,7 +22,7 @@
 <main>
     <div class="trait-header">Features/Traits</div>
     <div class="row">
-        {#each traits as trait}
+        {#each characterTraits as trait}
         <TraitComponent {...trait} />
         {/each}
     </div>

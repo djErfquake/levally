@@ -8,8 +8,7 @@
     import AddCharacter from "../../components/rpg/AddCharacter.svelte";
     import CharacterSheet from "../../components/rpg/characterSheet/CharacterSheet.svelte";
     import monsters from '../../rpg/monsters.js';
-
-    const dmSheet = {"spells":["all"]};
+    
     let monsterValues = Object.values(monsters).map(function(m) { return { label: m.name, value: m, group: m.group} });
     
     let encounter = { characters: [] , turnId: 0 };
@@ -164,7 +163,7 @@
     </section>
 
     <section>
-        <CharacterSheet characterSheet={dmSheet}/>
+        <CharacterSheet isDM={true}/>
     </section>
 </main>
 

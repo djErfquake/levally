@@ -2,7 +2,7 @@
     export let name;
     export let description;
     export let raceclass;
-    export let colors = [ '#2F4858' ];
+    export let colors = [ '#FDDC5C', '#2F4858' ];
 
     $: descriptionText = `<p>${description.replace(/\n{2,}/g, '</p><p>').replace(/\|ul\|/g, '<ul><li>').replace(/\|\/ul\|/g, '</li></ul>').replace(/\|li\|/g, '</li><li>')}</p>`;
 </script>

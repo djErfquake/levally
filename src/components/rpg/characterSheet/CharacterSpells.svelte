@@ -1,18 +1,20 @@
 <script>
     import SpellComponent from './Spell.svelte';
-    import spellHelper from '../../../rpg/spells.js';
+    import spells from '../../../rpg/spells.js';
+    import effectColors from '../../../rpg/effects.js';
     // console.log('spells', spells);
     
     export let characterSpells;
+    export let isDM = false;
     let spellsByLevel = [];
 
-    if (characterSpells.length > 0 && characterSpells[0] == "all") {
-        characterSpells = Object.keys(spellHelper.spells);
+    if (isDM) {
+        characterSpells = Object.keys(spells);
     }
 
     characterSpells = characterSpells.map(s => {
-        let spell = spellHelper.spells[s];
-        const colors = spellHelper.effectColors[spell.effect];
+        let spell = spells[s];
+        const colors = effectColors[spell.effect];
         if (colors) { spell.colors = colors; }
         return spell;
     });
