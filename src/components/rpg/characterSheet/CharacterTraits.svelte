@@ -10,6 +10,9 @@
 
     let characterTraits = isDM ? traits : traits.filter(t => t.level <= l && (t.raceclass == r || t.raceclass == c));
 
+    if (c == "Fighter-Protection") { characterTraits = characterTraits.concat(traits.filter(t => t.name == "Protection")); }
+    else if (c == "Fighter-Great_Weapon_Fighting") { characterTraits = characterTraits.concat(traits.filter(t => t.name == "Great Weapon Fighting")); }
+
     characterTraits = characterTraits.map(t => {
         const colors = effectColors[t.effect];
         if (colors) { t.colors = colors; }
