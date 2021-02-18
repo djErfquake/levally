@@ -61,7 +61,7 @@
     .card {
         position: relative;
 
-        width: 350px;
+        width: 18vw;
         min-height: 400px;
 
         background-color: rgb(240, 240, 240);
@@ -74,6 +74,24 @@
         flex-wrap: wrap;
         margin-bottom: 20px;
 
+    }
+
+    @media only screen and (max-width: 1366px) {
+        .card {
+            width: 25vw;
+        }
+    }
+
+    @media only screen and (max-width: 800px) {
+        .card {
+            width: 35vw;
+        }
+    }
+
+    @media only screen and (max-width: 450px) {
+        .card {
+            width: 85vw;
+        }
     }
 
     .title {

@@ -36,7 +36,15 @@
 
 
 <main>
-    {#each spellsByLevel as levelSpells}
+    {#each spellsByLevel as levelSpells, level}
+    <div class="spell-level-header">
+    {#if level == 0}
+        Cantrips
+    {:else}
+        Level {level} Spells
+    {/if}
+    </div>
+
     <div class="spell-level-row">
         {#each levelSpells as spell}
         <SpellComponent {...spell} />
@@ -58,6 +66,10 @@
         flex-wrap: wrap;
         width: 100%;
         padding-bottom: 30px;
+    }
+
+    .spell-level-header {
+        font-size: 3.5em;
     }
 
 </style>
