@@ -20,18 +20,10 @@
     });
 
     // sort spells by level
-    let spellLevel = 0;
-    let foundSpellAtLevel = true;
-    while (foundSpellAtLevel) {
-        const spellsAtLevel = characterSpells.filter(s => s.level == spellLevel);
-        if (spellsAtLevel.length > 0) {
-            spellsByLevel.push(spellsAtLevel);
-        }
-        else {
-            foundSpellAtLevel = false;
-        }
-
-        spellLevel++;
+    for (let i = 0; i <= 20; i++) {
+        let spellsAtLevel = [];
+        spellsAtLevel = spellsAtLevel.concat(characterSpells.filter(s => s.level == i));
+        spellsByLevel.push(spellsAtLevel);
     }
 
 </script>
@@ -39,19 +31,21 @@
 
 <main>
     {#each spellsByLevel as levelSpells, level}
-    <div class="spell-level-header">
-    {#if level == 0}
-        Cantrips
-    {:else}
-        Level {level} Spells
-    {/if}
-    </div>
+        {#if levelSpells.length > 0}
+            <div class="spell-level-header">
+            {#if level == 0}
+                Cantrips
+            {:else}
+                Level {level} Spells
+            {/if}
+            </div>
+        {/if}
 
-    <div class="spell-level-row">
-        {#each levelSpells as spell}
-        <SpellComponent {...spell} />
-        {/each}
-    </div>
+        <div class="spell-level-row">
+            {#each levelSpells as spell}
+            <SpellComponent {...spell} />
+            {/each}
+        </div>
     {/each}
 </main>
 

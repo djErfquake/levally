@@ -71,37 +71,39 @@
 
 
 <main>
-    <div>
-        Level
+    <div class='selector'>
+        <div class='selector-name'>Level</div>
         <Select items={levels} on:select={selectedLevel}></Select>
     </div>
-    <div>
-        Race
+    <div class='selector'>
+        <div class='selector-name'>Race</div>
         <Select items={dnd.races} on:select={selectedRace}></Select>
     </div>
-    <div>
-        Class
+    <div class='selector'>
+        <div class='selector-name'>Class</div>
         <Select items={dnd.classes} on:select={selectedClass}></Select>
     </div>
 
-    {#if c == "Fighter"}
-    <div>
-        Fighting Style
+    {#if c && c.includes("Fighter")}
+    <div class='selector fighting-style'>
+        <div class='selector-name'>Fighting Style</div>
         <Select items={dnd.fightingStyles} on:select={selectedFightingStyle}></Select>
     </div>
     {/if}
     
-    <div>
-        Spells
+    <div class='selector'>
+        <div class='selector-name'>Spells</div>
         <Select items={spellList} on:select={selectedSpell}></Select>
-        {#each selectedSpells as spell}
-            <Spell {...spell} on:removeSpell={removeSpell}></Spell>
-        {/each}
+        <div class="selected-spells">
+            {#each selectedSpells as spell}
+                <Spell {...spell} on:removeSpell={removeSpell}></Spell>
+            {/each}
+        </div>
     </div>
 
 
 
-    {characterJsonString}
+    <!-- {characterJsonString} -->
     {#if r && c && l && s.length > 0}
     <div>
         <a href="{characterUrl}">Your custom generated link!</a>
@@ -111,6 +113,21 @@
 
 
 <style>
-    
+    .selector {
+        margin: 20px;
+    }
+
+    .selector-name {
+        font-size: 1.2em;
+        font-weight: 600;
+    }
+
+    .fighting-style {
+        padding-left: 20px;
+    }
+
+    .selected-spells {
+        margin-top: 10px;
+    }
 
 </style>

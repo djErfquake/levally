@@ -1,6 +1,8 @@
 <script>
     const dispatch = createEventDispatcher();
     import { createEventDispatcher } from 'svelte';
+
+    import Button from '../Button.svelte';
     
 
     export let id;
@@ -14,12 +16,19 @@
 
 
 <main>
-    <button on:click={remove}>X</button> 
-    {name}
+    <Button onClick={remove} text={`X`} width={`3vw`}></Button>
+    <div class="spell-name">{name}</div>
 </main>
 
 
 <style>
-    
+    main {
+        display: flex;
+        align-items: center;
+    }
+
+    .spell-name {
+        font-size: 1.1em;
+    }
 
 </style>

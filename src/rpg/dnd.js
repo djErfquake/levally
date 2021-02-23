@@ -10,6 +10,7 @@ module.exports = {
     ],
     classes: [
         'Bard',
+        'Cleric',
         'Druid',
         'Fighter',
         'Rogue',
