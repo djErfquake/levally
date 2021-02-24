@@ -16,7 +16,7 @@
 
 
 <main>
-    <Button onClick={remove} text={`X`} width={`3vw`}></Button>
+    <Button onClick={remove} text={`✖`}></Button>
     <div class="spell-name">{name}</div>
 </main>
 
@@ -29,6 +29,7 @@
 
     .spell-name {
         font-size: 1.1em;
+        margin-left: 5px;
     }
 
 </style>

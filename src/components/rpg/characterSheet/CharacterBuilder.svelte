@@ -73,27 +73,27 @@
 <main>
     <div class='selector'>
         <div class='selector-name'>Level</div>
-        <Select items={levels} on:select={selectedLevel}></Select>
+        <Select items={levels} on:select={selectedLevel} isSeachable={false}></Select>
     </div>
     <div class='selector'>
         <div class='selector-name'>Race</div>
-        <Select items={dnd.races} on:select={selectedRace}></Select>
+        <Select items={dnd.races} on:select={selectedRace} isSeachable={false}></Select>
     </div>
     <div class='selector'>
         <div class='selector-name'>Class</div>
-        <Select items={dnd.classes} on:select={selectedClass}></Select>
+        <Select items={dnd.classes} on:select={selectedClass} isSeachable={false}></Select>
     </div>
 
     {#if c && c.includes("Fighter")}
     <div class='selector fighting-style'>
         <div class='selector-name'>Fighting Style</div>
-        <Select items={dnd.fightingStyles} on:select={selectedFightingStyle}></Select>
+        <Select items={dnd.fightingStyles} on:select={selectedFightingStyle} isSeachable={false}></Select>
     </div>
     {/if}
     
     <div class='selector'>
         <div class='selector-name'>Spells</div>
-        <Select items={spellList} on:select={selectedSpell}></Select>
+        <Select items={spellList} on:select={selectedSpell} isSeachable={false}></Select>
         <div class="selected-spells">
             {#each selectedSpells as spell}
                 <Spell {...spell} on:removeSpell={removeSpell}></Spell>
@@ -104,7 +104,7 @@
 
 
     <!-- {characterJsonString} -->
-    {#if r && c && l && s.length > 0}
+    {#if r && c && l}
     <div>
         <a href="{characterUrl}">Your custom generated link!</a>
     </div>
