@@ -1,14 +1,44 @@
 <script>
+    import { onMount } from 'svelte';
+
     export let name;
     export let description;
     export let raceclass;
     export let colors = [ '#FDDC5C', '#2F4858' ];
+    
+    export let size = 1;
+    let doBigCards = true;
+    let cardWidth = null;
+
+    onMount(async () => {
+        doBigCards = screen.width >= 1366;
+        if (doBigCards) {
+            if (screen.width > 800)
+            {
+                let desiredWidth = screen.width <= 1366 ? 25 : 18;
+                cardWidth = `${(size * desiredWidth) + ((size - 1) * 2)}vw`;
+            }
+            else {
+                doBigCards = false;
+            }
+        }
+        console.log(cardWidth);
+    });
 
     $: descriptionText = `<p>${description.replace(/\n{2,}/g, '</p><p>').replace(/\|ul\|/g, '<ul><li>').replace(/\|\/ul\|/g, '</li></ul>').replace(/\|li\|/g, '</li><li>')}</p>`;
 </script>
 
 
 <main>
+    {#if doBigCards}
+    <div class="card" style="width:{cardWidth};">
+        <div class="title" style="background-color: {colors[0]};">
+            <div class="name">{name}</div>
+        </div>
+        <div class="description">{@html descriptionText}</div>
+        <div class="stats" style="background-color: {colors[1]};">{raceclass}</div>
+    </div>
+    {:else}
     <div class="card">
         <div class="title" style="background-color: {colors[0]};">
             <div class="name">{name}</div>
@@ -16,6 +46,7 @@
         <div class="description">{@html descriptionText}</div>
         <div class="stats" style="background-color: {colors[1]};">{raceclass}</div>
     </div>
+    {/if}
 </main>
 
 

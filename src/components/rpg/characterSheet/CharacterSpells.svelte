@@ -39,13 +39,12 @@
                 Level {level} Spells
             {/if}
             </div>
+            <div class="spell-level-row">
+                {#each levelSpells as spell}
+                <SpellComponent {...spell} />
+                {/each}
+            </div>
         {/if}
-
-        <div class="spell-level-row">
-            {#each levelSpells as spell}
-            <SpellComponent {...spell} />
-            {/each}
-        </div>
     {/each}
 </main>
 

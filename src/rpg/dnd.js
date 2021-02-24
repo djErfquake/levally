@@ -20,5 +20,33 @@ module.exports = {
     fightingStyles: [
         'Great Weapon Fighting',
         'Protection'
+    ],
+    druidCircles: [
+        'Land',
+        'Moon'
+    ],
+    eldritchInvocations: [
+        'Agonizing Blast',
+        'Repelling Blast'
     ]
+
 }
+
+/*
+EXAMPLE CHARACTER JSON
+======================
+{
+    "l": 1,
+    "r": "Elf",
+    "c": "Druid",
+    "s": [2,3,1,4,5,6],
+    "*": {"dc":"Moon"}
+
+}
+
+
+
+
+
+
+*/
