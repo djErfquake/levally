@@ -15,7 +15,7 @@
 
     let selectedSpells = [];
 
-    let characterJson = {}; 
+    let characterJson = {s:[]}; 
     $: characterJsonString = JSON.stringify(characterJson);
     // $: characterJsonString = encode(JSON.stringify(characterJson));
     $: characterUrl = `https://levally.herokuapp.com/rpg/c/${encode(JSON.stringify(characterJson))}`;
