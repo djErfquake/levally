@@ -94,12 +94,12 @@
     }
 
     input {
-        border: 3px solid #475F94;
+        border: 3px solid #0f0e17;
         border-radius: 6px;
     }
 
     input:focus {
-        border-color: #475F94;
+        border-color: #0f0e17;
     }
 
     .number-input {

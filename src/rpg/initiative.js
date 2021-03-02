@@ -9,7 +9,8 @@ const turnStatuses = { READY: "READY", ACTIVE: "ACTIVE", DONE: "DONE" };
 
 let encounter = {
     characters: [],
-    turnId: 0   
+    turnId: 0,
+    timeSpent: 0
 };
 
 

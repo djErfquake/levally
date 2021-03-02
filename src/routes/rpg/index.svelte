@@ -3,10 +3,13 @@
     import CharacterStats from "../../components/rpg/CharacterStats.svelte";
     import AddCharacter from "../../components/rpg/AddCharacter.svelte";
     import Button from '../../components/rpg/Button.svelte';
+    import TimeBar from "../../components/rpg/TimeBar.svelte";
 
-    let encounter = { characters: [] , turnId: 0 };
+    let encounter = { characters: [] , turnId: 0, timeSpent: 0 };
     let initiative = [];
     let characterId = null;
+    const NUM_MINUTES = 24 * 60;
+    $: timePercentage = encounter.timeSpent / NUM_MINUTES;
 
     const socket = io();
     socket.emit('initRPG');
@@ -86,6 +89,10 @@
         {/each}
     </div>
 
+    <section class='section-time-bar'>
+        <TimeBar percentage={timePercentage} />
+    </section>
+
     <div class="character-adder">
         <AddCharacter on:addCharacter={addCharacter} on:updateCharacter={updateCharacter} dmView={false}/>
     </div>
@@ -109,7 +116,7 @@
         margin: 30px;
         border-style: solid;
         border-width: 3px;
-        border-color: #475F94;
+        border-color: #0f0e17;
     }
 
     .encounter:last-child {

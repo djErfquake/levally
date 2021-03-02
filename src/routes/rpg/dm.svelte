@@ -2,20 +2,23 @@
     import io from "socket.io-client";
     import { encode, decode } from "js-base64";
     import Button from '../../components/rpg/Button.svelte';
-    import FoWMap from '../../components/rpg/map/Map.svelte';
     import CharacterStats from "../../components/rpg/CharacterStats.svelte";
     import AddMonster from "../../components/rpg/AddMonster.svelte";
     import AddCharacter from "../../components/rpg/AddCharacter.svelte";
     import CharacterSheet from "../../components/rpg/characterSheet/CharacterSheet.svelte";
+    import TimeBar from "../../components/rpg/TimeBar.svelte";
     import monsters from '../../rpg/monsters.js';
     
     let monsterValues = Object.values(monsters).map(function(m) { return { label: m.name, value: m, group: m.group} });
     
-    let encounter = { characters: [] , turnId: 0 };
+    let encounter = { characters: [] , turnId: 0, timeSpent: 0 };
     let initiative = [];
 
     let selectedCharacterId = null;
     $: selectedCharacterIndex = selectedCharacterId ? encounter.characters.findIndex(c => c.id == selectedCharacterId) : null;
+
+    const NUM_MINUTES = 24 * 60;
+    $: timePercentage = encounter.timeSpent / NUM_MINUTES;
 
     const socket = io();
     socket.emit('initRPG');
@@ -82,6 +85,12 @@
         updateServer();
     }
 
+    function addTenMinutes() { encounter.timeSpent += 10; if (encounter.timeSpent > NUM_MINUTES) { encounter.timeSpent = NUM_MINUTES;} updateServer();}
+    function subtractTenMinutes() { encounter.timeSpent -= 10; if (encounter.timeSpent < 0) { encounter.timeSpent = 0;} updateServer();}
+    function addSixtyMinutes() { encounter.timeSpent += 60; if (encounter.timeSpent > NUM_MINUTES) { encounter.timeSpent = NUM_MINUTES;} updateServer();}
+    function subtractSixtyMinutes() { encounter.timeSpent -= 60; if (encounter.timeSpent < 0) { encounter.timeSpent = 0;} updateServer();}
+    function resetDay() { encounter.timeSpent = 0; updateServer();}
+
     function reset() {
         encounter.characters.length = 0;
         encounter.turnIndex = 0;
@@ -120,9 +129,6 @@
 
 
 <main>
-    <!-- <section class='fog-of-war-map'>
-        <FoWMap/>
-    </section> -->
 
     <section class='section-encounter'>
         <div class="encounter">
@@ -132,6 +138,19 @@
             {/each}
         </div>
     </section>
+
+    <section class='section-time-bar'>
+        <TimeBar percentage={timePercentage} />
+        <div class="time-bar-buttons">
+            <Button onClick={addTenMinutes} text={`+10`} />
+            <Button onClick={subtractTenMinutes} text={`-10`} />
+            <Button onClick={addSixtyMinutes} text={`+60`} />
+            <Button onClick={subtractSixtyMinutes} text={`-60`} />
+            <Button onClick={resetDay} text={`Reset Day`} />
+        </div>
+    </section>
+    
+
 
     {#if selectedCharacterId != null}
     <section class='section-selector-controls'>
@@ -171,7 +190,8 @@
 <style>
     main {
         /* color: #333; */
-        color: #343837;
+        background-color: #fffffe;
+        color: #0f0e17;
         width: 85vw;
         margin: auto;
     }
@@ -180,11 +200,18 @@
         margin: 30px;
         border-style: solid;
         border-width: 3px;
-        border-color: #475F94;
+        border-color: #0f0e17;
     }
 
     .encounter:last-child {
         margin-bottom: 50px;
+    }
+
+    .time-bar-buttons {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-evenly;
+        margin-top: 8px;
     }
 
     .character-adder {
@@ -194,7 +221,7 @@
     }
 
     input {
-        border: 3px solid #475F94;
+        border: 3px solid #0f0e17;
         border-radius: 6px;
     }
 </style>

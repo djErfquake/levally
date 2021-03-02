@@ -56,7 +56,7 @@
     .header {
         border-style: solid;
         border-width: 2px;
-        background-color: #475F94;
+        background-color: #0f0e17;
         color: white;
         font-size: 1.5em;
         font-weight: 600;
@@ -70,12 +70,12 @@
     }
 
     .selected {
-        background-color: #FDDC5C;
+        background-color: #f25f4c;
     }
 
     .turn-done {
         color: white;
-        background-color: #FA4224;
+        background-color: #ff8906;
     }
 
     .hp {

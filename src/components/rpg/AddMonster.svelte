@@ -70,11 +70,11 @@
 
     .select {
         width: 30vw;
-        --border: 3px solid #475F94;
+        --border: 3px solid #0f0e17;
 		--borderRadius: 10px;
-		--placeholderColor: #475F94;
-        --itemIsActiveBG: #475F94;
-        --borderFocusColor: #475F94;
+		--placeholderColor: #0f0e17;
+        --itemIsActiveBG: #0f0e17;
+        --borderFocusColor: #0f0e17;
     }
 
     .stat-section {
@@ -82,7 +82,7 @@
     }
 
     input {
-        border: 3px solid #475F94;
+        border: 3px solid #0f0e17;
         border-radius: 6px;
     }
 </style>

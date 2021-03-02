@@ -7,11 +7,14 @@
     import AddCharacter from "../../components/rpg/AddCharacter.svelte";
     import CharacterSheet from "../../components/rpg/characterSheet/CharacterSheet.svelte";
     import Button from '../../components/rpg/Button.svelte';
+    import TimeBar from "../../components/rpg/TimeBar.svelte";
 
-    let encounter = { characters: [] , turnId: 0 };
+    let encounter = { characters: [] , turnId: 0, timeSpent: 0 };
     let initiative = [];
     let characterId = null;
     let characterSheet = null;
+    const NUM_MINUTES = 24 * 60;
+    let timePercentage = encounter.timeSpent / NUM_MINUTES;
 
     export async function preload(page, session) {
 		const { slug } = page.params;
@@ -58,6 +61,7 @@
     }
 
     function mapEncounter() {
+        timePercentage = encounter.timeSpent / NUM_MINUTES;
         for (let i = 0; i < encounter.characters.length; i++) {
             let character = encounter.characters[i];
             if (character.turnStatus != "DONE") {
@@ -97,6 +101,10 @@
         {/each}
     </div>
 
+    <section class='section-time-bar'>
+        <TimeBar percentage={timePercentage} />
+    </section>
+
     <div class="character-adder">
         <AddCharacter on:addCharacter={addCharacter} on:updateCharacter={updateCharacter} dmView={false}/>
     </div>
@@ -122,7 +130,7 @@
         margin: 30px;
         border-style: solid;
         border-width: 3px;
-        border-color: #475F94;
+        border-color: #0f0e17;
     }
 
     .encounter:last-child {

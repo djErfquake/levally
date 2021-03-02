@@ -4,7 +4,7 @@
         https://www.shapedivider.app/
     */
 
-    import RoleHeader from '../../components/RoleHeader.svelte';
+    // import RoleHeader from '../../components/RoleHeader.svelte';
 
     export let role;
 
@@ -12,7 +12,7 @@
 
 
 <main>
-    <RoleHeader role={role}/>
+    <!-- <RoleHeader role={role}/> -->
     <section class="description">{role.power}</section>
 </main>
 

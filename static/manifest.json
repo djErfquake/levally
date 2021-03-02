@@ -1,6 +1,6 @@
 {
-	"background_color": "#ffffff",
-	"theme_color": "#333333",
+	"background_color": "#fffffe",
+	"theme_color": "#0f0e17",
 	"name": "LeVally App",
 	"short_name": "LeVally",
 	"display": "minimal-ui",

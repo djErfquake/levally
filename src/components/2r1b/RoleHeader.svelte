@@ -3,7 +3,7 @@
         https://flatuicolors.com/palette/ca
         https://www.shapedivider.app/
     */
-    import TimeBar from './TimeBar.svelte';
+    // import TimeBar from './TimeBar.svelte';
 
     export let role;
 
