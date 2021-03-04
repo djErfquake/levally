@@ -108,7 +108,7 @@
         }
         initiative = encounter.characters.map(c => {
             return { character: c, dmView: true }
-        });
+        }).sort((a, b) => b.character.initiative - a.character.initiative);
         // console.log('encounter', encounter);
     }
 
