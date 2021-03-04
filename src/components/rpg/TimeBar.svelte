@@ -7,11 +7,11 @@
         (percentage - 0.75) / 0.25,
     ];
     $: timePercentages = [
-        (percentages[0] > 1 ? 1 : percentages[0]) * 25,
-        (percentages[1] > 1 ? 1 : percentages[1]) * 25,
-        (percentages[2] > 1 ? 1 : percentages[2]) * 25,
-        (percentages[3] > 1 ? 1 : percentages[3]) * 25,
-    ]
+        (percentages[0] > 1 ? 1 : percentages[0] < 0 ? 0 : percentages[0]) * 25,
+        (percentages[1] > 1 ? 1 : percentages[1] < 0 ? 0 : percentages[1]) * 25,
+        (percentages[2] > 1 ? 1 : percentages[2] < 0 ? 0 : percentages[2]) * 25,
+        (percentages[3] > 1 ? 1 : percentages[3] < 0 ? 0 : percentages[3]) * 25,
+    ];
 </script>
 
 
