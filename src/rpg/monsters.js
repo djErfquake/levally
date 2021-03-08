@@ -13,6 +13,7 @@ module.exports = {
     // monster
     gazer: { name: "Gazer", hp: "3d4+6", dex: 3, group: 'Monster', link: "https://5e.tools/bestiary.html#gazer_vgm" },
     goblin: { name: "Goblin", hp: "2d6", dex: 2, group: 'Monster', link: "https://5e.tools/bestiary.html#goblin_mm" },
+    bugbear: { name: "Bugbear", hp: "5d8+5", dex: 2, group: 'Monster', link: "https://5e.tools/bestiary.html#bugbear_mm" },
     grayOoze: { name: "Gray Ooze", hp: "3d8+9", dex: -2, group: 'Monster', link: "https://5e.tools/bestiary.html#gray%20ooze_mm" },
     intellectDevourer: { name: "Intellect Devourer", hp: "6d4+5", dex: 2, group: 'Monster', link: "https://5e.tools/bestiary.html#intellect%20devourer_mm" },
     kenku: { name: "Kenku", hp: "3d8", dex: 3, group: 'Monster', link: "https://5e.tools/bestiary.html#kenku_mm" },
@@ -31,11 +32,13 @@ module.exports = {
     // beast
     rat: { name: "Rat", hp: "1d4-1", dex: 0, group: 'Beast', link: "https://5e.tools/bestiary.html#rat_mm" },
     stirges: { name: "Stirge", hp: "1d4", dex: 3, group: 'Beast', link: "https://5e.tools/bestiary.html#stirge_mm" },
+    wolf: { name: "Wolf", hp: "2d8+2", dex: 2, group: 'Beast', link: "https://5e.tools/bestiary.html#wolf_mm" },
 
     // construct
     animatedSword: { name: "AnimatedSword", hp: "5d6", dex: 2, group: 'Construct', link: "https://5e.tools/bestiary.html#flying%20sword_mm" },
 
     // characters
+    sildarHallwinter: { name: "Sildar Hallwinter", hp: "5d8+5", dex: 0, group: 'Character', link: "https://5e.tools/bestiary.html#sildar%20hallwinter_lmop" },
     victoroCassalanter: { name: "Victoro Cassalanter", hp: "15d8+30", dex: 1, group: 'Character', link: "https://5e.tools/bestiary.html#victoro%20cassalanter_wdh" },
     ammaliaCassalanter: { name: "Ammalia Cassalanter", hp: "10d8", dex: 2, group: 'Character', link: "https://5e.tools/bestiary.html#ammalia%20cassalanter_wdh" },
     durnan: { name: "Durnan", hp: "17d8+68", dex: 2, group: 'Character', link: "https://5e.tools/bestiary.html#durnan_wdh" },
