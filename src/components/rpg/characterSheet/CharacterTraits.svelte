@@ -12,6 +12,9 @@
     export let isDM = false;
     
     let traitNames = [r, c];
+
+    // testing
+    if (isDM) { sub = {}; }
     
     if (sub.fightingStyle) { traitNames.push(sub.fightingStyle); }
     

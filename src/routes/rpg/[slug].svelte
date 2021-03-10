@@ -9,7 +9,7 @@
     import Button from '../../components/rpg/Button.svelte';
     import TimeBar from "../../components/rpg/TimeBar.svelte";
 
-    let encounter = { characters: [] , turnId: 0, timeSpent: 0 };
+    let encounter = { characters: [] , turnId: 0, timeSpent: 0, options: { hideTimeBar: false } };
     let initiative = [];
     let characterId = null;
     let characterSheet = null;
@@ -101,9 +101,11 @@
         {/each}
     </div>
 
+    {#if !encounter.options.hideTimeBar}
     <section class='section-time-bar'>
         <TimeBar percentage={timePercentage} />
     </section>
+    {/if}
 
     <div class="character-adder">
         <AddCharacter on:addCharacter={addCharacter} on:updateCharacter={updateCharacter} dmView={false}/>

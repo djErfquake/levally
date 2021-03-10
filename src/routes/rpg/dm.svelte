@@ -11,7 +11,7 @@
     
     let monsterValues = Object.values(monsters).map(function(m) { return { label: m.name, value: m, group: m.group} });
     
-    let encounter = { characters: [] , turnId: 0, timeSpent: 0 };
+    let encounter = { characters: [] , turnId: 0, timeSpent: 0, options: { hideTimeBar: false } };
     let initiative = [];
 
     let selectedCharacterId = null;
@@ -85,6 +85,7 @@
         updateServer();
     }
 
+    function toggleTimeBar() { encounter.options.hideTimeBar = !encounter.options.hideTimeBar; updateServer(); }
     function addTenMinutes() { encounter.timeSpent += 10; if (encounter.timeSpent > NUM_MINUTES) { encounter.timeSpent = NUM_MINUTES;} updateServer();}
     function subtractTenMinutes() { encounter.timeSpent -= 10; if (encounter.timeSpent < 0) { encounter.timeSpent = 0;} updateServer();}
     function addSixtyMinutes() { encounter.timeSpent += 60; if (encounter.timeSpent > NUM_MINUTES) { encounter.timeSpent = NUM_MINUTES;} updateServer();}
@@ -147,6 +148,7 @@
             <Button onClick={addSixtyMinutes} text={`+60`} />
             <Button onClick={subtractSixtyMinutes} text={`-60`} />
             <Button onClick={resetDay} text={`Reset Day`} />
+            <Button onClick={toggleTimeBar} text={`Toggle Time Bar Visibility`} />
         </div>
     </section>
     

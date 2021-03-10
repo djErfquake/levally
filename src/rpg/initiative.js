@@ -10,7 +10,10 @@ const turnStatuses = { READY: "READY", ACTIVE: "ACTIVE", DONE: "DONE" };
 let encounter = {
     characters: [],
     turnId: 0,
-    timeSpent: 0
+    timeSpent: 0,
+    options: {
+        hideTimeBar: false
+    }
 };
 
 
