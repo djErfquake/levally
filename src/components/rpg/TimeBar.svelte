@@ -56,6 +56,7 @@
 
     main {
         width: 100%;
+        margin-top: 15px;
     }
 
     .bar-container {

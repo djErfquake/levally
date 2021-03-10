@@ -82,18 +82,18 @@
 
 
 <main>
+    {#if !encounter.options.hideTimeBar}
+    <section class='section-time-bar'>
+        <TimeBar percentage={timePercentage} />
+    </section>
+    {/if}
+
     <div class="encounter">
         <CharacterStats {...headers} />
         {#each initiative as e}
         <CharacterStats {...e} />
         {/each}
     </div>
-
-    {#if !encounter.options.hideTimeBar}
-    <section class='section-time-bar'>
-        <TimeBar percentage={timePercentage} />
-    </section>
-    {/if}
 
     <div class="character-adder">
         <AddCharacter on:addCharacter={addCharacter} on:updateCharacter={updateCharacter} dmView={false}/>
@@ -115,7 +115,8 @@
     }
 
     .encounter {
-        margin: 30px;
+        margin-top: 15px;
+        margin-bottom: 30px;
         border-style: solid;
         border-width: 3px;
         border-color: #0f0e17;

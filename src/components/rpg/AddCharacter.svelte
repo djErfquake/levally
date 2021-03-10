@@ -94,6 +94,7 @@
     }
 
     input {
+        height: 30px;
         border: 3px solid #0f0e17;
         border-radius: 6px;
     }
