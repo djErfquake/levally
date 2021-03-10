@@ -72,8 +72,8 @@ module.exports = [
         name: "Breath Weapon",
         effect: "Dragon",
         level: 1,
-        raceclass: "Dragonborn-Gold",
-        description: "You can use your action to exhale destructive energy. Gold Dragonborn deal a 15 ft cone (Dex save) of Fire damage.\n\nWhen you use your breath weapon, each creature in the area of the exhalation must make a saving throw. The DC for this saving throw equals 8 + your Constitution modifier + your proficiency bonus. A creature takes 2d6 damage on a failed save, and half as much damage on a successful one. The damage increases to 3d6 at 6th level, 4d6 at 11th level, and 5d6 at 16th level.\n\nAfter you use your breath weapon, you can't use it again until you complete a short or long rest.\n\nIn addition, you have resistance to the damage type associated with your draconic ancestry."
+        raceclass: "Dragonborn",
+        description: "You can use your action to exhale destructive energy. |COLOR| Dragonborn deal a |DAMAGE| of |DAMAGE_TYPE| damage.\n\nWhen you use your breath weapon, each creature in the area of the exhalation must make a saving throw. The DC for this saving throw equals 8 + your proficiency bonus + the save bonus. A creature takes 2d6 damage on a failed save, and half as much damage on a successful one. The damage increases to 3d6 at 6th level, 4d6 at 11th level, and 5d6 at 16th level.\n\nAfter you use your breath weapon, you can't use it again until you complete a short or long rest.\n\nIn addition, you have resistance to the damage type associated with your draconic ancestry."
     },
 
     // gnome

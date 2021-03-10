@@ -24,8 +24,6 @@
         }
         console.log(cardWidth);
     });
-
-    $: descriptionText = `<p>${description.replace(/\n{2,}/g, '</p><p>').replace(/\|ul\|/g, '<ul><li>').replace(/\|\/ul\|/g, '</li></ul>').replace(/\|li\|/g, '</li><li>')}</p>`;
 </script>
 
 
@@ -35,7 +33,7 @@
         <div class="title" style="background-color: {colors[0]};">
             <div class="name">{name}</div>
         </div>
-        <div class="description">{@html descriptionText}</div>
+        <div class="description">{@html description}</div>
         <div class="stats" style="background-color: {colors[1]};">{raceclass}</div>
     </div>
     {:else}
@@ -43,7 +41,7 @@
         <div class="title" style="background-color: {colors[0]};">
             <div class="name">{name}</div>
         </div>
-        <div class="description">{@html descriptionText}</div>
+        <div class="description">{@html description}</div>
         <div class="stats" style="background-color: {colors[1]};">{raceclass}</div>
     </div>
     {/if}

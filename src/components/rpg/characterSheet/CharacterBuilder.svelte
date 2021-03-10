@@ -12,10 +12,12 @@
 
     let r, c, l;
     let s = [];
+    let sub = {};
 
     let selectedSpells = [];
+    const draconicAncestries = Object.values(dnd.draconicAncestries).map(function(da) { return { label: da.dragon, value: da} });
 
-    let characterJson = {s:[]}; 
+    let characterJson = {s:[],sub:{}}; 
     $: characterJsonString = JSON.stringify(characterJson);
     // $: characterJsonString = encode(JSON.stringify(characterJson));
     $: characterUrl = `https://levally.herokuapp.com/rpg/c/${encode(JSON.stringify(characterJson))}`;
@@ -29,16 +31,15 @@
     function selectedRace(event) {
         r = event.detail.value;
         characterJson.r = r;
+
+        if (r != 'Dragonborn') { delete sub.draconicAncestry; }
     }
 
     function selectedClass(event) {
         c = event.detail.value;
         characterJson.c = c;
-    }
 
-    function selectedFightingStyle(event) {
-        c = `Fighter-${event.detail.value}`;
-        characterJson.c = c;
+        if (c != 'Fighter') { delete sub.fightingStyle; }
     }
 
     function selectedSpell(event) {
@@ -67,6 +68,18 @@
         characterJson.s = s;
     }
 
+
+    // SUB TYPES
+    function selectedFightingStyle(event) {
+        sub.fightingStyle = event.detail.value;
+        characterJson.sub = sub;
+    }
+
+    function selectedDraconicAncestry(event) {
+        sub.draconicAncestry = event.detail.value.dragon;
+        characterJson.sub = sub;
+    }
+
 </script>
 
 
@@ -79,13 +92,21 @@
         <div class='selector-name'>Race</div>
         <Select items={dnd.races} on:select={selectedRace} isSeachable={false}></Select>
     </div>
+    {#if r && r.includes("Dragonborn")}
+    <div class='selector sub-type'>
+        <div class='selector-name'>Draconic Ancestry</div>
+        <Select items={draconicAncestries} on:select={selectedDraconicAncestry} isSeachable={false}></Select>
+    </div>
+    {/if}
+
+
     <div class='selector'>
         <div class='selector-name'>Class</div>
         <Select items={dnd.classes} on:select={selectedClass} isSeachable={false}></Select>
     </div>
 
     {#if c && c.includes("Fighter")}
-    <div class='selector fighting-style'>
+    <div class='selector sub-type'>
         <div class='selector-name'>Fighting Style</div>
         <Select items={dnd.fightingStyles} on:select={selectedFightingStyle} isSeachable={false}></Select>
     </div>
@@ -103,7 +124,7 @@
 
 
 
-    <!-- {characterJsonString} -->
+    {characterJsonString}
     {#if r && c && l}
     <div>
         <a href="{characterUrl}">Your custom generated link!</a>
@@ -122,7 +143,7 @@
         font-weight: 600;
     }
 
-    .fighting-style {
+    .sub-type {
         padding-left: 20px;
     }
 

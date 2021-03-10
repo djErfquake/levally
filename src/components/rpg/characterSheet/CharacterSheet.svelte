@@ -9,12 +9,15 @@
     /*
         examples
 
-        carolyn eyJyIjoiRWxmIiwiYyI6IkRydWlkIiwibCI6MSwicyI6WzIsMywxLDQsNSw2XX0
-        {"r":"Elf","c":"Druid","l":1,"s":[2,3,1,4,5,6]}
+        carolyn eyJzIjpbMiwzLDQsNSwxLDZdLCJsIjoxLCJyIjoiRWxmIiwiYyI6IkRydWlkIn0=
+        dom     eyJzIjpbXSwibCI6MSwiciI6IkhhbGYtT3JjIiwiYyI6IkZpZ2h0ZXItUHJvdGVjdGlvbiJ9
+        grace   eyJzIjpbMjAsMTEsMTIsMjEsMjIsMjMsMjQsMjUsNV0sImwiOjEsInIiOiJEcmFnb25ib3JuLUdvbGQiLCJjIjoiV2l6YXJkIn0
+        rose    eyJzIjpbNyw4LDksMSwxMF0sImwiOjEsInIiOiJEd2FyZiIsImMiOiJDbGVyaWMifQ
+        colin   eyJzIjpbXSwibCI6MSwiciI6IkhhbGZsaW5nIiwiYyI6IlJvZ3VlIn0
+        am      eyJzIjpbMTEsMTIsMTMsMjMsMTQsMTUsNF0sImwiOjEsInIiOiJHbm9tZSIsImMiOiJCYXJkIn0=
 
-        dom eyJyIjoiSGFsZi1PcmMiLCJjIjoiRmlnaHRlci1Qcm90ZWN0b3IiLCJsIjoxLCJzIjpbXX0
-        {"r":"Half-Orc","c":"Fighter-Protector","l":1,"s":[]}
 
+        {"s":[20,11,12,21,22,23,24,25,5],"l":1,"r":"Dragonborn","c":"Wizard","sub":["draconicAncestry":"Gold"}]}
 
 
         shane eyJyIjoiSHVtYW4iLCJjIjoiQmFyZCIsImwiOjIsInMiOlsxMSwxNiwxLDE3LDE4LDE0LDE5XX0
@@ -41,6 +44,9 @@
 
             https://www.base64encode.org/
             https://mycolor.space/?hex=%2300C7A5&sub=1
+
+            https://emn178.github.io/online-tools/sha256.html
+            https://github.com/brix/crypto-js
     */
 
 </script>
@@ -49,7 +55,7 @@
 <main>
     <!-- {@debug characterSheet} -->
     {#if characterSheet != null}
-        <Traits r={characterSheet.r} c={characterSheet.c} l={characterSheet.l} />
+        <Traits r={characterSheet.r} c={characterSheet.c} l={characterSheet.l} sub={characterSheet.sub}/>
         <Spells characterSpells={characterSheet.s} />
     {:else if isDM}
     <Traits isDM={true} />
