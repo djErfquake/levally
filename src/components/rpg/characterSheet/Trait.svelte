@@ -22,7 +22,7 @@
                 doBigCards = false;
             }
         }
-        console.log(cardWidth);
+        // console.log(cardWidth);
     });
 </script>
 

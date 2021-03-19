@@ -8,8 +8,8 @@
     import CharacterSheet from "../../components/rpg/characterSheet/CharacterSheet.svelte";
     import TimeBar from "../../components/rpg/TimeBar.svelte";
     import monsters from '../../rpg/monsters.js';
-    
-    let monsterValues = Object.values(monsters).map(function(m) { return { label: m.name, value: m, group: m.group} });
+    // console.log('monsters', Dnd.data.monsters.find(m => m.name == 'Aboleth'));
+    let monsterValues = monsters.map(function(m) { return { label: m.name, value: m, group: m.type} });
     
     let encounter = { characters: [] , turnId: 0, timeSpent: 0, options: { hideTimeBar: false } };
     let initiative = [];
