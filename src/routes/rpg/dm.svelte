@@ -8,8 +8,14 @@
     import CharacterSheet from "../../components/rpg/characterSheet/CharacterSheet.svelte";
     import TimeBar from "../../components/rpg/TimeBar.svelte";
     import monsters from '../../rpg/monsters.js';
+
+    import dnd from 'dnd5-srd';
+    const dndMonsters = dnd.data.monsters;
+    const aboleth = dndMonsters.find(monster => monster.name === 'Aboleth');
+    console.log(aboleth);
+    // let monsterValues = monsters.map(function(m) { return { label: m.name, value: m, group: m.type} });
+
     // console.log('monsters', Dnd.data.monsters.find(m => m.name == 'Aboleth'));
-    let monsterValues = monsters.map(function(m) { return { label: m.name, value: m, group: m.type} });
     
     let encounter = { characters: [] , turnId: 0, timeSpent: 0, options: { hideTimeBar: false } };
     let initiative = [];
@@ -168,7 +174,7 @@
 
     <section class='section-adder'>
         <div class="character-adder">
-            <AddMonster monsters={monsterValues} on:addCharacter={addCharacter} />
+            <!-- <AddMonster monsters={monsterValues} on:addCharacter={addCharacter} /> -->
         </div>
 
         <div class="character-adder">
