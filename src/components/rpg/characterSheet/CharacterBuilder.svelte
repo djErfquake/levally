@@ -2,12 +2,13 @@
     import { encode } from "js-base64";
     import Select from 'svelte-select'; // https://github.com/rob-balfre/svelte-select
     import dnd from '../../../rpg/dnd.js';
-    import spells from '../../../rpg/spells.js';
+    import dndSrd from 'dnd5-srd';
     import Spell from './BuilderSpell.svelte';
-    
+
+    const spells = dndSrd.data.spells;
     const levels = [...Array(20).keys()].map(i => i + 1);
-    const spellList = Object.entries(spells)
-        .map(([k, v]) => {return { label: v.name, value: k}})
+    const spellList = spells
+        .map(s => {return { label: s.name, value: s}})
         .sort((a, b) => a.label.localeCompare(b.label));
 
     let r, c, l;
@@ -43,12 +44,12 @@
     }
 
     function selectedSpell(event) {
-        const spellId = event.detail.value;
+        const spell = event.detail.value;
         selectedSpells.push({
-            id: spellId,
-            name: spells[spellId].name
+            id: spell.index,
+            name: spell.name
         });
-        s.push(parseInt(spellId));
+        s.push(parseInt(spell.index));
         console.log(selectedSpells);
 
         selectedSpells = selectedSpells;

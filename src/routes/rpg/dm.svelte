@@ -12,7 +12,7 @@
     import dnd from 'dnd5-srd';
     const dndMonsters = dnd.data.monsters;
     const aboleth = dndMonsters.find(monster => monster.name === 'Aboleth');
-    console.log(aboleth);
+    console.log(dnd.data.spells.find(s => s.name == "Mage Hand"));
     // let monsterValues = monsters.map(function(m) { return { label: m.name, value: m, group: m.type} });
 
     // console.log('monsters', Dnd.data.monsters.find(m => m.name == 'Aboleth'));
