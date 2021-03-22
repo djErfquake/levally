@@ -1,18 +1,17 @@
 <script>
     export let name;
     export let level;
-    export let castingTime;
+    export let casting_time;
     export let range;
     export let components;
     export let duration;
     export let school;
-    // export let effect;
-    // export let icon;
-    export let description;
+    export let concentration;
+    export let desc;
     export let colors = [ '#FDDC5C', '#fe7231'];
 
     $: levelText = level == 0 ? "Cantrip" : `Level ${level}`;
-    $: descriptionText = `<p>${description.replace(/\n{2,}/g, '</p><p>').replace(/\|ul\|/g, '<ul><li>').replace(/\|\/ul\|/g, '</li></ul>').replace(/\|li\|/g, '</li><li>')}</p>`;
+    $: descriptionText = desc.reduce((d, d1) => `${d1}<p>${d.replace(/\n{2,}/g, '</p><p>').replace(/\|ul\|/g, '<ul><li>').replace(/\|\/ul\|/g, '</li></ul>').replace(/\|li\|/g, '</li><li>')}</p>`);
     $: componentsText = components.join(' ');
 
 </script>
@@ -33,15 +32,11 @@
             </div>
             <div class="stat">
                 <div class="stat-key">CASTING TIME</div>
-                <div class="stat-value">{castingTime}</div>
+                <div class="stat-value">{casting_time}</div>
             </div>
             <div class="stat">
-                <div class="stat-key">SCHOOL</div>
-                <div class="stat-value">{school}</div>
-            </div>
-            <div class="stat">
-                <div class="stat-key">COMPONENTS</div>
-                <div class="stat-value">{componentsText}</div>
+                <div class="stat-key">CONCENTRATION</div>
+                <div class="stat-value">{concentration ? "Yes" : "No"}</div>
             </div>
             <div class="stat">
                 <div class="stat-key">RANGE</div>

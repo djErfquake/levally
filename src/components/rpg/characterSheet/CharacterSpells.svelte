@@ -1,6 +1,6 @@
 <script>
+    import spells from 'dnd5-srd/spells';
     import SpellComponent from './Spell.svelte';
-    import spells from '../../../rpg/spells.js';
     import effectColors from '../../../rpg/effects.js';
     // console.log('spells', spells);
     
@@ -14,7 +14,7 @@
 
     characterSpells = characterSpells.map(s => {
         let spell = spells[s];
-        const colors = effectColors[spell.effect];
+        const colors = effectColors[spell.school.name];
         if (colors) { spell.colors = colors; }
         return spell;
     });
