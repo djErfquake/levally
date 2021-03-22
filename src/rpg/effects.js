@@ -7,8 +7,25 @@ module.exports = {
     Evocation: [ '#FDDC5C', '#fe7231'], // releasing raw magic energy
     Illusion:[ '#C7FCEC', '#00C7A5'], // manipulating a target's senses
     Necromancy: [ '#BCE776', '#847743'], // manipulation the life engergy of creatures
-    Transmuation: [ '#00ECD4', '#438FD6'] // manipulate physical properties of objects
+    Transmuation: [ '#00ECD4', '#438FD6'], // manipulate physical properties of objects
 
+    // classes
+    Bard: [ '#CEF6FF', '#0089BE'],
+    Cleric: [ '#DC9198', '#BB809A'],
+    Druid: [ '#FEFEDF', '#005B4B'],
+    Fighter: [ '#FFD170', '#BF5847'],
+    Rogue: [ '#A0CA65', '#50AF7A'],
+    Wizard: [ '#FAF8FF', '#726CB0'],
+    Warlock: [ '#FAF8FF', '#726CB0'],
+
+    // races
+    Elf: [ '#C7FCEC', '#00C7A5'],
+    Dwarf: [ '#D5AC89', '#9D7757'],
+    Gnome: [ '#9FAEEB', '#9663A5'],
+    HalfOrc: [ '#77BDDA', '#344A53'],
+    Human: [ '#FFEFCA', '#7E7666' ],
+    Dragonborn: [ '#BCE776', '#008985'],
+    Halfling: [ '#FFD170', '#BF5847' ]
 
     // Physical: [ '#FFE7FF', '#7A4E81'],
     // Charm: [ '#DC9198', '#BB809A'],

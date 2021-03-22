@@ -13,7 +13,7 @@
     }
 
     characterSpells = characterSpells.map(s => {
-        let spell = spells[s];
+        let spell = spells.find(sp => sp.index == s);
         const colors = effectColors[spell.school.name];
         if (colors) { spell.colors = colors; }
         return spell;

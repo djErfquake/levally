@@ -52,7 +52,14 @@ EXAMPLE CHARACTER JSON
     "r": "Elf",
     "c": "Druid",
     "s": [2,3,1,4,5,6],
-    "sub": {
+    "sub": [
+        "Fighting Style: Defense",
+    ]
+}
+
+
+
+"sub": {
         "fightingStyle":"Protection",
         "draconicAncestry":"Gold",
         "druicCircle":"Moon",
@@ -61,11 +68,6 @@ EXAMPLE CHARACTER JSON
             "Repelling Blast"
         ]
     }
-}
-
-
-
-
 
 
 */

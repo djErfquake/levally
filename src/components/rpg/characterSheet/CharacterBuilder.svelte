@@ -5,18 +5,28 @@
     import dndSrd from 'dnd5-srd';
     import Spell from './BuilderSpell.svelte';
 
-    const spells = dndSrd.data.spells;
-    const levels = [...Array(20).keys()].map(i => i + 1);
-    const spellList = spells
-        .map(s => {return { label: s.name, value: s}})
-        .sort((a, b) => a.label.localeCompare(b.label));
-
-    let r, c, l;
+    let l = 1;
+    let r, c;
     let s = [];
     let sub = {};
 
+    const availableLevels = [...Array(20).keys()].map(i => i + 1);
+    
+    const classesWithFeatures = ["Druid", "Fighter", "Ranger", "Sorcerer", "Warlock"];
+    const features = dndSrd.data.features.filter(f => f.group && classesWithFeatures.includes(f.class.name));
+    $: availableFeatures = features.filter(f => f.level <= l && f.class.name == c).map(f => f.name);
+    // console.log(features);
+    
+    const spells = dndSrd.data.spells;
+    $: availableSpells = spells
+        .filter(s => s.level <= l)
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .map(s => {return { label: s.name, value: s}});
+
+
     let selectedSpells = [];
     const draconicAncestries = Object.values(dnd.draconicAncestries).map(function(da) { return { label: da.dragon, value: da} });
+
 
     let characterJson = {s:[],sub:{}}; 
     $: characterJsonString = JSON.stringify(characterJson);
@@ -33,14 +43,14 @@
         r = event.detail.value;
         characterJson.r = r;
 
-        if (r != 'Dragonborn') { delete sub.draconicAncestry; }
+        delete sub.subRace;
     }
 
     function selectedClass(event) {
         c = event.detail.value;
         characterJson.c = c;
 
-        if (c != 'Fighter') { delete sub.fightingStyle; }
+        delete sub.subClass;
     }
 
     function selectedSpell(event) {
@@ -71,13 +81,14 @@
 
 
     // SUB TYPES
-    function selectedFightingStyle(event) {
-        sub.fightingStyle = event.detail.value;
+    function selectedFeature(event) {
+        sub.subClass = event.detail.value;
         characterJson.sub = sub;
     }
 
     function selectedDraconicAncestry(event) {
-        sub.draconicAncestry = event.detail.value.dragon;
+        sub.splice(sub.findIndex(s => s.name.includes('Draconic')), 1);
+        sub.push(event.detail.value);
         characterJson.sub = sub;
     }
 
@@ -87,7 +98,7 @@
 <main>
     <div class='selector'>
         <div class='selector-name'>Level</div>
-        <Select items={levels} on:select={selectedLevel} isSeachable={false}></Select>
+        <Select items={availableLevels} on:select={selectedLevel} isSeachable={false}></Select>
     </div>
     <div class='selector'>
         <div class='selector-name'>Race</div>
@@ -106,16 +117,16 @@
         <Select items={dnd.classes} on:select={selectedClass} isSeachable={false}></Select>
     </div>
 
-    {#if c && c.includes("Fighter")}
+    {#if availableFeatures.length > 0}
     <div class='selector sub-type'>
-        <div class='selector-name'>Fighting Style</div>
-        <Select items={dnd.fightingStyles} on:select={selectedFightingStyle} isSeachable={false}></Select>
+        <div class='selector-name'>{availableFeatures[0].substr(0, availableFeatures[0].indexOf(':'))}</div>
+        <Select items={availableFeatures} on:select={selectedFeature} isSeachable={false}></Select>
     </div>
     {/if}
     
     <div class='selector'>
         <div class='selector-name'>Spells</div>
-        <Select items={spellList} on:select={selectedSpell} isSeachable={false}></Select>
+        <Select items={availableSpells} on:select={selectedSpell} isSeachable={false}></Select>
         <div class="selected-spells">
             {#each selectedSpells as spell}
                 <Spell {...spell} on:removeSpell={removeSpell}></Spell>
