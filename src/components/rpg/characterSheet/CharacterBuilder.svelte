@@ -14,18 +14,24 @@
     
     const classesWithFeatures = ["Druid", "Fighter", "Ranger", "Sorcerer", "Warlock"];
     const features = dndSrd.data.features.filter(f => f.group && classesWithFeatures.includes(f.class.name));
-    $: availableFeatures = features.filter(f => f.level <= l && f.class.name == c).map(f => f.name);
-    // console.log(features);
+    let selectedFeatures = [];
+    $: availableFeatures = features
+        .filter(f => f.level <= l && f.class.name == c)
+        .map(f => {return { label: f.name, value: f }});
     
     const spells = dndSrd.data.spells;
+    let selectedSpells = [];
     $: availableSpells = spells
-        .filter(s => s.level <= l)
+        .filter(s => s.level <= l && s.classes.find(sc => sc.name == c))
         .sort((a, b) => a.name.localeCompare(b.name))
         .map(s => {return { label: s.name, value: s}});
 
 
-    let selectedSpells = [];
+
+    // CLASS SPECIFIC STUFF
+    $: featurePicks = c != "Warlock" ? 1 : dndSrd.data.levels.find(lev => lev.level == l && lev.class.name == c).class_specific.invocations_known;
     const draconicAncestries = Object.values(dnd.draconicAncestries).map(function(da) { return { label: da.dragon, value: da} });
+    
 
 
     let characterJson = {s:[],sub:{}}; 
@@ -82,8 +88,22 @@
 
     // SUB TYPES
     function selectedFeature(event) {
-        sub.subClass = event.detail.value;
-        characterJson.sub = sub;
+        if (!sub.subClass || (sub.subClass && sub.subClass.length < featurePicks)) {
+            if (sub.subClass) { sub.subClass.push(event.detail.value.index); }
+            else { sub.subClass = [ event.detail.value.index ]; }
+            characterJson.sub = sub;
+
+            selectedFeatures.push({
+                id: event.detail.value.index,
+                name: event.detail.value.name
+            });
+            selectedFeatures = selectedFeatures;
+        }
+    }
+
+    function removeFeature(event) {
+        sub.subClass.splice(sub.subClass.findIndex(s => s == event.detail.value), 1);
+        if (sub.subClass.length == 0 ) { delete sub.subClass; }
     }
 
     function selectedDraconicAncestry(event) {
@@ -119,8 +139,13 @@
 
     {#if availableFeatures.length > 0}
     <div class='selector sub-type'>
-        <div class='selector-name'>{availableFeatures[0].substr(0, availableFeatures[0].indexOf(':'))}</div>
+        <div class='selector-name'>{availableFeatures[0].label.substr(0, availableFeatures[0].label.indexOf(':'))}</div>
         <Select items={availableFeatures} on:select={selectedFeature} isSeachable={false}></Select>
+        {#if featurePicks > 1}
+            {#each selectedFeatures as feature}
+                <Spell {...feature} on:removeSpell={removeFeature}></Spell>
+            {/each}
+        {/if}
     </div>
     {/if}
     

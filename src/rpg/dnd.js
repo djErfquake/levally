@@ -45,6 +45,34 @@ module.exports = {
 }
 
 /*
+https://www.npmjs.com/package/dnd5-srd
+https://npm.runkit.com/dnd5-srd
+
+
+Still not working:
+X elritch invocations
+- druid circles
+- dragon heritage (in races.trait_options)
+
+To do:
+- add custom stuff (wrapper for dnd5-srd)
+- levels.spellcasting as a card
+- dm screen only adds cards for current players
+
+Working order:
+- get character builder page fully working
+- get character page fully working
+- get dm page working
+
+
+*/
+
+
+
+
+
+
+/*
 EXAMPLE CHARACTER JSON
 ======================
 {
