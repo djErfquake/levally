@@ -13,6 +13,10 @@
     const availableRaces = dnd.races.map(r => r.name);
     const availableClasses = dnd.classes.map(c => c.name);
     
+    $: availableSubClasses = dnd.subclasses
+        .filter(sc => sc.level <= l && sc.class.name == c)
+        .map(sc => {return { label: sc.name, value: sc }});
+
     const classesWithFeatures = ["Druid", "Fighter", "Ranger", "Sorcerer", "Warlock"];
     const features = dnd.features.filter(f => f.group && classesWithFeatures.includes(f.class.name));
     let selectedFeatures = [];
@@ -33,7 +37,6 @@
     $: featurePicks = c != "Warlock" ? 1 : dnd.levels.find(lev => lev.level == l && lev.class.name == c).class_specific.invocations_known;
 
     // RACE SPECIFIC STUFF
-    console.log('subraces', dnd.subraces);
     $: availableSubRaces = dnd.subraces
         .filter(sr => sr.race.name == r)
         .map(sr => { return {label: sr.name, value: sr}});
@@ -63,6 +66,7 @@
         characterJson.c = c;
 
         delete sub.subClass;
+        delete sub.subFeatures;
     }
 
     function selectedSpell(event) {
@@ -94,9 +98,9 @@
 
     // SUB TYPES
     function selectedFeature(event) {
-        if (!sub.subClass || (sub.subClass && sub.subClass.length < featurePicks)) {
-            if (sub.subClass) { sub.subClass.push(event.detail.value.index); }
-            else { sub.subClass = [ event.detail.value.index ]; }
+        if (!sub.subFeatures || (sub.subFeatures && sub.subFeatures.length < featurePicks)) {
+            if (sub.subFeatures) { sub.subFeatures.push(event.detail.value.index); }
+            else { sub.subFeatures = [ event.detail.value.index ]; }
             characterJson.sub = sub;
 
             selectedFeatures.push({
@@ -108,13 +112,18 @@
     }
 
     function removeFeature(event) {
-        sub.subClass.splice(sub.subClass.findIndex(s => s == event.detail.value), 1);
-        if (sub.subClass.length == 0 ) { delete sub.subClass; }
+        sub.subFeatures.splice(sub.subFeatures.findIndex(s => s == event.detail.value), 1);
+        if (sub.subFeatures.length == 0 ) { delete sub.subFeatures; }
         characterJson.sub = sub;
     }
 
     function selectedSubrace(event) {
         sub.subRace = event.detail.value.index;
+        characterJson.sub = sub;
+    }
+
+    function selectedSubclass(event) {
+        sub.subClass = [ event.detail.value.index ];
         characterJson.sub = sub;
     }
 
@@ -142,10 +151,15 @@
         <div class='selector-name'>Class</div>
         <Select items={availableClasses} on:select={selectedClass} isSeachable={false}></Select>
     </div>
-
+    {#if availableSubClasses.length > 0}
+    <div class='selector sub-type'>
+        <div class='selector-name'>{availableSubClasses[0].value.group}</div>
+        <Select items={availableSubClasses} on:select={selectedSubclass} isSeachable={false}></Select>
+    </div>
+    {/if}
     {#if availableFeatures.length > 0}
     <div class='selector sub-type'>
-        <div class='selector-name'>{availableFeatures[0].label.substr(0, availableFeatures[0].label.indexOf(':'))}</div>
+        <div class='selector-name'>{availableFeatures[0].value.group}</div>
         <Select items={availableFeatures} on:select={selectedFeature} isSeachable={false}></Select>
         {#if featurePicks > 1}
             {#each selectedFeatures as feature}

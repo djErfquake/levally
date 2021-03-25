@@ -30,21 +30,24 @@
     let characterFeatures = isDM ? features : features
         .filter(f => f.level <= l && 
                 f.class.name == c && 
-                (!f.group || f.name == sub.subClass) && !f.name.includes('Choose:'))
+                (!f.group || sub.subFeatures.includes(f.index) || (sub.subClass && f.subclass.name == sub.subClass)) && !f.name.includes('Choose:'))
+                // (!f.group || sub.subFeatures.includes(f.index)) && !f.name.includes('Choose:'))
         .map(f => { f.raceclass = c; return f;});
-    if (spellcasting) {
-        const spellcastingCard = {
-            name: "Spellcasting",
-            raceclass: c,
-            desc: Object.entries(spellcasting)
-                .map(sc => {
-                    if (sc[1] > 0) {
-                        const spellType = sc[0].replace(/_/g, " ").replace(/\w\S*/g, m => m.charAt(0).toUpperCase() + m.substr(1).toLowerCase());
-                        return `${spellType}: ${sc[1]}`;
-                    }
-                    return '';
-                })
-        };
+    if (spellcasting.class) {
+        const spellcastingAbilityName = dnd.spellcasting.find(sc => sc.class.name == c).spellcasting_ability.name;
+        const spellcastingAbilityFullName = dnd.abilityScores.find(as => as.name == spellcastingAbilityName).full_name;
+        const spellcastingAbility = `Your spellcasting ability is ${spellcastingAbilityFullName}.`;
+        const spellcastingStats = Object.entries(spellcasting).map(sc => {
+            if (sc[1] > 0) {
+                const spellType = sc[0].replace(/_/g, " ").replace(/\w\S*/g, m => m.charAt(0).toUpperCase() + m.substr(1).toLowerCase());
+                return `<span style="font-weight: 600;">${spellType}:</span> ${sc[1]}`;
+            }
+            return '';
+        });
+        let spellcastingDesc = [ spellcastingAbility ];
+        spellcastingDesc = spellcastingDesc.concat(spellcastingStats);
+
+        const spellcastingCard = { name: "Spellcasting", raceclass: c, desc: spellcastingDesc };
         characterFeatures.push(spellcastingCard);
     }
     const allTraits = racialTraits.concat(characterFeatures)
@@ -59,12 +62,13 @@
                 description = description.replace(/\|COLOR\|/g, draconicAncestry.name).replace(/\|DAMAGE\|/g, draconicAncestry.breathWeapon).replace(/\|DAMAGE_TYPE\|/g, draconicAncestry.damageType)
             }
 
+            let size = Math.floor(description.length / 500);
             return {
                 name: t.name,
                 colors: colors,
                 raceclass: t.raceclass,
                 description: description,
-                size: description.length > 2000 ? 3 : 1
+                size: size <= 3 ? size : 3
             };
         });
 
