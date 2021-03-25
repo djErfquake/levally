@@ -2,7 +2,6 @@
     import { encode } from "js-base64";
     import Select from 'svelte-select'; // https://github.com/rob-balfre/svelte-select
     import dnd from '../../../rpg/dnd.js';
-    import dndSrd from 'dnd5-srd';
     import Spell from './BuilderSpell.svelte';
 
     let l = 1;
@@ -11,15 +10,17 @@
     let sub = {};
 
     const availableLevels = [...Array(20).keys()].map(i => i + 1);
+    const availableRaces = dnd.races.map(r => r.name);
+    const availableClasses = dnd.classes.map(c => c.name);
     
     const classesWithFeatures = ["Druid", "Fighter", "Ranger", "Sorcerer", "Warlock"];
-    const features = dndSrd.data.features.filter(f => f.group && classesWithFeatures.includes(f.class.name));
+    const features = dnd.features.filter(f => f.group && classesWithFeatures.includes(f.class.name));
     let selectedFeatures = [];
     $: availableFeatures = features
         .filter(f => f.level <= l && f.class.name == c)
         .map(f => {return { label: f.name, value: f }});
     
-    const spells = dndSrd.data.spells;
+    const spells = dnd.spells;
     let selectedSpells = [];
     $: availableSpells = spells
         .filter(s => s.level <= l && s.classes.find(sc => sc.name == c))
@@ -29,11 +30,16 @@
 
 
     // CLASS SPECIFIC STUFF
-    $: featurePicks = c != "Warlock" ? 1 : dndSrd.data.levels.find(lev => lev.level == l && lev.class.name == c).class_specific.invocations_known;
-    const draconicAncestries = Object.values(dnd.draconicAncestries).map(function(da) { return { label: da.dragon, value: da} });
+    $: featurePicks = c != "Warlock" ? 1 : dnd.levels.find(lev => lev.level == l && lev.class.name == c).class_specific.invocations_known;
+
+    // RACE SPECIFIC STUFF
+    console.log('subraces', dnd.subraces);
+    $: availableSubRaces = dnd.subraces
+        .filter(sr => sr.race.name == r)
+        .map(sr => { return {label: sr.name, value: sr}});
     
 
-
+    // GENERATE ENCODED CHARACTER INFO
     let characterJson = {s:[],sub:{}}; 
     $: characterJsonString = JSON.stringify(characterJson);
     // $: characterJsonString = encode(JSON.stringify(characterJson));
@@ -104,11 +110,11 @@
     function removeFeature(event) {
         sub.subClass.splice(sub.subClass.findIndex(s => s == event.detail.value), 1);
         if (sub.subClass.length == 0 ) { delete sub.subClass; }
+        characterJson.sub = sub;
     }
 
-    function selectedDraconicAncestry(event) {
-        sub.splice(sub.findIndex(s => s.name.includes('Draconic')), 1);
-        sub.push(event.detail.value);
+    function selectedSubrace(event) {
+        sub.subRace = event.detail.value.index;
         characterJson.sub = sub;
     }
 
@@ -122,19 +128,19 @@
     </div>
     <div class='selector'>
         <div class='selector-name'>Race</div>
-        <Select items={dnd.races} on:select={selectedRace} isSeachable={false}></Select>
+        <Select items={availableRaces} on:select={selectedRace} isSeachable={false}></Select>
     </div>
-    {#if r && r.includes("Dragonborn")}
+    {#if availableSubRaces.length > 0}
     <div class='selector sub-type'>
-        <div class='selector-name'>Draconic Ancestry</div>
-        <Select items={draconicAncestries} on:select={selectedDraconicAncestry} isSeachable={false}></Select>
+        <div class='selector-name'>Sub Race</div>
+        <Select items={availableSubRaces} on:select={selectedSubrace} isSeachable={false}></Select>
     </div>
     {/if}
 
 
     <div class='selector'>
         <div class='selector-name'>Class</div>
-        <Select items={dnd.classes} on:select={selectedClass} isSeachable={false}></Select>
+        <Select items={availableClasses} on:select={selectedClass} isSeachable={false}></Select>
     </div>
 
     {#if availableFeatures.length > 0}

@@ -1,12 +1,10 @@
 <script>
     import TraitComponent from './Trait.svelte';
     import dnd from '../../../rpg/dnd.js';
-    // import traits from '../../../rpg/traits.js';
     import effectColors from '../../../rpg/effects.js';
-    import dndSrd from 'dnd5-srd';
 
-    const traits = dndSrd.data.traits;
-    const features = dndSrd.data.features;
+    const traits = dnd.traits;
+    const features = dnd.features;    
     
     export let r;
     export let c;
@@ -15,6 +13,9 @@
 
     export let isDM = false;
     
+    const subrace = dnd.subraces.find(sr => sr.index == sub.subRace);
+    const spellcasting = dnd.levels.find(lev => lev.level == l && lev.class.name == c).spellcasting;
+
     let traitNames = [r, c];
 
     // testing
@@ -31,24 +32,39 @@
                 f.class.name == c && 
                 (!f.group || f.name == sub.subClass) && !f.name.includes('Choose:'))
         .map(f => { f.raceclass = c; return f;});
-
+    if (spellcasting) {
+        const spellcastingCard = {
+            name: "Spellcasting",
+            raceclass: c,
+            desc: Object.entries(spellcasting)
+                .map(sc => {
+                    if (sc[1] > 0) {
+                        const spellType = sc[0].replace(/_/g, " ").replace(/\w\S*/g, m => m.charAt(0).toUpperCase() + m.substr(1).toLowerCase());
+                        return `${spellType}: ${sc[1]}`;
+                    }
+                    return '';
+                })
+        };
+        characterFeatures.push(spellcastingCard);
+    }
     const allTraits = racialTraits.concat(characterFeatures)
         .map(t => {
             // set color
             const colors = effectColors[t.raceclass] ? effectColors[t.raceclass] :  [ '#ACA9BB', '#474554'];
 
             // set text
-            const description = t.desc.reduce((d, d1) => `${d1}<p>${d.replace(/\n{2,}/g, '</p><p>').replace(/\|ul\|/g, '<ul><li>').replace(/\|\/ul\|/g, '</li></ul>').replace(/\|li\|/g, '</li><li>')}</p>`);
-            // if (draconicAncestry) {
-            //     description = description.replace(/\|COLOR\|/g, draconicAncestry.dragon).replace(/\|DAMAGE\|/g, draconicAncestry.breathWeapon).replace(/\|DAMAGE_TYPE\|/g, draconicAncestry.damageType)
-            // }
+            let description = t.desc.reduce((d, d1) => `${d}<p>${d1}</p>`);
+            if (t.index == 17) {
+                const draconicAncestry = subrace;
+                description = description.replace(/\|COLOR\|/g, draconicAncestry.name).replace(/\|DAMAGE\|/g, draconicAncestry.breathWeapon).replace(/\|DAMAGE_TYPE\|/g, draconicAncestry.damageType)
+            }
 
             return {
                 name: t.name,
                 colors: colors,
                 raceclass: t.raceclass,
                 description: description,
-                size: t.desc.length > 3 ? 3 : 1
+                size: description.length > 2000 ? 3 : 1
             };
         });
 

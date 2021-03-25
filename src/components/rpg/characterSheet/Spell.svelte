@@ -11,7 +11,7 @@
     export let colors = [ '#FDDC5C', '#fe7231'];
 
     $: levelText = level == 0 ? "Cantrip" : `Level ${level}`;
-    $: descriptionText = desc.reduce((d, d1) => `${d1}<p>${d.replace(/\n{2,}/g, '</p><p>').replace(/\|ul\|/g, '<ul><li>').replace(/\|\/ul\|/g, '</li></ul>').replace(/\|li\|/g, '</li><li>')}</p>`);
+    $: descriptionText = desc.reduce((d, d1) => `${d}<p>${d1}</p>`);
     $: componentsText = components.join(' ');
 
 </script>
