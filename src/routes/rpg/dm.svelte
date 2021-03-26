@@ -6,19 +6,17 @@
     import AddMonster from "../../components/rpg/AddMonster.svelte";
     import AddCharacter from "../../components/rpg/AddCharacter.svelte";
     import CharacterSheet from "../../components/rpg/characterSheet/CharacterSheet.svelte";
+    import MultiCharacterSheet from "../../components/rpg/characterSheet/MultipleCharacterSheet.svelte";
     import TimeBar from "../../components/rpg/TimeBar.svelte";
-    import monsters from '../../rpg/monsters.js';
-
-    import dnd from 'dnd5-srd';
-    const dndMonsters = dnd.data.monsters;
-    const aboleth = dndMonsters.find(monster => monster.name === 'Aboleth');
-    // console.log(dnd.data.spells.find(s => s.name == "Mage Hand"));
+    // import monsters from '../../rpg/monsters.js';
     // let monsterValues = monsters.map(function(m) { return { label: m.name, value: m, group: m.type} });
-
-    // console.log('monsters', Dnd.data.monsters.find(m => m.name == 'Aboleth'));
     
+    import dnd from '../../rpg/dnd.js';
+    const monsters = dnd.monsters;
+
     let encounter = { characters: [] , turnId: 0, timeSpent: 0, options: { hideTimeBar: false } };
     let initiative = [];
+    $: allCharacterStats = encounter.characters.map(c => c.stats);
 
     let selectedCharacterId = null;
     $: selectedCharacterIndex = selectedCharacterId ? encounter.characters.findIndex(c => c.id == selectedCharacterId) : null;
@@ -31,6 +29,7 @@
     socket.on('update', function(data) {
         encounter = data;
         mapEncounter();
+        console.log('encounter', encounter);
     });
     socket.emit('catchup');
     socket.on('catchup', function(data) {
@@ -190,7 +189,7 @@
     </section>
 
     <section>
-        <CharacterSheet isDM={true}/>
+        <MultiCharacterSheet characters={allCharacterStats}></MultiCharacterSheet>
     </section>
 </main>
 

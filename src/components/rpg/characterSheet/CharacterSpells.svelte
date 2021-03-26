@@ -1,36 +1,54 @@
 <script>
-    import spells from 'dnd5-srd/spells';
+    import dnd from '../../../rpg/dnd.js';
     import SpellComponent from './Spell.svelte';
     import effectColors from '../../../rpg/effects.js';
-    // console.log('spells', spells);
     
     export let characterSpells;
-    export let isDM = false;
-    let spellsByLevel = [];
-
-    if (isDM) {
-        characterSpells = Object.keys(spells);
-    }
-
-    characterSpells = characterSpells.map(s => {
-        let spell = spells.find(sp => sp.index == s);
+    // let spellsByLevel = [];
+    $: console.log('characterSpells', characterSpells);
+    
+    const allSpells = dnd.spells;
+    $: spellList = characterSpells.map(s => {
+        let spell = allSpells.find(sp => sp.index == s);
         const colors = effectColors[spell.school.name];
         if (colors) { spell.colors = colors; }
         return spell;
-    });
+    })
+    .filter((item, pos, self) => self.indexOf(item) == pos); // dedup
 
-    // sort spells by level
-    for (let i = 0; i <= 20; i++) {
-        let spellsAtLevel = [];
-        spellsAtLevel = spellsAtLevel.concat(characterSpells.filter(s => s.level == i));
-        spellsByLevel.push(spellsAtLevel);
+    function getSpellsByLevel(spells) {
+        let spellsByLevel = [];
+        for (let i = 0; i <= 20; i++) {
+            let spellsAtLevel = [];
+            spellsAtLevel = spellsAtLevel.concat(spellList.filter(s => s.level == i));
+            spellsByLevel.push(spellsAtLevel);
+        }
+        return spellsByLevel;
     }
+
+    // // sort spells by level
+    // for (let i = 0; i <= 20; i++) {
+    //     let spellsAtLevel = [];
+    //     spellsAtLevel = spellsAtLevel.concat(spellList.filter(s => s.level == i));
+    //     spellsByLevel.push(spellsAtLevel);
+    // }
+
+    // $: spellsByLevel = characterSpells.map(s => {
+    //     let spell = spells.find(sp => sp.index == s);
+    //     const colors = effectColors[spell.school.name];
+    //     if (colors) { spell.colors = colors; }
+    //     return spell;
+    // })
+    // .reduce((rv, x) => {
+    //     (rv[x.level] = rv[x.level] || []).push(x);
+    //     return rv;
+    // }, {});
 
 </script>
 
 
 <main>
-    {#each spellsByLevel as levelSpells, level}
+    {#each getSpellsByLevel(spellList) as levelSpells, level}
         {#if levelSpells.length > 0}
             <div class="spell-level-header">
             {#if level == 0}

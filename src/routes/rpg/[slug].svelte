@@ -37,6 +37,7 @@
     function addCharacter(event) {
         let character = event.detail;
         console.log("added character: ", character);
+        character.stats = characterSheet;
         characterId = character.id;
         encounter.characters.push(character);
         encounter.characters = encounter.characters.sort((a, b) => b.initiative - a.initiative);
