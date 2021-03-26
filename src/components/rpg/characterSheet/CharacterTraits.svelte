@@ -11,23 +11,20 @@
     export let l;
     export let sub;
 
-    export let isDM = false;
+    export let showHeader = true;
     
     const subrace = dnd.subraces.find(sr => sr.index == sub.subRace);
     const spellcasting = dnd.levels.find(lev => lev.level == l && lev.class.name == c).spellcasting;
 
     let traitNames = [r, c];
 
-    // testing
-    if (isDM) { sub = {}; }
-
     // get all racial traits
-    let racialTraits = isDM ? traits : traits
+    let racialTraits = traits
         .filter(t => t.races.find(tr => tr.name == r || tr.name == sub.subRace))
         .map(t => {t.raceclass = r; return t; });
 
     // get all class features
-    let characterFeatures = isDM ? features : features
+    let characterFeatures = features
         .filter(f => f.level <= l && 
                 f.class.name == c && 
                 (!f.group || sub.subFeatures.includes(f.index) || (sub.subClass && f.subclass.name == sub.subClass)) && !f.name.includes('Choose:'))
@@ -76,7 +73,9 @@
 
 
 <main>
+    {#if showHeader}
     <div class="trait-header">Features/Traits</div>
+    {/if}
     <div class="row">
         {#each allTraits as trait}
         <TraitComponent {...trait} />

@@ -14,7 +14,7 @@
         if (colors) { spell.colors = colors; }
         return spell;
     })
-    .filter((item, pos, self) => self.indexOf(item) == pos); // dedup
+    .sort((a, b) => a.name.localeCompare(b.name));
 
     function getSpellsByLevel(spells) {
         let spellsByLevel = [];
@@ -25,24 +25,6 @@
         }
         return spellsByLevel;
     }
-
-    // // sort spells by level
-    // for (let i = 0; i <= 20; i++) {
-    //     let spellsAtLevel = [];
-    //     spellsAtLevel = spellsAtLevel.concat(spellList.filter(s => s.level == i));
-    //     spellsByLevel.push(spellsAtLevel);
-    // }
-
-    // $: spellsByLevel = characterSpells.map(s => {
-    //     let spell = spells.find(sp => sp.index == s);
-    //     const colors = effectColors[spell.school.name];
-    //     if (colors) { spell.colors = colors; }
-    //     return spell;
-    // })
-    // .reduce((rv, x) => {
-    //     (rv[x.level] = rv[x.level] || []).push(x);
-    //     return rv;
-    // }, {});
 
 </script>
 
