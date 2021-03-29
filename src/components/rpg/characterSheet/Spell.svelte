@@ -5,9 +5,9 @@
     export let range;
     export let components;
     export let duration;
-    export let school;
     export let concentration;
     export let desc;
+    
     export let colors = [ '#FDDC5C', '#fe7231'];
 
     $: levelText = level == 0 ? "Cantrip" : `Level ${level}`;

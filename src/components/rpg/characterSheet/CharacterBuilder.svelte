@@ -46,7 +46,8 @@
     let characterJson = {s:[],sub:{}}; 
     $: characterJsonString = JSON.stringify(characterJson);
     // $: characterJsonString = encode(JSON.stringify(characterJson));
-    $: characterUrl = `https://levally.herokuapp.com/rpg/c/${encode(JSON.stringify(characterJson))}`;
+    $: characterUrl = `https://levally.herokuapp.com/rpg/${encode(JSON.stringify(characterJson))}`;
+    $: justCharacterUrl = `https://levally.herokuapp.com/rpg/c/${encode(JSON.stringify(characterJson))}`;
 
 
     function selectedLevel(event) {
@@ -181,11 +182,10 @@
 
 
 
-    {characterJsonString}
+    <!-- {characterJsonString} -->
     {#if r && c && l}
-    <div>
-        <a href="{characterUrl}">Your custom generated link!</a>
-    </div>
+    <div><a href="{characterUrl}">Link to Initiative Tracker</a></div>
+    <div><a href="{justCharacterUrl}">Link to just stats</a></div>
     {/if}
 </main>
 

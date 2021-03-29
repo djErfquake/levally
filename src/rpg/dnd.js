@@ -1,4 +1,5 @@
 let dndSrd = require('dnd5-srd');
+let customMonsters = require('./monsters.js');
 
 let abilityScores = dndSrd.data.abilityScores;
 let classes = dndSrd.data.classes;
@@ -128,7 +129,8 @@ traits[traits.findIndex(t => t.index == 17)].desc[0] = "You can use your action 
 
 
 // CUSTOM STUFF
-
+customMonsters.sort((a, b) => a.name.localeCompare(b.name)).forEach(m => m.type = "custom");
+monsters = monsters.concat(customMonsters);
 
 
 

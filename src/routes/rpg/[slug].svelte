@@ -26,6 +26,7 @@
     socket.emit('initRPG');
     socket.on('update', function(data) {
         encounter = data;
+        console.log('encounter', encounter);
         mapEncounter();
     });
     socket.emit('catchup');
@@ -63,19 +64,17 @@
 
     function mapEncounter() {
         timePercentage = encounter.timeSpent / NUM_MINUTES;
-        for (let i = 0; i < encounter.characters.length; i++) {
-            let character = encounter.characters[i];
-            if (character.turnStatus != "DONE") {
-                encounter.turnId = character.id;
-                break;
-            }
-        }
-        initiative = encounter.characters.map(c => {
-            return { character: c, dmView: false }
-        }).sort((a, b) => b.character.initiative - a.character.initiative);
-        // console.log('encounter', encounter);
-        console.log("characterId", characterId);
-        console.log("encounter.turnId", encounter.turnId);
+        encounter = encounter;
+        // for (let i = 0; i < encounter.characters.length; i++) {
+        //     let character = encounter.characters[i];
+        //     if (character.turnStatus != "DONE") {
+        //         encounter.turnId = character.id;
+        //         break;
+        //     }
+        // }
+        // initiative = encounter.characters.map(c => {
+        //     return { character: c, dmView: false }
+        // }).sort((a, b) => b.character.initiative - a.character.initiative);
     }
 
     function updateServer() {
@@ -95,6 +94,8 @@
 
 
 <main>
+    {JSON.stringify(encounter)}
+
     {#if !encounter.options.hideTimeBar}
     <section class='section-time-bar'>
         <TimeBar percentage={timePercentage} />

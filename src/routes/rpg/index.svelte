@@ -50,6 +50,7 @@
     }
 
     function mapEncounter() {
+        timePercentage = encounter.timeSpent / NUM_MINUTES;
         for (let i = 0; i < encounter.characters.length; i++) {
             let character = encounter.characters[i];
             if (character.turnStatus != "DONE") {
@@ -60,9 +61,6 @@
         initiative = encounter.characters.map(c => {
             return { character: c, dmView: false }
         }).sort((a, b) => b.character.initiative - a.character.initiative);
-        // console.log('encounter', encounter);
-        console.log("characterId", characterId);
-        console.log("encounter.turnId", encounter.turnId);
     }
 
     function updateServer() {

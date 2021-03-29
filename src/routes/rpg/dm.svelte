@@ -8,15 +8,12 @@
     import CharacterSheet from "../../components/rpg/characterSheet/CharacterSheet.svelte";
     import MultiCharacterSheet from "../../components/rpg/characterSheet/MultipleCharacterSheet.svelte";
     import TimeBar from "../../components/rpg/TimeBar.svelte";
-    // import monsters from '../../rpg/monsters.js';
-    // let monsterValues = monsters.map(function(m) { return { label: m.name, value: m, group: m.type} });
-    
-    import dnd from '../../rpg/dnd.js';
-    const monsters = dnd.monsters;
 
     let encounter = { characters: [] , turnId: 0, timeSpent: 0, options: { hideTimeBar: false } };
     let initiative = [];
-    $: allCharacterStats = encounter.characters.map(c => c.stats);
+    $: allCharacterStats = encounter.characters
+        .filter(c => c.isPC)
+        .map(c => c.stats);
 
     let selectedCharacterId = null;
     $: selectedCharacterIndex = selectedCharacterId ? encounter.characters.findIndex(c => c.id == selectedCharacterId) : null;
@@ -146,6 +143,7 @@
     </section>
 
     <section class='section-time-bar'>
+        {#if !encounter.options.hideTimeBar}
         <TimeBar percentage={timePercentage} />
         <div class="time-bar-buttons">
             <Button onClick={addTenMinutes} text={`+10`} />
@@ -153,8 +151,9 @@
             <Button onClick={addSixtyMinutes} text={`+60`} />
             <Button onClick={subtractSixtyMinutes} text={`-60`} />
             <Button onClick={resetDay} text={`Reset Day`} />
-            <Button onClick={toggleTimeBar} text={`Toggle Time Bar Visibility`} />
         </div>
+        {/if}
+        <Button onClick={toggleTimeBar} text={`Toggle Time Bar Visibility`} />
     </section>
     
 
@@ -173,7 +172,7 @@
 
     <section class='section-adder'>
         <div class="character-adder">
-            <!-- <AddMonster monsters={monsterValues} on:addCharacter={addCharacter} /> -->
+            <AddMonster on:addCharacter={addCharacter} />
         </div>
 
         <div class="character-adder">

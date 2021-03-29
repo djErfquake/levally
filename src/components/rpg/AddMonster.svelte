@@ -4,11 +4,12 @@
     import Select from 'svelte-select'; // https://github.com/rob-balfre/svelte-select
     import generator from '../../utilities/generator.js';
     import dice from '../../rpg/dice.js';
+    import dnd from '../../rpg/dnd.js';
     const dispatch = createEventDispatcher();
     import { createEventDispatcher } from 'svelte';
 
 
-    export let monsters;
+    const monsters = dnd.monsters.map(function(m) { return { label: m.name, value: m, group: m.type} });
     
     const groupBy = (item) => item.group;
     const firstMonster = monsters.length > 0 ? monsters[0] : null;
@@ -25,9 +26,9 @@
         const character = {
             id: generator.guid(),
             name: selectedMonster.name,
-            hp: dice.parseAndRollDice(selectedMonster.hp),
-            initiative: dice.rollCheck(selectedMonster.dex),
-            link: selectedMonster.link,
+            hp: selectedMonster.hp ? dice.parseAndRollDice(selectedMonster.hp) : selectedMonster.hit_points,
+            initiative:  dice.rollCheck(Math.floor((selectedMonster.dexterity - 10) / 2)),
+            link: selectedMonster.link ? selectedMonster.link : null,
             description: '',
             statuses: [],
             turnStatus: "NOT_YET",
