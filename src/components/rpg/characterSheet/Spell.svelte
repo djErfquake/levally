@@ -7,11 +7,12 @@
     export let duration;
     export let concentration;
     export let desc;
+    export let higher_level;
     
     export let colors = [ '#FDDC5C', '#fe7231'];
 
     $: levelText = level == 0 ? "Cantrip" : `Level ${level}`;
-    $: descriptionText = desc.reduce((d, d1) => `${d}<p>${d1}</p>`);
+    $: descriptionText = higher_level ? desc.concat(higher_level).reduce((d, d1) => `${d}<p>${d1}</p>`) : desc.reduce((d, d1) => `${d}<p>${d1}</p>`);
     $: componentsText = components.join(' ');
 
 </script>
