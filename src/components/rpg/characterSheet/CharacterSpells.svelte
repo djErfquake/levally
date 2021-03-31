@@ -40,7 +40,7 @@
             </div>
             <div class="spell-level-row">
                 {#each levelSpells as s}
-                <SpellComponent name={s.name} level={s.level} casting_time={s.casting_time} range={s.range} components={s.components} duration={s.duration} concentration={s.concentration} desc={s.desc}/>
+                <SpellComponent name={s.name} level={s.level} casting_time={s.casting_time} range={s.range} components={s.components} duration={s.duration} concentration={s.concentration} desc={s.desc} colors={s.colors} />
                 {/each}
             </div>
         {/if}
