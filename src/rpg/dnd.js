@@ -34,6 +34,10 @@ for (let i = 0; i < featuresToRemove.length; i++) { features.splice(features.fin
 const subclassesToRemove = [2,4];
 for (let i = 0; i < subclassesToRemove.length; i++) { subclasses.splice(subclasses.findIndex(f => f.index == subclassesToRemove[i]), 1); }
 
+const subracesToRemove = [1,2,3,4];
+for (let i = 0; i < subracesToRemove.length; i++) { subraces.splice(subraces.findIndex(f => f.index == subracesToRemove[i]), 1); }
+
+
 // ADD STUFF
 const dragonAncestryTypes = [
     { name: "Black", race: { name: "Dragonborn"}, damageType: "Acid", breathWeapon: "5 by 30ft. line (Dex. save)" },
