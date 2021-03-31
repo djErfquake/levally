@@ -124,6 +124,7 @@
     .description {
         padding: 15px 20px;
         flex-grow: 1;
+        font-size: 16px;
     }
 
     .stats {

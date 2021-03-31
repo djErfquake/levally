@@ -27,7 +27,8 @@
     const spells = dnd.spells;
     let selectedSpells = [];
     $: availableSpells = spells
-        .filter(s => s.level <= l && s.classes.find(sc => sc.name == c))
+        // .filter(s => s.level <= l && s.classes.find(sc => sc.name == c))
+        .filter(s => s.level <= l)
         .sort((a, b) => a.name.localeCompare(b.name))
         .map(s => {return { label: s.name, value: s}});
 
