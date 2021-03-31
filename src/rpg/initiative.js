@@ -2,9 +2,6 @@
     color palette: https://colors.lol/whacking
 
 */
-
-let monsters = require('./monsters');
-
 const turnStatuses = { READY: "READY", ACTIVE: "ACTIVE", DONE: "DONE" };
 
 let encounter = {
@@ -20,8 +17,7 @@ let encounter = {
 
 let initialized = false;
 module.exports = {
-    monsters: monsters,
-
+    defaultEncounter: { characters: [] , turnId: 0, timeSpent: 0, options: { hideTimeBar: false } },
     init: function() {
         if (initialized) return;
         console.log("Initializing RPG Initiative Tracker.");

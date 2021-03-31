@@ -17,9 +17,3 @@
 
     <Spells characterSpells={allSpells} />
 </main>
-
-
-<style>
-    
-
-</style>

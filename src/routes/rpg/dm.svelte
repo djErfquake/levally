@@ -12,7 +12,7 @@
     let encounter = { characters: [] , turnId: 0, timeSpent: 0, options: { hideTimeBar: false } };
     let initiative = [];
     $: allCharacterStats = encounter.characters
-        .filter(c => c.isPC)
+        .filter(c => c.isPC && c.stats)
         .map(c => c.stats);
 
     let selectedCharacterId = null;
@@ -26,7 +26,6 @@
     socket.on('update', function(data) {
         encounter = data;
         mapEncounter();
-        console.log('encounter', encounter);
     });
     socket.emit('catchup');
     socket.on('catchup', function(data) {
@@ -46,7 +45,6 @@
     function updateCharacter(event) {
         let character = event.detail;
         const changed = encounter.characters.findIndex(c => c.id == character.id);
-        console.log("updated character: ", character);
         encounter.characters[changed] = character;
         mapEncounter();
         updateServer();

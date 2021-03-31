@@ -28,7 +28,7 @@
 </script>
 
 
-<main class:selected="{dmView && character.id == selectedCharacterId}" class:turn-done="{character.turnStatus == 'DONE'}" class:header="{isHeader}">
+<main class="stat-row" class:selected="{dmView && character.id == selectedCharacterId}" class:turn-done="{character.turnStatus == 'DONE'}" class:header="{isHeader}">
     <div class="stat" on:click={characterClicked}>{@html character.initiative}</div>
     <div class="stat" on:click={() => openLink(character.link)}>
         {#if !character.isPC}👹{/if}
@@ -60,6 +60,10 @@
         color: white;
         font-size: 1.5em;
         font-weight: 600;
+    }
+
+    .stat-row {
+        height: 35px;
     }
 
     .stat {
