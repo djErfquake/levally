@@ -50,7 +50,7 @@
                 <Header text={`Initiative`}></Header>
                 <input id="initiative" class="number-input" type="number" min="1" bind:value={character.initiative}/>
             </div>
-            <div class="stat-section">
+            <div class="stat-section add-character-button">
                 <Button onClick={addCharacter} text={`Add Character`}></Button> 
             </div>
         </div>
@@ -91,6 +91,10 @@
 
     .stat-section {
         padding: 30px;
+    }
+
+    .add-character-button {
+        padding-top: 50px;
     }
 
     input {

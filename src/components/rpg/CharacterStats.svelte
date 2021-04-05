@@ -62,10 +62,6 @@
         font-weight: 600;
     }
 
-    .stat-row {
-        height: 35px;
-    }
-
     .stat {
         flex-grow: 1;
         text-align: center;
