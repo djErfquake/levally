@@ -2,7 +2,7 @@
     import Spells from './CharacterSpells.svelte';
     import Traits from './CharacterTraits.svelte';
 
-    export let characterSheet = null;
+    export let character = null;
 
     
 
@@ -10,10 +10,10 @@
 
 
 <main>
-    <!-- {@debug characterSheet} -->
-    {#if characterSheet != null}
-        <Traits r={characterSheet.r} c={characterSheet.c} l={characterSheet.l} sub={characterSheet.sub}/>
-        <Spells characterSpells={characterSheet.s} />
+    <!-- {@debug character} -->
+    {#if character != null}
+        <Traits character={character}/>
+        <Spells characterSpells={character.spells} />
     {/if}
 </main>
 

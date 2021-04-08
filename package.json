@@ -16,6 +16,7 @@
     "sirv": "^1.0.0",
     "socket.io": "^2.2.0",
     "socket.io-client": "^2.2.0",
+    "svelte-persistent-store": "^0.1.6",
     "sveltejs-tippy": "^3.0.0"
   },
   "devDependencies": {
@@ -36,6 +37,6 @@
     "sapper": "^0.28.0",
     "svelte": "^3.17.3",
     "svelte-canvas": "^0.6.1",
-    "svelte-select": "^3.15.0"
+    "svelte-select": "^3.17.0"
   }
 }

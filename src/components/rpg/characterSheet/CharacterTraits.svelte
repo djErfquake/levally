@@ -6,32 +6,29 @@
     const traits = dnd.traits;
     const features = dnd.features;    
     
-    export let r;
-    export let c;
-    export let l;
-    export let sub;
+    export let character;
 
     export let showHeader = true;
     
-    const subrace = dnd.subraces.find(sr => sr.index == sub.subRace);
-    const spellcasting = dnd.levels.find(lev => lev.level == l && lev.class.name == c).spellcasting;
+    const subrace = dnd.subraces.find(sr => sr.index == character.subTypes.subRace);
+    const spellcasting = dnd.levels.find(lev => lev.level == character.level && lev.class.name == character.class).spellcasting;
 
-    let traitNames = [r, c];
+    let traitNames = [character.race, character.class];
 
     // get all racial traits
     let racialTraits = traits
-        .filter(t => t.races.find(tr => tr.name == r || tr.name == sub.subRace))
-        .map(t => {t.raceclass = r; return t; });
+        .filter(t => t.races.find(tr => tr.name == character.race || tr.name == character.subTypes.subRace))
+        .map(t => {t.raceclass = character.race; return t; });
 
     // get all class features
     let characterFeatures = features
-        .filter(f => f.level <= l && 
-                f.class.name == c && 
-                (!f.group || sub.subFeatures.includes(f.index) || (sub.subClass && f.subclass.name == sub.subClass)) && !f.name.includes('Choose:'))
+        .filter(f => f.level <= character.level && 
+                f.class.name == character.class && 
+                (!f.group || character.subTypes.subFeatures.includes(f.index) || (character.subTypes.subClass && f.subclass.name == character.subTypes.subClass)) && !f.name.includes('Choose:'))
                 // (!f.group || sub.subFeatures.includes(f.index)) && !f.name.includes('Choose:'))
-        .map(f => { f.raceclass = c; return f;});
+        .map(f => { f.raceclass = character.class; return f;});
     if (spellcasting.class) {
-        const spellcastingAbilityName = dnd.spellcasting.find(sc => sc.class.name == c).spellcasting_ability.name;
+        const spellcastingAbilityName = dnd.spellcasting.find(sc => sc.class.name == character.class).spellcasting_ability.name;
         const spellcastingAbilityFullName = dnd.abilityScores.find(as => as.name == spellcastingAbilityName).full_name;
         const spellcastingAbility = `Your spellcasting ability is ${spellcastingAbilityFullName}.`;
         const spellcastingStats = Object.entries(spellcasting).map(sc => {
@@ -44,7 +41,7 @@
         let spellcastingDesc = [ spellcastingAbility ];
         spellcastingDesc = spellcastingDesc.concat(spellcastingStats);
 
-        const spellcastingCard = { name: "Spellcasting", raceclass: c, desc: spellcastingDesc };
+        const spellcastingCard = { name: "Spellcasting", raceclass: character.class, desc: spellcastingDesc };
         characterFeatures.push(spellcastingCard);
     }
     const allTraits = racialTraits.concat(characterFeatures)

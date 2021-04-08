@@ -1,16 +1,13 @@
 <script context="module">
     import { encode, decode } from "js-base64";
     import CharacterSheet from "../../../components/rpg/characterSheet/CharacterSheet.svelte";
-    import CharacterBuilder from "../../../components/rpg/characterSheet/CharacterBuilder.svelte";
     
     let characterSheet = null;
 
     export async function preload(page, session) {
 		const { slug } = page.params;
-        if (slug != 'builder') {
-            characterSheet = JSON.parse(decode(slug));
-            console.log('characterSheet', characterSheet);
-        }
+        characterSheet = JSON.parse(decode(slug));
+        console.log('characterSheet', characterSheet);
 	}
 </script>
 
@@ -18,8 +15,6 @@
 <main>
     {#if characterSheet}
         <CharacterSheet characterSheet={characterSheet}/>
-    {:else}
-        <CharacterBuilder />
     {/if}
 </main>
 
