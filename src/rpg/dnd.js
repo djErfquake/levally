@@ -97,4 +97,9 @@ jonny - eyJsZXZlbCI6IjIiLCJyYWNlIjoiRWxmIiwiY2xhc3MiOiJSb2d1ZSIsInNwZWxscyI6WzIw
 andy  - eyJsZXZlbCI6MiwicmFjZSI6IkhhbGYtT3JjIiwiY2xhc3MiOiJEcnVpZCIsInNwZWxscyI6WzcxLDk0LDIyMiw3MF0sInN1YlR5cGVzIjp7InN1YkNsYXNzIjpbMTJdfX0=
 
 
+
+TODO:
+[ ] only show spells/traits for selected player with player is selected
+[ ] only show spells/traits for selected monster with monster is selected
+
 */
