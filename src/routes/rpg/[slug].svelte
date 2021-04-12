@@ -3,19 +3,19 @@
     import Encounter from "../../components/rpg/Encounter.svelte";
     import CharacterSheet from "../../components/rpg/characterSheet/CharacterSheet.svelte";
 
-    let characterSheet = null;
+    let character = null;
 
     export async function preload(page, session) {
 		const { slug } = page.params;
-        characterSheet = JSON.parse(decode(slug));
-        console.log('characterSheet', characterSheet);
+        character = JSON.parse(decode(slug));
+        console.log('character', character);
 	}
 </script>
 
 
 <main>
-    <Encounter stats={characterSheet} />
-    <CharacterSheet characterSheet={characterSheet}/>
+    <Encounter stats={character} />
+    <CharacterSheet character={character}/>
 </main>
 
 <style>

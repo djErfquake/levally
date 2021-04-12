@@ -10,14 +10,14 @@
 
     export let showHeader = true;
     
-    const subrace = dnd.subraces.find(sr => sr.index == character.subTypes.subRace);
-    const spellcasting = dnd.levels.find(lev => lev.level == character.level && lev.class.name == character.class).spellcasting;
+    const races = [ character.race ];
+    if (character.subTypes.subRace) { races.push(dnd.subraces.find(sr => sr.index == character.subTypes.subRace).name); }
 
-    let traitNames = [character.race, character.class];
+    const spellcasting = dnd.levels.find(lev => lev.level == character.level && lev.class.name == character.class).spellcasting;
 
     // get all racial traits
     let racialTraits = traits
-        .filter(t => t.races.find(tr => tr.name == character.race || tr.name == character.subTypes.subRace))
+        .filter(t => t.races.find(tr => races.includes(tr.name)))
         .map(t => {t.raceclass = character.race; return t; });
 
     // get all class features
@@ -52,7 +52,7 @@
             // set text
             let description = t.desc.reduce((d, d1) => `${d}<p>${d1}</p>`);
             if (t.index == 17) {
-                const draconicAncestry = subrace;
+                const draconicAncestry = subRace;
                 description = description.replace(/\|COLOR\|/g, draconicAncestry.name).replace(/\|DAMAGE\|/g, draconicAncestry.breathWeapon).replace(/\|DAMAGE_TYPE\|/g, draconicAncestry.damageType)
             }
 

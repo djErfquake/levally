@@ -4,15 +4,15 @@
 
     export let characters = [];
     $: allSpells = []
-        .concat(...characters.map(c => c.s ))
-        .filter((item, pos, self) => self.indexOf(item) == pos); // dedup
+        .concat(...characters.map(c => c.spells ))
+        .filter((item, pos, self) => self.indexOf(item) == pos); // dedupe
 
 </script>
 
 
 <main>
     {#each characters as c, i}
-        <Traits l={c.l} r={c.r} c={c.c} sub={c.sub} showHeader={i == 0}/>
+        <Traits character={c} showHeader={i == 0}/>
     {/each}
 
     <Spells characterSpells={allSpells} />

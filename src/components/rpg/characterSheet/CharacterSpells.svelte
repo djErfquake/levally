@@ -7,13 +7,16 @@
     // let spellsByLevel = [];
     
     const allSpells = dnd.spells;
-    $: spellList = characterSpells.map(s => {
+    $: spellList = characterSpells
+    .map(s => {
         let spell = allSpells.find(sp => sp.index == s);
-        const colors = effectColors[spell.school.name];
-        if (colors) { spell.colors = colors; }
+        let colors = effectColors[spell.school.name];
+        if (!colors) { colors = [ '#FDDC5C', '#fe7231']; }
+        spell.colors = colors;
         return spell;
     })
     .sort((a, b) => a.name.localeCompare(b.name));
+    // $: console.log('characterSpells', characterSpells);
 
     function getSpellsByLevel(spells) {
         let spellsByLevel = [];

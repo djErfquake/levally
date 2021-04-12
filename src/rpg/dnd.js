@@ -88,4 +88,13 @@ function addToList(list, items) {
 /*
 https://npm.runkit.com/dnd5-srd
 
+
+players:
+jobin - eyJsZXZlbCI6IjIiLCJyYWNlIjoiRHdhcmYiLCJjbGFzcyI6IkZpZ2h0ZXIiLCJzcGVsbHMiOltdLCJzdWJUeXBlcyI6eyJzdWJGZWF0dXJlcyI6WzEyMl19fQ==
+kevin - eyJsZXZlbCI6MiwicmFjZSI6IkVsZiIsImNsYXNzIjoiV2FybG9jayIsInNwZWxscyI6WzcxLDk2LDE4NywzMjEsMTU2LDMyMF0sInN1YlR5cGVzIjp7InN1YkZlYXR1cmVzIjpbMzI2LDMzOV19fQ==
+shane - eyJsZXZlbCI6IjIiLCJyYWNlIjoiSHVtYW4iLCJjbGFzcyI6IkJhcmQiLCJzcGVsbHMiOlsyMDUsMzA0LDcwLDE1NCwzOSwxNTksMjJdLCJzdWJUeXBlcyI6e319
+jonny - eyJsZXZlbCI6IjIiLCJyYWNlIjoiRWxmIiwiY2xhc3MiOiJSb2d1ZSIsInNwZWxscyI6WzIwNV0sInN1YlR5cGVzIjp7fX0=
+andy  - eyJsZXZlbCI6MiwicmFjZSI6IkhhbGYtT3JjIiwiY2xhc3MiOiJEcnVpZCIsInNwZWxscyI6WzcxLDk0LDIyMiw3MF0sInN1YlR5cGVzIjp7InN1YkNsYXNzIjpbMTJdfX0=
+
+
 */

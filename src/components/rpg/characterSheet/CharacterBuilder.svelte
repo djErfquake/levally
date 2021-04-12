@@ -221,25 +221,27 @@
     {#if availableSubClasses.length > 0}
     <div class='selector sub-type'>
         <div class='selector-name'>{availableSubClasses[0].value.group}</div>
-        <Select items={availableSubClasses} on:select={selectedSubclass} selectedValue={availableSubClasses.find(sc => sc.value.index == character.subTypes.subClass[0]).label} isSeachable={false}></Select>
+        <Select items={availableSubClasses} on:select={selectedSubclass} selectedValue={character.subTypes.subClass && character.subTypes.subClass.length > 1 ? availableSubClasses.find(sc => sc.value.index == character.subTypes.subClass[0]).label : null} isSeachable={false}></Select>
     </div>
     {/if}
     {#if availableFeatures.length > 0}
     <div class='selector sub-type'>
         <div class='selector-name'>{availableFeatures[0].value.group}</div>
         <Select items={availableFeatures} on:select={selectedFeature} isSeachable={false}></Select>
-        {#if featurePicks > 1}
-            {#each selectedFeatures as feature}
-                <Spell {...feature} on:removeSpell={removeFeature}></Spell>
-            {/each}
-        {/if}
+        <div class="extra-selections">
+            {#if featurePicks > 1}
+                {#each selectedFeatures as feature}
+                    <Spell {...feature} on:removeSpell={removeFeature}></Spell>
+                {/each}
+            {/if}
+        </div>
     </div>
     {/if}
     
     <div class='selector'>
         <div class='selector-name'>Spells</div>
         <Select items={availableSpells} on:select={selectedSpell} isSeachable={false}></Select>
-        <div class="selected-spells">
+        <div class="extra-selections">
             {#each selectedSpells as spell}
                 <Spell {...spell} on:removeSpell={removeSpell}></Spell>
             {/each}
@@ -275,7 +277,7 @@
         padding-left: 20px;
     }
 
-    .selected-spells {
+    .extra-selections {
         margin-top: 10px;
     }
 
