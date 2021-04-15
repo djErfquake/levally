@@ -9,7 +9,7 @@
     // This will display the current host
     $: console.log("page", $page.host);
     // $: console.log($page.host);
-    let currentHost = $page.host.toLower();
+    $: currentHost = $page.host.toLowerCase();
 
 
 
@@ -19,6 +19,8 @@
     <div>Current Host is {currentHost}</div>
     {#if currentHost == "calvin"}
         <Calvin />
+    {:else}
+        Welcome to the site!
     {/if}
 </main>
 
