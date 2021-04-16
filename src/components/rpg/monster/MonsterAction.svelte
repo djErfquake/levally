@@ -48,7 +48,7 @@
 
 <style>
     .alternate {
-        background-color: white;
+        background-color: #fff;
     }
 
     .name {

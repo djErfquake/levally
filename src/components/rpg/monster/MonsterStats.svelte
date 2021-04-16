@@ -14,7 +14,7 @@
     export let strength;
     export let wisdom;
     
-    export let colors = [ '#FDDC5C', '#fe7231'];
+    export let colors = [ '#FBC905', '#4C2E00'];
 
 </script>
 
@@ -132,7 +132,7 @@
     }
 
     svg path {
-        fill: #fe7231;
+        fill: #4C2E00;
     }
 
     .armor-class {
@@ -147,6 +147,7 @@
         position: absolute;
         left: 20px;
         top: 14px;
+        color: #fff;
     }
 
     .name {
@@ -158,7 +159,8 @@
     }
 
     .speed {
-        background-color: #fe7231;
+        background-color: #4C2E00;
+        color: #fff;
         width: 18%;
         height: 100%;
         font-weight: 600;
@@ -173,7 +175,7 @@
     .stats {
         width: 100%;
         height: 130px;
-        background-color: #fe7231;
+        background-color: #4C2E00;
         border-radius: 0 0 13px 13px;
 
         display: flex;
@@ -190,7 +192,7 @@
         justify-content: center;
         align-items: center;
 
-        color: white;
+        color: #fff;
     }
 
     .stat-key {

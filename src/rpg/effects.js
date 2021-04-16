@@ -7,7 +7,7 @@ module.exports = {
     Evocation: [ '#FDDC5C', '#fe7231'], // releasing raw magic energy
     Illusion:[ '#C7FCEC', '#00C7A5'], // manipulating a target's senses
     Necromancy: [ '#BCE776', '#847743'], // manipulation the life engergy of creatures
-    // Transmutation: [ '#00ECD4', '#438FD6'], // manipulate physical properties of objects
+    Transmutation: [ '#00ECD4', '#438FD6'], // manipulate physical properties of objects
 
     // classes
     Bard: [ '#CEF6FF', '#0089BE'],

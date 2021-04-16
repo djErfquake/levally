@@ -18,11 +18,11 @@
 
     let selectedCharacterId = null;
     $: selectedCharacterIndex = selectedCharacterId ? encounter.characters.findIndex(c => c.id == selectedCharacterId) : null;
+    let selectedCharacter = null;
 
     const NUM_MINUTES = 24 * 60;
     $: timePercentage = encounter.timeSpent / NUM_MINUTES;
 
-    let selectedMonsterStats = null;
 
 
     const socket = io();
@@ -56,7 +56,7 @@
 
     function killCharacter(event) {
         selectedCharacterId = null;
-        selectedMonsterStats = null;
+        selectedCharacter = null;
         let characterId = event.detail;
         const characterIndex = encounter.characters.findIndex(c => c.id == characterId);
         console.log(`killed ${encounter.characters[characterIndex].name}`);
@@ -67,17 +67,13 @@
 
     function characterClicked(event) {
         const characterId = event.detail;
-        selectedCharacterId = (selectedCharacterId != characterId) ? characterId : null;
-        
-        const character = encounter.characters.find(c => c.id == selectedCharacterId);
-        if (!character.isPC) {
-            selectedMonsterStats = character.stats;
-        }
+        selectedCharacterId = (selectedCharacterId != characterId) ? characterId : null; 
+        selectedCharacter = encounter.characters.find(c => c.id == selectedCharacterId);
     }
 
     function renameCharacter() {
         selectedCharacterId = null;
-        selectedMonsterStats = null;
+        selectedCharacter = null;
         mapEncounter();
         updateServer();
     }
@@ -86,7 +82,7 @@
         const prevStatus = encounter.characters[selectedCharacterIndex].turnStatus;
         encounter.characters[selectedCharacterIndex].turnStatus = prevStatus == "DONE" ? "READY" : "DONE";
         selectedCharacterId = null;
-        selectedMonsterStats = null;
+        selectedCharacter = null;
         mapEncounter();
         updateServer();
     }
@@ -197,22 +193,27 @@
         </div>
     </section>
 
-    <section>
-        {#if selectedMonsterStats}
+    <section class="section-stats">
+        {#if selectedCharacter}
+        {#if selectedCharacter.isPC}
+        <MultiCharacterSheet characters={[selectedCharacter.stats]}></MultiCharacterSheet>
+        {:else }
         <MonsterStats
-            name={selectedMonsterStats.name} 
-            armorClass={selectedMonsterStats.armor_class}
-            speed={selectedMonsterStats.speed.walk}
-            actions={selectedMonsterStats.actions}
-            charisma={selectedMonsterStats.charisma}
-            constitution={selectedMonsterStats.constitution}
-            dexterity={selectedMonsterStats.dexterity}
-            intelligence={selectedMonsterStats.intelligence}
-            strength={selectedMonsterStats.strength}
-            wisdom={selectedMonsterStats.wisdom}
+            name={selectedCharacter.stats.name} 
+            armorClass={selectedCharacter.stats.armor_class}
+            speed={selectedCharacter.stats.speed.walk}
+            actions={selectedCharacter.stats.actions}
+            charisma={selectedCharacter.stats.charisma}
+            constitution={selectedCharacter.stats.constitution}
+            dexterity={selectedCharacter.stats.dexterity}
+            intelligence={selectedCharacter.stats.intelligence}
+            strength={selectedCharacter.stats.strength}
+            wisdom={selectedCharacter.stats.wisdom}
         />
         {/if}
+        {:else}
         <MultiCharacterSheet characters={allCharacterStats}></MultiCharacterSheet>
+        {/if}
     </section>
 </main>
 
@@ -254,4 +255,9 @@
         border: 3px solid #0f0e17;
         border-radius: 6px;
     }
+
+    .section-stats {
+        margin-top: 20px;
+    }
+
 </style>
