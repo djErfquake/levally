@@ -1,27 +1,27 @@
 <script>
     import Calvin from "../components/portfolios/Calvin.svelte";
+    // import Carolyn from "../components/portfolios/Carolyn.svelte";
 
-    import { stores } from '@sapper/app';
-    const { page } = stores();
-
-
-  
-    // This will display the current host
-    $: console.log("page", $page.host);
-    // $: console.log($page.host);
-    $: currentHost = $page.host.toLowerCase();
-
-
+    const calvinResume = {
+        name: "Calvin LeVally",
+        title: "Software Engineer",
+        email: "calvinlevally@gmail.com",
+        phone: "614-806-3499",
+        links: [
+            {
+                title: "LinkedIn",
+                link: "https://www.linkedin.com/in/calvin-levally-816b8938/",
+                icon: "fab fa-linkedin"
+            },
+            {
+                title: "Github",
+                link: "https://github.com/djErfquake",
+                icon: "fab fa-github"
+            }
+        ]
+    };
 
 </script>
 
-<main>
-    <div>Current Host is {currentHost}</div>
-    {#if currentHost == "calvin"}
-        <Calvin />
-    {:else}
-        Welcome to the site!
-    {/if}
-</main>
-
-
+<!-- <Carolyn /> -->
+<Calvin resume={calvinResume} />

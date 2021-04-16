@@ -30,6 +30,7 @@
             initiative:  dice.rollCheck(Math.floor((selectedMonster.dexterity - 10) / 2)),
             link: selectedMonster.link ? selectedMonster.link : null,
             description: '',
+            stats: selectedMonster,
             statuses: [],
             turnStatus: "NOT_YET",
             isPC: false

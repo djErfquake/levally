@@ -1,5 +1,5 @@
 <script>
-    import Calvin from "../../components/portfolios/Calvin.svelte";
+    import Calvin from "../components/portfolios/Calvin.svelte";
 
     const resume = {
         name: "Calvin LeVally",
@@ -18,7 +18,7 @@
                 icon: "fab fa-github"
             }
         ]
-    }
+    };
 </script>
 
 

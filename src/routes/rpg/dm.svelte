@@ -4,6 +4,7 @@
     import Button from '../../components/rpg/Button.svelte';
     import CharacterStats from "../../components/rpg/CharacterStats.svelte";
     import AddMonster from "../../components/rpg/AddMonster.svelte";
+    import MonsterStats from "../../components/rpg/monster/MonsterStats.svelte"
     import AddCharacter from "../../components/rpg/AddCharacter.svelte";
     import CharacterSheet from "../../components/rpg/characterSheet/CharacterSheet.svelte";
     import MultiCharacterSheet from "../../components/rpg/characterSheet/MultipleCharacterSheet.svelte";
@@ -20,6 +21,9 @@
 
     const NUM_MINUTES = 24 * 60;
     $: timePercentage = encounter.timeSpent / NUM_MINUTES;
+
+    let selectedMonsterStats = null;
+
 
     const socket = io();
     socket.emit('initRPG');
@@ -52,6 +56,7 @@
 
     function killCharacter(event) {
         selectedCharacterId = null;
+        selectedMonsterStats = null;
         let characterId = event.detail;
         const characterIndex = encounter.characters.findIndex(c => c.id == characterId);
         console.log(`killed ${encounter.characters[characterIndex].name}`);
@@ -63,10 +68,16 @@
     function characterClicked(event) {
         const characterId = event.detail;
         selectedCharacterId = (selectedCharacterId != characterId) ? characterId : null;
+        
+        const character = encounter.characters.find(c => c.id == selectedCharacterId);
+        if (!character.isPC) {
+            selectedMonsterStats = character.stats;
+        }
     }
 
     function renameCharacter() {
         selectedCharacterId = null;
+        selectedMonsterStats = null;
         mapEncounter();
         updateServer();
     }
@@ -75,6 +86,7 @@
         const prevStatus = encounter.characters[selectedCharacterIndex].turnStatus;
         encounter.characters[selectedCharacterIndex].turnStatus = prevStatus == "DONE" ? "READY" : "DONE";
         selectedCharacterId = null;
+        selectedMonsterStats = null;
         mapEncounter();
         updateServer();
     }
@@ -186,6 +198,20 @@
     </section>
 
     <section>
+        {#if selectedMonsterStats}
+        <MonsterStats
+            name={selectedMonsterStats.name} 
+            armorClass={selectedMonsterStats.armor_class}
+            speed={selectedMonsterStats.speed.walk}
+            actions={selectedMonsterStats.actions}
+            charisma={selectedMonsterStats.charisma}
+            constitution={selectedMonsterStats.constitution}
+            dexterity={selectedMonsterStats.dexterity}
+            intelligence={selectedMonsterStats.intelligence}
+            strength={selectedMonsterStats.strength}
+            wisdom={selectedMonsterStats.wisdom}
+        />
+        {/if}
         <MultiCharacterSheet characters={allCharacterStats}></MultiCharacterSheet>
     </section>
 </main>
