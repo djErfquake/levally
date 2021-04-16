@@ -5,8 +5,8 @@
     export let name;
     export let desc;
     export let damage;
-    $: damages = desc.match(/\dd\d (\+|\-) \d/gm);
-    $: damageButtonTexts = desc.match(/\dd\d (\+|\-) \d/gm).map(d => `Damage (${d})`);
+    $: damages = desc.match(/\dd\d (\+|\-) \d/gm) ?? [];
+    $: damageButtonTexts = desc.match(/\dd\d (\+|\-) \d/gm) != null ? desc.match(/\dd\d (\+|\-) \d/gm).map(d => `Damage (${d})`) : [];
 
     export let isAlternate = false;
 
