@@ -2,6 +2,8 @@
     import Header from "./calvin/Header.svelte";
 
     export let resume;
+
+    // https://sproogen.github.io/modern-resume-theme/
 </script>
 
 

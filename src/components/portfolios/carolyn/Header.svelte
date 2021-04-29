@@ -204,6 +204,9 @@
 
     .header_area .navbar .nav .nav-item {
         margin-right: 45px;
+        color: #fff;
+        box-sizing: border-box;
+        text-size-adjust: 100%;
     }
 
     .header_area .navbar .nav .nav-item.active .nav-link {
@@ -223,6 +226,10 @@
 
     li {
         text-align: -webkit-match-parent;
+    }
+
+    a:-webkit-any-link {
+        color: #fff;
     }
 
 </style>

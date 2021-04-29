@@ -13,6 +13,44 @@ const druidCircles = [
     }
 ];
 
+const bardColleges = [
+    {
+        name: "Lore",
+        group: "Bard College",
+        class: { name: "Bard" },
+        level: 3
+    },
+    {
+        name: "Valor",
+        group: "Bard College",
+        class: { name: "Bard" },
+        level: 3
+    }
+];
+
+const martialArchetypes = [
+    {
+        name: "Champion",
+        group: "Martial Archetype",
+        class: { name: "Fighter" },
+        level: 3
+    },
+    {
+        name: "Battle Master",
+        group: "Martial Archetype",
+        class: { name: "Fighter" },
+        level: 3
+    },
+    {
+        name: "Eldritch Knight",
+        group: "Martial Archetype",
+        class: { name: "Fighter" },
+        level: 3
+    }
+];
+
 module.exports = {
-    druidCircles: druidCircles
+    druidCircles: druidCircles,
+    bardColleges: bardColleges,
+    martialArchetypes: martialArchetypes
 };

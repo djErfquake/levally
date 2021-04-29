@@ -25,6 +25,7 @@
     "@babel/plugin-transform-runtime": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "@babel/runtime": "^7.0.0",
+    "@fortawesome/free-brands-svg-icons": "^5.15.3",
     "@rollup/plugin-babel": "^5.0.0",
     "@rollup/plugin-commonjs": "^14.0.0",
     "@rollup/plugin-json": "^4.1.0",
@@ -37,6 +38,7 @@
     "sapper": "^0.28.0",
     "svelte": "^3.17.3",
     "svelte-canvas": "^0.6.1",
+    "svelte-fa": "^2.2.0",
     "svelte-select": "^3.17.0"
   }
 }

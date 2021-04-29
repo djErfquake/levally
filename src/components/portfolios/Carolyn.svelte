@@ -8,7 +8,7 @@
 
 <div>
     <Header></Header>
-    <!-- <Banner {resume}></Banner> -->
+    <Banner {resume}></Banner>
 </div>
 
 <style>

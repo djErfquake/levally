@@ -30,7 +30,7 @@ let weaponProperties = dndSrd.data.weaponProperties;
 
 // REMOVE STUFF
 removeFromList(traits, [3,6,9,10,11,16,22,23,27]);
-removeFromList(features, [25,71,100,101,103,105,106,107,108,109,110,111,112,198,227,303,340,342,400]);
+removeFromList(features, [25,29,30,32,71,100,101,103,105,106,107,108,109,110,111,112,198,227,303,340,342,400]);
 removeFromList(subclasses, [2,4]);
 removeFromList(subraces, [1,2,3,4]);
 
@@ -42,7 +42,10 @@ customMonsters.sort((a, b) => a.name.localeCompare(b.name)).forEach(m => m.type 
 
 // ADD STUFF
 features = addToList(features, customFeatures.circleOfTheMoon);
+features = addToList(features, customFeatures.collegeOfValor);
 subclasses = addToList(subclasses, customSubclasses.druidCircles);
+subclasses = addToList(subclasses, customSubclasses.bardColleges);
+subclasses = addToList(subclasses, customSubclasses.martialArchetypes);
 subraces = addToList(subraces, customSubraces.dragonAncestryTypes);
 monsters = addToList(monsters, customMonsters);
 spells = addToList(spells, customSpells);
@@ -92,7 +95,7 @@ https://npm.runkit.com/dnd5-srd
 players:
 jobin - eyJsZXZlbCI6IjIiLCJyYWNlIjoiRHdhcmYiLCJjbGFzcyI6IkZpZ2h0ZXIiLCJzcGVsbHMiOltdLCJzdWJUeXBlcyI6eyJzdWJGZWF0dXJlcyI6WzEyMl19fQ==
 kevin - eyJsZXZlbCI6MiwicmFjZSI6IkVsZiIsImNsYXNzIjoiV2FybG9jayIsInNwZWxscyI6WzcxLDk2LDE4NywzMjEsMTU2LDMyMF0sInN1YlR5cGVzIjp7InN1YkZlYXR1cmVzIjpbMzI2LDMzOV19fQ==
-shane - eyJsZXZlbCI6IjIiLCJyYWNlIjoiSHVtYW4iLCJjbGFzcyI6IkJhcmQiLCJzcGVsbHMiOlsyMDUsMzA0LDcwLDE1NCwzOSwxNTksMjJdLCJzdWJUeXBlcyI6e319
+shane - eyJsZXZlbCI6IjMiLCJyYWNlIjoiSHVtYW4iLCJjbGFzcyI6IkJhcmQiLCJzcGVsbHMiOlsyMDUsMzA0LDIyLDM5LDcwLDE1NCwxNTldLCJzdWJUeXBlcyI6eyJzdWJDbGFzcyI6WzEzXX19
 jonny - eyJsZXZlbCI6IjIiLCJyYWNlIjoiRWxmIiwiY2xhc3MiOiJSb2d1ZSIsInNwZWxscyI6WzIwNV0sInN1YlR5cGVzIjp7fX0=
 andy  - eyJsZXZlbCI6MiwicmFjZSI6IkhhbGYtT3JjIiwiY2xhc3MiOiJEcnVpZCIsInNwZWxscyI6WzcxLDk0LDIyMiw3MF0sInN1YlR5cGVzIjp7InN1YkNsYXNzIjpbMTJdfX0=
 
