@@ -1,5 +1,6 @@
 <script>
     import Title from '../../../components/games/monikers/Title.svelte';
+    import Instructions from '../../../components/games/monikers/Instructions.svelte';
     import Setup from '../../../components/games/monikers/Setup.svelte';
     import RoundStart from '../../../components/games/monikers/RoundStart.svelte';
     import Round from '../../../components/games/monikers/Round.svelte';
@@ -10,16 +11,24 @@
         setup: 1,
         roundStart: 2,
         round: 3,
-        roundEnd: 4
+        roundEnd: 4,
+        instructions: 5
     };
     let gameState = GAME_STATES.title;
+    function setGameState(gs) {
+        console.log('setgamestate', gs);
+        gameState = GAME_STATES[gs.detail];
+    }
+    
 
 </script>
 
 
 <main class="monikers">
     {#if gameState == GAME_STATES.title}
-    <Title></Title>
+    <Title on:setGameState={setGameState}></Title>
+    {:else if gameState == GAME_STATES.instructions}
+    <Instructions on:setGameState={setGameState}></Instructions>
     {:else if gameState == GAME_STATES.setup}
     <Setup></Setup>
     {:else if gameState == GAME_STATES.roundStart}
@@ -53,5 +62,6 @@
 
     main {
         height: 100%;
+        margin: 50px
     }
 </style>

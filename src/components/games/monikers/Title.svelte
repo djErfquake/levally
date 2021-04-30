@@ -1,13 +1,20 @@
 <script>
     import Button from '../../common/JiggleButton.svelte';
 
+    const dispatch = createEventDispatcher();
+    import { createEventDispatcher } from 'svelte';
+    
+    function buttonClicked(button) {
+        dispatch('setGameState', button);
+    }
+
 </script>
 
 <main class="title-container">
     <h1>Monikers</h1>
     <div class="buttons">
-        <div class="button"><Button text="Play"></Button></div>
-        <div class="button"><Button text="What?"></Button></div>
+        <div class="button" on:click={() => buttonClicked("setup")}><Button text="Play"></Button></div>
+        <div class="button" on:click={() => buttonClicked("instructions")}><Button text="What?"></Button></div>
     </div>
 </main>
 

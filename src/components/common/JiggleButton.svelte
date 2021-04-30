@@ -1,9 +1,4 @@
 <script>
-    // click
-    const dispatch = createEventDispatcher();
-    import { createEventDispatcher } from 'svelte';
-    function click() { dispatch('button-click'); }
-
     // colors
     export let text = "Button";
     export let color = "#000";
@@ -30,7 +25,7 @@
 </script>
 
 
-<button on:click={click} 
+<button
         style="background-color: {backgroundColor};
                border: {border.size}px solid {border.color};
                width: {size.width}px;
