@@ -1,104 +1,64 @@
 <script>
-    const dispatch = createEventDispatcher();
-    import { createEventDispatcher } from 'svelte';
-
-    
+    export let checked = false;
+    export let color = "#2196F3";
 </script>
 
-
-
-<style>
-
-    
-
-</style>
-
-
-<!--
-<script src="https://kit.fontawesome.com/a7e9f794eb.js" crossorigin="anonymous"></script>
-<div class="container">
-
-  <div class="btn3_container">
-    <span class="main">
-      <i class="fas fa-times-circle btn"></i>
-    </span>
-  </div>
+<label class="switch">
+    <input type="checkbox" bind:checked />
+    <span class="slider" />
+</label>
   
-</div>
+<style>
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+    }
 
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
 
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: 0.4s;
+        transition: 0.4s;
+        border-radius: 34px;
+    }
 
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: 0.4s;
+        transition: 0.4s;
+        border-radius: 50%;
+    }
 
-.container {
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  background: linear-gradient(to right, #e9e4f0, #d3cce3);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
+    input:checked + .slider {
+        background-color: #2196f3;
+    }
 
-.btn1_container,
-.btn2_container,
-.btn3_container {
-  margin: 20px 0px;
-  width: 150px;
-  height: 56px;
-  background-color: black;
-  display: flex;
-  position: relative;
-  border: 3px solid #111;
-  margin-right: 20px;
-  box-shadow: -1px 3px 22px 0px rgba(0, 0, 0, 0.75);
-}
+    input:checked + .slider {
+        box-shadow: 0 0 1px #2196f3;
+    }
 
-/* Style 3 */
-
-.btn3_container {
-  border-color: #fff;
-  border-radius: 50px;
-  background-color: #fff;
-  box-shadow: -1px 3px 22px 0px rgba(255, 255, 255, 0.75);
-}
-
-.main {
-  transition: all 300ms ease;
-}
-
-.btn {
-  color: #111;
-  font-size: 50px;
-  color: red;
-  transition: all 300ms ease;
-}
-
-.active3 {
-  transform: translateX(92px) rotate(350deg);
-}
-
-.greenclr {
-  color: green;
-}
-
-
-
-// Style 3
-const btn3_ctn = document.querySelector(".btn3_container");
-const main = document.querySelector(".main");
-const icon = document.querySelector(".btn");
-btn3_ctn.addEventListener("click", () => {
-  icon.classList.toggle("fa-check-circle");
-  icon.classList.toggle("fa-times-circle");
-  main.classList.toggle("active3");
-  icon.classList.toggle("greenclr");
-});
-
-
--->
+    input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+</style>

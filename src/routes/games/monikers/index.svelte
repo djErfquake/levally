@@ -14,10 +14,15 @@
         roundEnd: 4,
         instructions: 5
     };
-    let gameState = GAME_STATES.title;
-    function setGameState(gs) {
-        console.log('setgamestate', gs);
-        gameState = GAME_STATES[gs.detail];
+    let game = {
+        state: GAME_STATES.title,
+        settings: null
+    };
+
+    function setGameState(gs) { game.state = GAME_STATES[gs.detail]; }
+    function startGame(settings) {
+        game.settings = settings.detail;
+        console.log('starting game', game.settings);
     }
     
 
@@ -25,17 +30,17 @@
 
 
 <main class="monikers">
-    {#if gameState == GAME_STATES.title}
+    {#if game.state == GAME_STATES.title}
     <Title on:setGameState={setGameState}></Title>
-    {:else if gameState == GAME_STATES.instructions}
+    {:else if game.state == GAME_STATES.instructions}
     <Instructions on:setGameState={setGameState}></Instructions>
-    {:else if gameState == GAME_STATES.setup}
-    <Setup></Setup>
-    {:else if gameState == GAME_STATES.roundStart}
+    {:else if game.state == GAME_STATES.setup}
+    <Setup on:startGame={startGame}></Setup>
+    {:else if game.state == GAME_STATES.roundStart}
     <RoundStart></RoundStart>
-    {:else if gameState == GAME_STATES.round}
+    {:else if game.state == GAME_STATES.round}
     <Round></Round>
-    {:else if gameState == GAME_STATES.roundEnd}
+    {:else if game.state == GAME_STATES.roundEnd}
     <RoundEnd></RoundEnd>
     {:else}
         Error!
