@@ -28,7 +28,7 @@
 
 
 <style>
-    .header_area {
+    /* .header_area {
         position: absolute;
         width: 100%;
         top: 0;
@@ -230,6 +230,6 @@
 
     a:-webkit-any-link {
         color: #fff;
-    }
+    } */
 
 </style>

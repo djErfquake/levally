@@ -1,6 +1,6 @@
 <script>
     import io from "socket.io-client";
-    import RoleCard from './RoleCard.svelte';
+    import RoleCard from '../../../components/games/2r1b/RoleCard.svelte';
 
     let role = null;
 

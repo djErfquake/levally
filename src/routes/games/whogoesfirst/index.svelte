@@ -1,6 +1,6 @@
 <script>
-    import Button from '../../components/rpg/Button.svelte';
-    import firstPlayer from '../../game/firstPlayer.js';
+    import Button from '../../../components/rpg/Button.svelte';
+    import firstPlayer from '../../../game/firstPlayer.js';
     
     const TIEBREAKER = "Get Tiebreaker";
     const GET_ANOTHER = "Get Another";

@@ -26,7 +26,7 @@
 
 
 <style>
-    body {
+    /* body {
         color: #333;
         font-family: Roboto, sans-serif;
         font-feature-settings: "kern", "liga", "pnum";
@@ -39,5 +39,5 @@
         body {
             width: 1170px;
         }
-    }
+    } */
 </style>

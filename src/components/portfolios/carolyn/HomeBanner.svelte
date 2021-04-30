@@ -40,7 +40,7 @@
 
 
 <style>
-    .home_banner_area {
+    /* .home_banner_area {
         line-height: 26px;
         font-size: 16px;
         font-family: "Roboto", sans-serif;
@@ -245,5 +245,5 @@
 
     *, ::after, ::before {
         box-sizing: border-box;
-    }
+    } */
 </style>
