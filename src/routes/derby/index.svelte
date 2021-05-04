@@ -15,16 +15,45 @@
         setup: 0,
         bets: 1,
         bet: 2,
-        payouts: 3
+        selectWinner: 3,
+        payouts: 4
     };
     let game = {
         state: GAME_STATES.setup,
-        horses: Array(6),
-        bets: []
+        // horses: Array(6),
+        horses: [ 
+            { name: "Really long horse name", bets: {} },
+            { name: "Peanut Butter and Jelly Sandwich", bets: {} },
+            { name: "Calvin has hair down to his feet", bets: {} },
+            { name: "Sure Loser", bets: {} },
+            { name: "A bunch of gibberish that kind of sounds like a horse name", bets: {} },
+            { name: "Bagel Bites", bets: {} }
+        ]
     };
+    let currentBet = { horse: -1, name: "", amount: 1 };
 
     function next() {
-        console.log(game);
+        if (game.state == GAME_STATES.bets) game.state = GAME_STATES.selectWinner;
+        else game.state++;
+    }
+
+    function back() {
+        game.state--;
+    }
+
+    function placeBet(index) {
+        currentBet.horse = index; currentBet.name = ""; currentBet.amount = 0;
+        game.state = GAME_STATES.bet;
+    }
+
+    function submitBet() {
+        console.log(`${currentBet.name} placed a $${currentBet.amount} bet on ${game.horses[currentBet.horse].name}`);
+        if (game.horses[currentBet.horse].bets.hasOwnProperty(currentBet.name)) 
+            game.horses[currentBet.horse].bets[currentBet.name] += currentBet.amount;
+        else 
+            game.horses[currentBet.horse].bets[currentBet.name] = currentBet.amount;
+
+        game.state = GAME_STATES.bets;
     }
 
 </script>
@@ -37,18 +66,42 @@
         <div class="horse-container">
             {#each game.horses as horse, index}
             <div class="horse-component">
-                Horse {index + 1}: <input bind:value={horse}>
+                Horse {index + 1}: <input bind:value={horse.name}>
             </div>
             {/each}
         </div>
     </div>
     {:else if game.state == GAME_STATES.bets}
     <div class="bets-screen screen">
-        <h1>Pace Bets</h1>
+        <h1>Place Bets</h1>
+        <div class="horse-container">
+            {#each game.horses as horse, index}
+            <div class="horse-component">
+                <div class="bet-button button" on:click={() => placeBet(index)}>
+                    <div class="button-text">{horse.name}</div>
+                </div>
+            </div>
+            {/each}
+        </div>
     </div>
     {:else if game.state == GAME_STATES.bet}
     <div class="bet-screen screen">
         <h1>Enter Bet</h1>
+        <div class="bet-component">
+            <div class="bet-variable">
+                <div class="bet-variable-name">Name</div>
+                <input bind:value={currentBet.name}>
+            </div>
+            <div class="bet-variable">
+                <div class="bet-variable-name">Amount</div>
+                <input type=number bind:value={currentBet.amount} min=1>
+            </div>
+        </div>
+        <div class="button submit-bet-button" on:click={submitBet}>Place Bet</div>
+    </div>
+    {:else if game.state == GAME_STATES.selectWinner}
+    <div class="bet-screen screen">
+        <h1>Select Winner</h1>
     </div>
     {:else if game.state == GAME_STATES.payouts}
     <div class="payouts-screen screen">
@@ -63,9 +116,11 @@
 
     <div class="bottom-buttons">
         {#if game.state > GAME_STATES.setup}
-            <div class="back-button bottom-button button">Back</div>
+            <div class="back-button bottom-button button" on:click={back}>Back</div>
         {/if}
-        <div class="next-button bottom-button button" on:click={next}>{game.state == GAME_STATES.payouts ? "Again" : "Next"}</div>
+        {#if game.state != GAME_STATES.bet}
+            <div class="next-button bottom-button button" on:click={next}>{game.state == GAME_STATES.payouts ? "Again" : "Next"}</div>
+        {/if}
     </div>
 </main>
 
@@ -143,10 +198,9 @@
     }
 
     .button {
-        display:inline-block;
-        padding:0.7em 1.4em;
-        margin:0 0.3em 0.3em 0;
-        border-radius:0.15em;
+        padding: 0.1em;
+        margin: 0 0.3em 0.3em 0;
+        border-radius: 0.15em;
         box-sizing: border-box;
         text-decoration: none;
         font-weight: 600;
@@ -155,8 +209,10 @@
         background-color:#e6dd3b;
         box-shadow: inset 0 -0.6em 0 -0.35em rgba(0,0,0,0.17);
         text-align: center;
-        font-size: 1.8em;
         user-select: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .button:active {
@@ -176,5 +232,38 @@
     .bottom-button {
         height: 70px;
         width: 200px;
+        font-size: 2em;
+    }
+
+    .bet-button {
+        height: 150px;
+        width: 350px;
+    }
+
+    .bet-component {
+        display: flex;
+        flex-wrap: nowrap;
+
+        font-size: 3em;
+        display: flex;
+        flex-wrap: nowrap;
+        margin: 35px;
+    }
+
+    .bet-variable {
+        display: flex;
+        flex-direction: column;
+        margin: 20px;
+    }
+
+    .bet-variable input {
+        font-size: 1em;
+    }
+
+    .submit-bet-button {
+        height: 150px;
+        width: 550px;
+        margin-top: 50px;
+        font-size: 4em;
     }
 </style>
