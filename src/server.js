@@ -11,6 +11,7 @@ const server = http.createServer();
 
 import game2r1b from './2r1b/game';
 import rpg from './rpg/initiative';
+import derby from './game/derby'
 
 polka({server}) // You can also use Express
 	.use(
@@ -26,7 +27,8 @@ polka({server}) // You can also use Express
 
 const GAMES = {
 	"TWOROOMS": "Two Rooms and a Boom",
-	"RPG": "RPG Initiative Tracker"
+	"RPG": "RPG Initiative Tracker",
+	"DERBY": "DERBY"
 };
 
 let sockets = {};
@@ -53,5 +55,11 @@ io(server).on('connection', function(socket) {
 		rpg.init();
 		socket.game = GAMES.RPG;
 		rpg.registerSocket(socket);
+	});
+
+	socket.on('init_derby', function() {
+		derby.init();
+		socket.game = GAMES.DERBY;
+		derby.registerSocket(socket);
 	});
 });

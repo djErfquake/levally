@@ -2,6 +2,7 @@ import path from 'path';
 import resolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 import commonjs from '@rollup/plugin-commonjs';
+import svelteSVG from "rollup-plugin-svelte-svg";
 import url from '@rollup/plugin-url';
 import svelte from 'rollup-plugin-svelte';
 import babel from '@rollup/plugin-babel';
@@ -27,6 +28,9 @@ export default {
 			replace({
 				'process.browser': true,
 				'process.env.NODE_ENV': JSON.stringify(mode)
+			}),
+			svelteSVG({
+				dev
 			}),
 			json({
 				compact: true
@@ -79,6 +83,9 @@ export default {
 			replace({
 				'process.browser': false,
 				'process.env.NODE_ENV': JSON.stringify(mode)
+			}),
+			svelteSVG({
+				generate: "ssr", dev
 			}),
 			json({
 				compact: true

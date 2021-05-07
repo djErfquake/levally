@@ -10,6 +10,7 @@
         icons
         https://fontawesome.com/icons/horse-head?style=solid
     */
+    import io from "socket.io-client";
 
     const GAME_STATES = {
         setup: 0,
@@ -34,10 +35,15 @@
     let currentBet = { horse: -1, name: "", amount: 1 };
     // $: BET_TOTAL = game.horses.reduce((ha, hb) => ha + Object.values(hb.bets).reduce((ba, bb) => ba + bb.amount));
 
+    const socket = io();
+    socket.emit('init_derby');
+
+
     function next() {
         switch (game.state) {
             case GAME_STATES.bets:
                 game.state = GAME_STATES.selectWinner;
+                socket.emit('update', game.horses);
                 break;
             case GAME_STATES.payouts:
                 reset();
@@ -69,6 +75,8 @@
         else 
             game.horses[currentBet.horse].bets[currentBet.name] = currentBet.amount;
 
+        socket.emit('update', game.horses);
+
         game.state = GAME_STATES.bets;
     }
 
@@ -96,6 +104,7 @@
             h.name = "";
             h.bets = {};
         });
+        socket.emit('update', game.horses);
     }
 
 </script>
