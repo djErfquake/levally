@@ -20,6 +20,7 @@
     };
     let game = {
         state: GAME_STATES.setup,
+        winner: null,
         // horses: Array(6),
         horses: [ 
             { name: "Really long horse name", bets: {} },
@@ -31,14 +32,29 @@
         ]
     };
     let currentBet = { horse: -1, name: "", amount: 1 };
+    // $: BET_TOTAL = game.horses.reduce((ha, hb) => ha + Object.values(hb.bets).reduce((ba, bb) => ba + bb.amount));
 
     function next() {
-        if (game.state == GAME_STATES.bets) game.state = GAME_STATES.selectWinner;
-        else game.state++;
+        switch (game.state) {
+            case GAME_STATES.bets:
+                game.state = GAME_STATES.selectWinner;
+                break;
+            case GAME_STATES.payouts:
+                reset();
+                break;
+            default:
+                game.state++;
+        }
     }
 
     function back() {
-        game.state--;
+        switch (game.state) {
+            case GAME_STATES.bet:
+                game.state = GAME_STATES.bets;
+                break;
+            default:
+                game.state--;
+        }
     }
 
     function placeBet(index) {
@@ -54,6 +70,32 @@
             game.horses[currentBet.horse].bets[currentBet.name] = currentBet.amount;
 
         game.state = GAME_STATES.bets;
+    }
+
+    function selectWinner(index) {
+        game.winner = index;
+        next();
+    }
+
+    function calculateWinnings(better) {
+        let totalWinnings = 0;
+        game.horses.forEach(h => {
+            totalWinnings += Object.values(h.bets).reduce((b, bi) => b + bi, 0);
+        });
+        const winningHorseTotal = Object.values(game.horses[game.winner].bets).reduce((b, bi) => b + bi, 0);
+        const percentageOfWinnings = game.horses[game.winner].bets[better] / winningHorseTotal;
+        const winnings = percentageOfWinnings * totalWinnings;
+        const roundedWinnings = (Math.round((winnings + Number.EPSILON) * 100) / 100).toFixed(2);
+        return roundedWinnings;
+    }
+
+    function reset() {
+        game.state = GAME_STATES.setup;
+        game.winner = null;
+        game.horses.forEach(h => {
+            h.name = "";
+            h.bets = {};
+        });
     }
 
 </script>
@@ -102,10 +144,27 @@
     {:else if game.state == GAME_STATES.selectWinner}
     <div class="bet-screen screen">
         <h1>Select Winner</h1>
+        <div class="horse-container">
+            {#each game.horses as horse, index}
+            <div class="horse-component">
+                <div class="bet-button button" on:click={() => selectWinner(index)}>
+                    <div class="button-text">{horse.name}</div>
+                </div>
+            </div>
+            {/each}
+        </div>
     </div>
     {:else if game.state == GAME_STATES.payouts}
     <div class="payouts-screen screen">
         <h1>Payouts</h1>
+        <h2>{game.horses[game.winner].name} wins!</h2>
+        {#if Object.keys(game.horses[game.winner].bets).length > 0}
+        {#each Object.keys(game.horses[game.winner].bets) as better}
+        <div class="payout">{better} wins ${calculateWinnings(better)}</div>
+        {/each}
+        {:else}
+        <div class="payout">Nobody wins anything!</div>
+        {/if}
     </div>
     {:else}
     <div class="error-screen screen">
@@ -118,8 +177,8 @@
         {#if game.state > GAME_STATES.setup}
             <div class="back-button bottom-button button" on:click={back}>Back</div>
         {/if}
-        {#if game.state != GAME_STATES.bet}
-            <div class="next-button bottom-button button" on:click={next}>{game.state == GAME_STATES.payouts ? "Again" : "Next"}</div>
+        {#if game.state != GAME_STATES.bet && game.state != GAME_STATES.selectWinner}
+            <div class="next-button bottom-button button" on:click={next}>{game.state == GAME_STATES.payouts ? "Again?" : "Next"}</div>
         {/if}
     </div>
 </main>
@@ -265,5 +324,19 @@
         width: 550px;
         margin-top: 50px;
         font-size: 4em;
+    }
+
+    h2 {
+        margin-top: 0;
+        font-size: 5em;
+        font-weight: 600;
+        text-transform: uppercase;
+        text-align: center;
+        text-shadow: 2px 2px #1e6f5c;
+    }
+
+    .payout {
+        font-size: 3em;
+        font-weight: 600;
     }
 </style>
