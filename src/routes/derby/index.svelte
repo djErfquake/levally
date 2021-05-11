@@ -41,26 +41,41 @@
 
     function next() {
         switch (game.state) {
+            case GAME_STATES.setup:
+                updateDisplay();
+                break;
             case GAME_STATES.bets:
                 game.state = GAME_STATES.selectWinner;
-                socket.emit('update', game.horses);
+                updateDisplay();
+                return;
+                break;
+            case GAME_STATES.selectWinner:
+                game.horses[game.winner].winner = true;
+                updateDisplay();
                 break;
             case GAME_STATES.payouts:
                 reset();
+                return;
                 break;
-            default:
-                game.state++;
         }
+
+        game.state++;
     }
 
     function back() {
         switch (game.state) {
             case GAME_STATES.bet:
+            case GAME_STATES.selectWinner:
                 game.state = GAME_STATES.bets;
+                return;
                 break;
-            default:
-                game.state--;
+            case GAME_STATES.payouts:
+                game.horses[game.winner].winner = false;
+                updateDisplay();
+                break;
         }
+
+        game.state--;
     }
 
     function placeBet(index) {
@@ -75,9 +90,9 @@
         else 
             game.horses[currentBet.horse].bets[currentBet.name] = currentBet.amount;
 
-        socket.emit('update', game.horses);
-
+            
         game.state = GAME_STATES.bets;
+        updateDisplay();
     }
 
     function selectWinner(index) {
@@ -103,8 +118,14 @@
         game.horses.forEach(h => {
             h.name = "";
             h.bets = {};
+            h.winner = false;
         });
+        updateDisplay();
+    }
+
+    function updateDisplay() {
         socket.emit('update', game.horses);
+        console.log('updating display', game.horses);
     }
 
 </script>

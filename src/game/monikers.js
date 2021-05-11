@@ -2620,6 +2620,9 @@ module.exports = {
 /*
 IDEAS
 
+vibration:
+  - https://dev.to/bibekkakati/how-to-use-vibration-api-in-your-website-4dp4
+
 components:
   - switch: https://svelte.dev/repl/35d77f2ab11e4197a19ffd8e7c4ac74e?version=3.9.1
 

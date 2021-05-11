@@ -6,6 +6,8 @@
         #289672
         #29bb89
         #e6dd3b
+
+        #d5ecc2
     */
 
     import io from "socket.io-client";
@@ -18,23 +20,59 @@
     };
     // import Horse from "../../../assets/svg/horse.svg";
 
-    let horses = [];
+    let horses = [
+        { name: "", bets: {} },
+        { name: "", bets: {} },
+        { name: "", bets: {} },
+        { name: "", bets: {} },
+        { name: "", bets: {} },
+        { name: "", bets: {} }
+    ];
+    $: winner = horses.find(h => h.winner);
 
     const socket = io();
     socket.emit('init_derby');
     socket.on('update', function(data) {
+        console.log('got update', data);
         horses = data;
     });
     socket.emit('request_update');
+
+
+    function calculateWinnings(better) {
+        let totalWinnings = 0;
+        horses.forEach(h => {
+            totalWinnings += Object.values(h.bets).reduce((b, bi) => b + bi, 0);
+        });
+        const winningHorseTotal = Object.values(winner.bets).reduce((b, bi) => b + bi, 0);
+        const percentageOfWinnings = winner.bets[better] / winningHorseTotal;
+        const winnings = percentageOfWinnings * totalWinnings;
+        const roundedWinnings = (Math.round((winnings + Number.EPSILON) * 100) / 100).toFixed(2);
+        return roundedWinnings;
+    }
 
 </script>
 
 <main>
     <div class="screen">
+        {#if winner}
+        <div class="winner-screen">
+            <h1>{winner.name} wins!</h1>
+            <div class="winner-bets">
+                {#if Object.keys(winner.bets).length > 0}
+                {#each Object.keys(winner.bets) as better}
+                <div class="payout">{better} wins ${calculateWinnings(better)}</div>
+                {/each}
+                {:else}
+                <div class="payout">Nobody wins anything!</div>
+                {/if}
+            </div>
+        </div>
+        {:else}
         <div class="horses-info">
-            {#each horses as horse}
-            <div class="horse-info">
-                <div class="horse">
+            {#each horses as horse, i}
+            <div class="horse-info" >
+                <div class="horse" class:alternate-header="{i % 2}">
                     <div class="icon">
                         <Fa icon={faHorseHead} {...iconTheme}/>
                     </div>
@@ -54,6 +92,7 @@
             </div>
             {/each}
         </div>
+        {/if}
     </div>
     <!-- <Horse width="400"/> -->
 </main>
@@ -94,18 +133,26 @@
         display: flex;
         flex-wrap: nowrap;
         justify-content: space-evenly;
-        padding-top: 20px;
     }
 
     .horse-info {
-        width: 16vw;
+        width: calc(100%/6);
         text-align: center;
+    }
+
+    .horse {
+        background-color: #1e6f5cbb;
+        padding: 15px 0;
+        width: 100%;
+    }
+
+    .alternate-header{
+        background-color: #134237bb;
     }
 
     .icon {
         width: 100%;
         height: 8vh;
-        text-shadow: 2px 2px #1e6f5c;
     }
 
     .horse-name {
@@ -124,13 +171,27 @@
     }
 
     .horse-bets {
-        width: 16vw;
+        width: calc(100%/6);
         text-align: center;
     }
 
     .bet {
         font-weight: 600;
         font-size: 3em;
+    }
+
+    h1 {
+        font-size: 12em;
+        font-weight: 600;
+        text-transform: uppercase;
+        text-align: center;
+        text-shadow: 2px 2px #1e6f5c;
+    }
+
+    .payout {
+        font-size: 5em;
+        font-weight: 600;
+        text-align: center;
     }
 
 </style>
