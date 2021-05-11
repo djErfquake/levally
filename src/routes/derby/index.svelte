@@ -22,14 +22,13 @@
     let game = {
         state: GAME_STATES.setup,
         winner: null,
-        // horses: Array(6),
-        horses: [ 
-            { name: "Really long horse name", bets: {} },
-            { name: "Peanut Butter and Jelly Sandwich", bets: {} },
-            { name: "Calvin has hair down to his feet", bets: {} },
-            { name: "Sure Loser", bets: {} },
-            { name: "A bunch of gibberish that kind of sounds like a horse name", bets: {} },
-            { name: "Bagel Bites", bets: {} }
+        horses : [
+            { name: "", bets: {} },
+            { name: "", bets: {} },
+            { name: "", bets: {} },
+            { name: "", bets: {} },
+            { name: "", bets: {} },
+            { name: "", bets: {} }
         ]
     };
     let currentBet = { horse: -1, name: "", amount: 1 };
