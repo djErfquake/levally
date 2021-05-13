@@ -2626,4 +2626,7 @@ vibration:
 components:
   - switch: https://svelte.dev/repl/35d77f2ab11e4197a19ffd8e7c4ac74e?version=3.9.1
 
+colors:
+  #d36157
+
 */

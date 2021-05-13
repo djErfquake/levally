@@ -1,6 +1,7 @@
 <script>
     export let checked = false;
-    export let color = "#2196F3";
+    export let color = "#2196f3";
+    $: cssVarStyle = `--checkbox-color:${color}`;
 </script>
 
 <label class="switch">
@@ -49,11 +50,8 @@
     }
 
     input:checked + .slider {
-        background-color: #2196f3;
-    }
-
-    input:checked + .slider {
-        box-shadow: 0 0 1px #2196f3;
+        background-color: var(--checkbox-color, #2196f3);
+        box-shadow: 0 0 1px var(--checkbox-color, #2196f3);
     }
 
     input:checked + .slider:before {

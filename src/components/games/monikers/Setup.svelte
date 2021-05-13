@@ -1,11 +1,13 @@
 <script>
     import Button from '../../common/JiggleButton.svelte';
     import Toggle from '../../common/Toggle.svelte';
+    import Radio from '../../common/Radio.svelte';
 
     const dispatch = createEventDispatcher();
     import { createEventDispatcher } from 'svelte';
     
 
+    const possibleRounds = [1, 2, 3, 4];
     let settings = {
         curated: false,
         onePhone: true,
@@ -15,11 +17,12 @@
     function playClicked() {
         dispatch('startGame', settings);
     }
+    
 
 
 </script>
 
-<main class="title-container">
+<main>
     <h1>Setup</h1>
 
     <div class="setting curated">
@@ -34,7 +37,13 @@
 
     <div class="setting rounds">
         <div class="setting-name">Number of Rounds</div>
-        <!-- <Toggle bind:checked={settings.curated}></Toggle> -->
+        <div class="rounds-buttons">
+            {#each possibleRounds as r}
+            <div class="round-button">
+                <Radio label={r} bind:value={settings.numRounds}></Radio>
+            </div>
+            {/each}
+        </div>
     </div>
 
     <div class="setting" on:click={playClicked}>
@@ -45,6 +54,7 @@
 <style>
     main {
         height: 100%;
+        width: 85%;
 
         display: flex;
         align-items: center;
@@ -62,7 +72,6 @@
 
     .setting {
         display: flex;
-        flex-wrap: nowrap;
         justify-content: space-between;
         align-items: center;
         margin-bottom: 30px;
@@ -72,10 +81,22 @@
         text-transform: uppercase;
         font-weight: 600;
         font-size: 2em;
-        width: 25vw;
+        width: 35vw;
     }
 
     .rounds {
         margin-bottom: 15vh;
+    }
+
+    .rounds-buttons {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+        width: 45vw;
+    }
+
+    .round-button {
+        width: 30px;
+        height: 30px;
     }
 </style>
