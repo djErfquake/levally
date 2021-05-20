@@ -11,6 +11,12 @@ module.exports = {
     "You can't say anything all — just charades.",
     "Get behind a large object. Now stick your head out. You can only use head movements and sound effects."
   ],
+  pointColors: {
+    1: "#42be9f",
+    2: "#00b7ef",
+    3: "#8868ae",
+    4: "#f0533e"
+  },
   cards: [
     {
       name: 'Blacula',

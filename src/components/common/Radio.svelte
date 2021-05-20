@@ -10,10 +10,10 @@
   
 <style>
     .container {
-      border: 2px solid #000;
+      border: 2px solid #ccc;
       border-radius: 50%;
       background-color: transparent;
-      color: #000;
+      color: #ccc;
       width: 100%;
       height: 100%;
       display: flex;
@@ -26,6 +26,7 @@
     .checked {
       background-color: #2196f3;
       color: white;
+      border-color: #000;
     }
   
     input[type="radio"] {

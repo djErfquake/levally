@@ -3,19 +3,15 @@
     import Toggle from '../../common/Toggle.svelte';
     import Radio from '../../common/Radio.svelte';
 
-    const dispatch = createEventDispatcher();
     import { createEventDispatcher } from 'svelte';
+    const dispatch = createEventDispatcher();
     
 
     const possibleRounds = [1, 2, 3, 4];
-    let settings = {
-        curated: false,
-        onePhone: true,
-        numRounds: 3
-    };
+    export let settings;
 
     function playClicked() {
-        dispatch('startGame', settings);
+        dispatch('setGameState', 'roundStart');
     }
     
 
@@ -54,7 +50,6 @@
 <style>
     main {
         height: 100%;
-        width: 85%;
 
         display: flex;
         align-items: center;
@@ -67,6 +62,7 @@
         text-transform: uppercase;
         font-weight: 600;
         font-size: 3em;
+        margin-top: 15vh;
         margin-bottom: 10vh;
     }
 

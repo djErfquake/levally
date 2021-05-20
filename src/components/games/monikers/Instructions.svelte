@@ -1,8 +1,8 @@
 <script>
     import Button from '../../common/JiggleButton.svelte';
 
-    const dispatch = createEventDispatcher();
     import { createEventDispatcher } from 'svelte';
+    const dispatch = createEventDispatcher();
     
     function back() {
         dispatch('setGameState', 'title');
@@ -37,6 +37,7 @@
         text-transform: uppercase;
         font-weight: 600;
         font-size: 5em;
+        margin-top: 15vh;
         margin-bottom: 5vh;
     }
 
