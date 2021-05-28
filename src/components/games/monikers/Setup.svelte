@@ -11,7 +11,7 @@
     export let settings;
 
     function playClicked() {
-        dispatch('setGameState', 'roundStart');
+        dispatch('gameStart');
     }
     
 
@@ -61,7 +61,7 @@
     h1 {
         text-transform: uppercase;
         font-weight: 600;
-        font-size: 3em;
+        font-size: 5vh;
         margin-top: 15vh;
         margin-bottom: 10vh;
     }
@@ -76,7 +76,7 @@
     .setting-name {
         text-transform: uppercase;
         font-weight: 600;
-        font-size: 2em;
+        font-size: 2.5vh;
         width: 35vw;
     }
 

@@ -32,7 +32,7 @@
     h1 {
         text-transform: uppercase;
         font-weight: 600;
-        font-size: 5em;
+        font-size: 7vh;
         margin-top: 20vh;
         margin-bottom: 30vh;
     }

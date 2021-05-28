@@ -6,10 +6,10 @@ module.exports = {
   The same cards are used in each round, so by the end of the game, you've made up a bunch of hilarious jokes together.
   */
   rounds: [
-    "Say anything you want, except for the name on the card.",
-    "Only use one word.",
-    "You can't say anything all — just charades.",
-    "Get behind a large object. Now stick your head out. You can only use head movements and sound effects."
+    "you can say anything you want, except for the name on the card.",
+    "you can only use one word.",
+    "you can't say anything all — just charades.",
+    "you must get behind a large object and stick only your head out. You can only use head movements and sound effects."
   ],
   pointColors: {
     1: "#42be9f",
@@ -2086,7 +2086,7 @@ module.exports = {
       pointValue: 4
     },
     {
-      name: 'A straight Tetis piece',
+      name: 'A straight Tetris piece',
       description:
         'A tall, single columned block from the classic Soviet video game. The 4 x 1 shpe is often called an I-Block, Line Piece, or I-tetronimo, and is the only way to clear four lines simultaneous, which results in a bonus to the player\'s score.',
       category: 'ET CETERA',

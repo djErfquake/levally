@@ -36,13 +36,13 @@
     h1 {
         text-transform: uppercase;
         font-weight: 600;
-        font-size: 5em;
+        font-size: 7vh;
         margin-top: 15vh;
         margin-bottom: 5vh;
     }
 
     .instructions {
-        font-size: 1.3em;
+        font-size: 2vh;
         margin-left: 50px;
         margin-right: 50px;
         margin-bottom: 25vh;

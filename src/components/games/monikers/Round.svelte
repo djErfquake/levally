@@ -1,4 +1,6 @@
 <script>
+    import helper from '../../../utilities/helper';
+
     import Button from '../../common/JiggleButton.svelte';
     import Timer from './components/Timer.svelte';
 
@@ -7,47 +9,60 @@
 
 
 
-    export let game;
-    $: activeTeam = game.teams.find(t => t.active);
-
-    export let pointColors;
-
+    export let settings;
     export let cards;
-    const numCards = game.settings.numPlayers * game.settings.cardsPerPlayer;
-    let remainingCards = cards.slice((game.round - 1) * numCards, numCards);
+    export let activeTeam;
+    export let pointColors;
+    $: console.table(cards);
+
     let card;
     pickCard();
 
 
     
     function pickCard() {
-        if (remainingCards.length > 0) {
-            const randomIndex = Math.floor(Math.random() * remainingCards.length);
-            card = remainingCards[randomIndex];
-            remainingCards.splice(randomIndex, 1);
+        if (cards.length > 0) {
+            const randomIndex = Math.floor(Math.random() * cards.length);
+            card = cards[randomIndex];
+            cards.splice(randomIndex, 1);
         }
         else {
-            dispatch('roundEnd', game.teams);
+            showScores(true);
         }
     }
 
+    function addCard(c) {
+        cards.push(c);
+        // helper.shuffleArray(cards);
+    }
+
+
+    function showScores(roundEnd) {
+        let command = roundEnd ? 'roundEnd' : 'turnEnd';
+        dispatch(command, activeTeam.points);
+    }
+
+
     function timesUp() {
-        // turn end
+        addCard(card);
+        showScores(false);
     }
 
     function gotIt() {
-
+        activeTeam.points += card.pointValue;
+        pickCard();
     }
 
     function pass() {
-        
+        addCard(card);
+        pickCard();
     }
     
     
 </script>
 
 <main class="round-container">
-    <Timer time={game.settings.roundTime} color={activeTeam.color} on:timesUp={timesUp}></Timer>
+    <Timer time={settings.roundTime} color={activeTeam.color} on:timesUp={timesUp}></Timer>
     <div class="card">
         <div class="pointValue" style="background-color: {pointColors[card.pointValue]}">{card.pointValue}</div>
         <div class="category">{card.category}</div>
@@ -104,10 +119,20 @@
     }
 
     .description {
-        margin-top: 10vh;
+        margin: 10vh;
+        font-size: 2vh;
+    }
+
+    .buttons {
+        text-align: center;
     }
 
     .button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        flex-wrap: nowrap;
         margin-bottom: 20px;
     }
 

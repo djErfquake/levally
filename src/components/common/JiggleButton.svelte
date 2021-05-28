@@ -10,15 +10,15 @@
 
     // font
     export let font = {
-        size: 22,
+        size: 2.5,
         weight: 600,
         family: "Lato, Roboto"
     };
 
     // size
     export let size = {
-        width: 300,
-        height: 100
+        width: 25,
+        height: 10
     };
     
 
@@ -28,11 +28,11 @@
 <button
         style="background-color: {backgroundColor};
                border: {border.size}px solid {border.color};
-               width: {size.width}px;
-               height: {size.height}px;">
+               width: {size.width}vw;
+               height: {size.height}vh;">
     <span 
         style="color: {color};
-               font: {font.size}px {font.family}, sans-serif;
+               font: {font.size}vh {font.family}, sans-serif;
                font-weight: {font.weight}px;">
         {@html text}
     </span>

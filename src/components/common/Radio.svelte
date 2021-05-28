@@ -19,6 +19,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      font-size: 2vh;
       font-weight: 600;
       user-select: none;
     }
@@ -26,7 +27,7 @@
     .checked {
       background-color: #2196f3;
       color: white;
-      border-color: #000;
+      border-color: #2196f3;
     }
   
     input[type="radio"] {
