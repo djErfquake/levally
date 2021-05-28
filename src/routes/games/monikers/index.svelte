@@ -132,8 +132,21 @@
         game.teams[activeTeamIndex].active = true;
     }
 
-    function reset() {
+    function getWinningTeams() {
+        let winners = [game.teams[0]];
+        for (let i = 1; i < game.teams.length; i++) {
+            if (game.teams[i].points > winners[0].points) {
+                winners = [game.teams[i]];
+            }
+            else if (game.teams[i].points == winners[0].points) {
+                winners.push(game.teams[i]);
+            }
+        }
+        return winners;
+    }
 
+    function reset() {
+        game.teams.forEach(t => t.active = false);
     }
     
 
@@ -156,7 +169,7 @@
     {:else if game.state == GAME_STATES.scores}
     <Scores on:turnStart={turnStart} on:roundStart={roundStart} on:setGameState={setGameState} teams={game.teams} round={game.settings.round} roundEnd={roundEnded} gameEnd={gameEnded}></Scores>
     {:else if game.state == GAME_STATES.gameEnd}
-    <GameEnd></GameEnd>
+    <GameEnd teams={getWinningTeams()}></GameEnd>
     {:else}
         Error!
     {/if}

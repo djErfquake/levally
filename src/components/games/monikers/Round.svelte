@@ -13,7 +13,7 @@
     export let cards;
     export let activeTeam;
     export let pointColors;
-    $: console.table(cards);
+    // $: console.table(cards);
 
     let card;
     pickCard();
