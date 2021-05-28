@@ -91,8 +91,8 @@
     }
 
     .pointValue {
-        width: 15vw;
-        height: 10vh;
+        width: 80px;
+        height: 80px;
         border-radius: 0 0 50% 50%;
 
         display: flex;
@@ -119,7 +119,7 @@
     }
 
     .description {
-        margin: 10vh;
+        margin: 12vw 0;
         font-size: 2vh;
     }
 

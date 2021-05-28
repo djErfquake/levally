@@ -40,9 +40,9 @@
             curated: false,
             onePhone: true,
             numRounds: 3,
-            numPlayers: 2,
-            cardsPerPlayer: 2, // 5
-            roundTime: 10, // 60
+            numPlayers: 10,
+            cardsPerPlayer: 5,
+            roundTime: 60,
             includeTypes: ['ET CETERA', 'FICTIONAL CHARACTER', 'CELEBRITY', 'HISTORICAL FIGURE']
         }
     };
@@ -50,7 +50,7 @@
     // common variables
     $: activeTeam = game.teams.find(t => t.active);
     let roundEnded = false;
-    $: gameEnded = game.settings.round > game.settings.numRounds;
+    $: gameEnded = game.settings.round >= game.settings.numRounds;
 
     // get deck
     const allCards = monikers.cards;
@@ -161,7 +161,7 @@
     {:else if game.state == GAME_STATES.instructions}
     <Instructions on:setGameState={setGameState}></Instructions>
     {:else if game.state == GAME_STATES.setup}
-    <Setup on:gameStart={gameStart} bind:settings={game.settings}></Setup>
+    <Setup on:gameStart={gameStart} bind:settings={game.settings} possibleNumRounds={monikers.rounds.length}></Setup>
     {:else if game.state == GAME_STATES.roundStart}
     <RoundStart on:setGameState={setGameState} activeTeam={activeTeam} settings={game.settings} roundsText={monikers.rounds}></RoundStart>
     {:else if game.state == GAME_STATES.round}
@@ -169,7 +169,7 @@
     {:else if game.state == GAME_STATES.scores}
     <Scores on:turnStart={turnStart} on:roundStart={roundStart} on:setGameState={setGameState} teams={game.teams} round={game.settings.round} roundEnd={roundEnded} gameEnd={gameEnded}></Scores>
     {:else if game.state == GAME_STATES.gameEnd}
-    <GameEnd teams={getWinningTeams()}></GameEnd>
+    <GameEnd on:setGameState={setGameState} teams={getWinningTeams()}></GameEnd>
     {:else}
         Error!
     {/if}

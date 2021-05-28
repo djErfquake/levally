@@ -1,7 +1,7 @@
 <script>
     // colors
     export let text = "Button";
-    export let color = "#000";
+    export let color = "#333";
     export let backgroundColor = "#fff";
     export let border = {
         color: color,

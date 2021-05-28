@@ -22,7 +22,6 @@
         }
     }
 
-
 </script>
 
 <main class="title-container">
@@ -35,13 +34,9 @@
         <Score team={team}></Score>
         {/each}
     </div>
-    {#if !roundEnd}
+    {#if gameEnd || !roundEnd}
     <div class="buttons">
         <div class="button" on:click={next}><Button text="Continue"></Button></div>
-    </div>
-    {:else if gameEnd}
-    <div class="buttons">
-        <div class="button" on:click={next}><Button text="End Game"></Button></div>
     </div>
     {:else}
     <div class="buttons">

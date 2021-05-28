@@ -27,7 +27,7 @@
         {/each}
     </div>
     <div class="buttons">
-        <div class="button" on:click={end}><Button text="Continue"></Button></div>
+        <div class="button" on:click={end}><Button text="Play Again?"></Button></div>
     </div>
 </main>
 

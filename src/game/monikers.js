@@ -2466,7 +2466,7 @@ module.exports = {
     {
       name: 'Ed Hardy',
       description:
-        'A clothing designer known as "the Godfather of madern Tattoo." On the website Stuff White People LIke, hating poeple who wear these shirts ranks as #124, and this person\'s clothing is so reviled that, "like Ku Klux Klan robes or Nazi uniforms, it cannot even be worn ironically."',
+        'A clothing designer known as "the Godfather of madern Tattoo." On the website Stuff White People Like, hating poeple who wear these shirts ranks as #124, and this person\'s clothing is so reviled that, "like Ku Klux Klan robes or Nazi uniforms, it cannot even be worn ironically."',
       category: 'CELEBRITY',
       pointValue: 2
     },

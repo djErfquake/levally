@@ -1,4 +1,5 @@
 <script>
+    import tippy from 'sveltejs-tippy';
     import Button from '../../common/JiggleButton.svelte';
     import Toggle from '../../common/Toggle.svelte';
     import Radio from '../../common/Radio.svelte';
@@ -6,9 +7,16 @@
     import { createEventDispatcher } from 'svelte';
     const dispatch = createEventDispatcher();
     
-
-    const possibleRounds = [1, 2, 3, 4];
     export let settings;
+    export let possibleNumRounds = 4;
+
+    const settingsInfo = {
+        curated: { content: "Allow players to veto some monikers before the game starts.", placement: 'top-start' },
+        // onePhone: { content: "Share the same phone between teams. Otherwise, each player could use their own phone.", placement: 'top-start' },
+        numRounds: { content: "The number of rounds to by played. Typically 3 rounds are played.", placement: 'top-start' },
+        numPlayers: { content: "The total number of players across all teams.", placement: 'top-start' },
+        cardsPerPlayer: { content: "How many monikers per player. Typically there are 5 monikers per player", placement: 'top-start' }
+    };
 
     function playClicked() {
         dispatch('gameStart');
@@ -22,19 +30,32 @@
     <h1>Setup</h1>
 
     <div class="setting curated">
-        <div class="setting-name">Curated</div>
-        <Toggle bind:checked={settings.curated}></Toggle>
+        <div class="setting-name" use:tippy={settingsInfo.curated}>Curated</div>
+        <div class="setting-value">
+            <Toggle bind:checked={settings.curated}></Toggle>
+        </div>
     </div>
 
-    <div class="setting onePhone">
-        <div class="setting-name">One Phone</div>
-        <Toggle bind:checked={settings.onePhone}></Toggle>
+    <div class="setting numPlayers">
+        <div class="setting-name" use:tippy={settingsInfo.numPlayers}>Number of Players</div>
+        <div class="setting-value">
+            <input type=number bind:value={settings.numPlayers} min=1>
+        </div>
     </div>
+
+
+    <div class="setting cardsPerPlayer">
+        <div class="setting-name" use:tippy={settingsInfo.cardsPerPlayer}>Cards per Player</div>
+        <div class="setting-value">
+            <input type=number bind:value={settings.cardsPerPlayer} min=1 max=10>
+        </div>
+    </div>
+
 
     <div class="setting rounds">
-        <div class="setting-name">Number of Rounds</div>
-        <div class="rounds-buttons">
-            {#each possibleRounds as r}
+        <div class="setting-name" use:tippy={settingsInfo.numRounds}>Number of Rounds</div>
+        <div class="rounds-buttons setting-value">
+            {#each [...Array(possibleNumRounds).keys()].map(i => i + 1) as r}
             <div class="round-button">
                 <Radio label={r} bind:value={settings.numRounds}></Radio>
             </div>
@@ -42,7 +63,7 @@
         </div>
     </div>
 
-    <div class="setting" on:click={playClicked}>
+    <div class="buttons" on:click={playClicked}>
         <Button text="Go!"></Button>
     </div>
 </main>
@@ -66,17 +87,29 @@
         margin-bottom: 10vh;
     }
 
-    .setting {
+    .buttons {
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-bottom: 30px;
     }
 
+    .setting {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        width: 70vw;
+    }
+
     .setting-name {
         text-transform: uppercase;
         font-weight: 600;
         font-size: 2.5vh;
+        width: 35vw;
+    }
+
+    .setting-value {
         width: 35vw;
     }
 
@@ -88,11 +121,23 @@
         display: flex;
         flex-wrap: nowrap;
         justify-content: space-around;
-        width: 45vw;
+        width: 50vw;
     }
 
     .round-button {
         width: 30px;
         height: 30px;
+    }
+
+    input {
+        font-size: 3vh;
+        border: 2px solid #333;
+        border-radius: 5px;
+        width: 50px;
+    }
+
+    input:focus {
+        border: 2px solid #2196f3;
+        outline: none !important;
     }
 </style>
