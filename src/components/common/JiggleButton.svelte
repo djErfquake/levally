@@ -1,41 +1,10 @@
 <script>
-    // colors
     export let text = "Button";
-    export let color = "#333";
-    export let backgroundColor = "#fff";
-    export let border = {
-        color: color,
-        size: 3
-    };
-
-    // font
-    export let font = {
-        size: 2.5,
-        weight: 600,
-        family: "Lato, Roboto"
-    };
-
-    // size
-    export let size = {
-        width: 25,
-        height: 10
-    };
-    
-
 </script>
 
 
-<button
-        style="background-color: {backgroundColor};
-               border: {border.size}px solid {border.color};
-               width: {size.width}vw;
-               height: {size.height}vh;">
-    <span 
-        style="color: {color};
-               font: {font.size}vh {font.family}, sans-serif;
-               font-weight: {font.weight}px;">
-        {@html text}
-    </span>
+<button>
+    <span>{@html text}</span>
 </button>
 
 
@@ -45,21 +14,27 @@
         position: relative;
         outline: none;
         text-decoration: none;
-        border-radius: 50px;
+        border-radius: 5vh;
         display: flex;
         justify-content: center;
         align-items: center;
         cursor: pointer;
         text-transform: uppercase;
-        height: 60px;
-        width: 210px;
+        height: 10vh;
+        width: 300px;
         opacity: 1;
+        border: 3px solid #333;
+        background-color: #fff;
     }
 
     button span {
         font-size: 12px;
         font-weight: 500;
         letter-spacing: 0.7px;
+        color: #333;
+        font-size: 2.5vh;
+        font-weight: 600;
+        font-family: "Lato", "Roboto";
     }
     button:hover {
         animation: rotate 0.7s ease-in-out both;
@@ -67,6 +42,17 @@
     button:hover span {
         animation: storm 0.7s ease-in-out both;
         animation-delay: 0.06s;
+    }
+
+    @media only screen and (min-height: 1100px) {
+        button {
+            width: 600px;
+            border: 8px solid #333;
+        }
+
+        button span {
+            font-size: 2vh;
+        }
     }
 
     @keyframes rotate {

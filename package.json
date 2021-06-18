@@ -9,10 +9,11 @@
     "start": "node __sapper__/build"
   },
   "dependencies": {
-    "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "compression": "^1.7.1",
     "dnd5-srd": "^1.0.0",
     "js-base64": "^3.6.0",
+    "mathjs": "^9.4.2",
+    "parse-ingredient": "^0.3.0",
     "polka": "^1.0.0-next.11",
     "sirv": "^1.0.0",
     "socket.io": "^2.2.0",
@@ -27,6 +28,8 @@
     "@babel/preset-env": "^7.0.0",
     "@babel/runtime": "^7.0.0",
     "@fortawesome/free-brands-svg-icons": "^5.15.3",
+    "@fortawesome/free-regular-svg-icons": "^5.15.3",
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@rollup/plugin-babel": "^5.0.0",
     "@rollup/plugin-commonjs": "^14.0.0",
     "@rollup/plugin-json": "^4.1.0",
