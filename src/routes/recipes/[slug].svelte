@@ -166,6 +166,26 @@
                 {/each}
             </ol>
         </div>
+        {#if recipe.tips && recipe.tips.length > 0}
+        <div class="tips section">
+            <h2>Tips</h2>
+            <ul>
+                {#each recipe.tips as tip}
+                <li>{tip}</li>
+                {/each}
+            </ul>
+        </div>
+        {/if}
+        {#if recipe.variations && recipe.variations.length > 0}
+        <div class="variations section">
+            <h2>Variations</h2>
+            <ul>
+                {#each recipe.variations as variation}
+                <li>{variation}</li>
+                {/each}
+            </ul>
+        </div>
+        {/if}
     </div>
 </main>
 
@@ -255,6 +275,16 @@
 
         .section {
             margin: 100px 0px;
+        }
+    }
+
+    @media only screen and (max-width: 700px) {
+        main {
+            font-size: 1.5em;
+        }
+
+        .name {
+            font-size: 1.8em;
         }
     }
     
