@@ -5,53 +5,49 @@
 		const { slug } = page.params;
 
         recipe = {
-            name: 'Apple Cinnamon Glazed Chicken',
+            name: 'Garlic Butter Chicken Bites',
             desc: [
-                "Chicken breasts are universally loved because they are tender and juicy when cooked correctly and because they combine well with so many different ingredients. This sweet and slightly spicy recipe is a case in point.",
-                "It's delicious served with grilled asparagus and French bread. Or serve this chicken with some hot cooked rice or pasta, a gelatin fruit salad, some homemade and simple dinner rolls, and an ice cream pie or brownies for dessert."
+                "Tender, juicy, bite size pieces of chicken breast are pan seared until beautifully golden brown and coated in a rich garlic and butter sauce. Does dinner get any better?",
+                "This is my something out of nothing dinner. You likely already have all of the ingredients on hand to make these and those that you don’t can be swapped for other flavors."
             ],
-            linkUrl: 'https://www.thespruceeats.com/apple-cinnamon-glazed-chicken-recipe-479476',
-            picUrl: 'https://www.thespruceeats.com/thmb/YSy26MmvnVQKr8h5HWfX1yEBFm0=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/aplle-and-cinnamon-183579009-58adc9d15f9b58a3c9d12698.jpg',
-            servings: 4,
-            prepTime: 10,
-            cookTime: 20,
+            linkUrl: 'https://www.cookingclassy.com/garlic-butter-chicken-bites/',
+            picUrl: 'https://www.cookingclassy.com/wp-content/uploads/2020/04/garlic-butter-chicken-bites-1-600x900.jpg',
+            servings: 3,
+            prepTime: 9,
+            cookTime: 6,
             tags: [ 'chicken' ],
             ingredients: [
                 {
                     main: [
-                        "2 tbsp applesauce",
-                        "1/3 cup apple jelly",
-                        "1 tablespoon honey",
-                        "5/6 tablespoons honey dijon mustard",
-                        "1/2 teaspoon cinnamon",
-                        "1/4 tsp salt",
-                        "1/8 tsp white pepper",
-                        "4 chicken breast halves (boneless, skinless)"
+                        "1 package of chicken breasts or tenders",
+                        "1 cup flour",
+                        "2 tsp italian seasoning",
+                        "1 tsp salt",
+                        "1/2 tsp pepper",
+                        "1 1/2 tbsp olive oil",
+                        "3 tbsp butter",
+                        "1 1/2 tsp garlic"
                     ]
                 }
             ],
             directions: [
                 {
                     main: [
-                        "Gather the ingredients.",
-                        "Prepare and preheat grill so the coals are medium. Make sure that the grill rack is very clean.",
-                        "Meanwhile, in a small bowl, combine the applesauce, apple jelly, honey, honey Dijon mustard, cinnamon, salt, and pepper, and stir to combine.",
-                        "When ready to cook, grease the grill rack with a paper towel dipped in oil.",
-                        "Brush apple mixture on the chicken and place on grill 4 to 6 inches from medium coals.",
-                        "Cook the chicken for 15 to 20 minutes, turning occasionally and brushing frequently with the jelly mixture until chicken is no longer pink and internal temperature reaches 165 F.",
-                        "Discard any remaining jelly mixture.",
-                        "Serve and enjoy!"
+                        "Heat pan: Preheat a 12-inch non-stick skillet over medium-high heat.",
+                        "Dry chicken (for a better sear): Dab chicken on all sides dry with paper towels.",
+                        "Toss chicken with flour and seasonings: Sprinkle over flour and Italian seasoning, and season with desired amount of salt and pepper. Toss well to evenly coat (all flour should stick to chicken and not be left behind on cutting board, keep tossing if needed).",
+                        "Heat oil and 1 Tbsp butter in skillet: Add 1 Tbsp olive oil and 1 Tbsp butter to skillet, butter should melt quickly. Tilt pan to evenly coat.",
+                        "Sear chicken: Add chicken in an even layer, work to leave some space between pieces so they’ll brown rather than steam. Let cook until nicely golden brown on bottom, about 3 minutes then flip to opposite side and cook 2 minutes longer, or until nearly cooked through.",
+                        "Finish with butter, garlic and parsley: Add remaining 2 Tbsp butter in small pieces, garlic and parsley. Cook 1 minute longer."
                     ]
                 }
             ],
             tips: [
-                "Make sure that you buy chicken breasts that are no larger than 8 ounces each. The larger breasts come from older hens and are best braised or stewed. They will be tough if you cook them as this recipe directs.",
-                "When you are grilling chicken, make sure you are cooking over medium coals. Chicken needs some time to cook through. If the coals are any hotter than medium the meat may burn before the inside cooks through. In fact, indirect heat is one of the best ways to cook chicken. Place a grill pan in the center of the coal grate, and pile coals around it. If the chicken is cooking too quickly, place it over the part of the grate that doesn't have any coals.",
-                "And always cook the chicken to 165 F as tested with a reliable meat thermometer. Chicken cooked to any temperature lower than that could harbor dangerous bacteria.",
-                "Let the chicken rest after it comes off the grill for 5 to 10 minutes so the juices can redistribute. Then enjoy every juicy and flavorful bite!"
+                "For extra herb flavor double up on the parsley. For another layer of flavor you can finish by juicing in half a lemon.",
+                "Nutrition estimate based on 3 servings. Does not include added salt."
             ],
             variations: [
-                "If you love cinnamon, increase the amount of cinnamon in this recipe to one teaspoon."
+                "If you prefer chicken thighs those will work here too. Just go with boneless skinless and trim away visible fat, then cook about 1 minute longer."
             ]
         };
 	}
@@ -73,7 +69,8 @@
     let ingredients = recipe.ingredients.length == 1 ? recipe.ingredients[0].main : recipe.ingredients;
     let directions = recipe.directions.length == 1 ? recipe.directions[0].main : recipe.directions;
 
-    ingredients = ingredients.map(i => parseIngredient(i, { normalizeUOM: true })[0]);
+    // ingredients = ingredients.map(i => parseIngredient(i, { normalizeUOM: true })[0]);
+    ingredients = ingredients.map(i => parseIngredient(i)[0]);
     ingredients.forEach(i => {
         i.perServingSize = i.quantity / servingSize;
     });
@@ -153,7 +150,9 @@
             <ul>
                 {#each ingredients as ingredient}
                 <li>{ingredient.quantity} 
-                    {#if ingredient.unitOfMeasure}{ingredient.unitOfMeasure}{/if}
+                    {#if ingredient.unitOfMeasure}
+                    {ingredient.unitOfMeasure}{#if ingredient.quantity != 1}s{/if}
+                    {/if}
                     {ingredient.description}</li>
                 {/each}
             </ul>
@@ -269,6 +268,10 @@
             font-size: 3em;
         }
 
+        .cover {
+            height: 30vh;
+        }
+
         .name {
             font-size: 2em;
         }
@@ -283,8 +286,16 @@
             font-size: 1.5em;
         }
 
+        .cover {
+            height: 30vh;
+        }
+
         .name {
             font-size: 1.8em;
+        }
+
+        .section {
+            margin: 40px 0px;
         }
     }
     
