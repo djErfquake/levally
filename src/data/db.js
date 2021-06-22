@@ -24,9 +24,8 @@ export default {
         await init();
         if (pgClient != null) {
             const text = 'SELECT * FROM recipes LIMIT 500';
-            const values = [recipeIndex];
             try {
-                const res = await pgClient.query(text, values);
+                const res = await pgClient.query(text);
                 if (res.rows) {
                     return { success: true, value: res.rows };
                 }

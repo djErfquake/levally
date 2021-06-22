@@ -5,7 +5,7 @@ export async function get(req, res) {
     if (result) {
         if (result.success) {
             const recipes = result.value;
-            console.log(`got recipes ${recipes.length}`);
+            console.log(`got ${recipes.length} recipes`);
             res.setHeader('Content-Type', 'application/json');
             res.end(JSON.stringify(recipes));
         }

@@ -1,5 +1,5 @@
 <script>
-    import recipes from '../../data/recipes';
+    import TagBar from './TagBar.svelte';
     import parseIngredient from 'parse-ingredient';
     import { create, all } from 'mathjs';
     const mathjs = create(all, {number: 'Fraction'});
@@ -53,7 +53,7 @@
     }
 
     function recalculateIngredientAmounts() {
-        const allowableFractions = [0.167, 0.333, 0.667, 0.833, 1];
+        const allowableFractions = [0.167, 0.25, 0.333, 0.5, 0.667, 0.75, 0.833, 1];
 
         ingredients.forEach(i => {
             let quantity = i.perServingSize * servingSize;
@@ -95,6 +95,7 @@
         <div class="cover" style="background-image: url('{picUrl}');"></div>
         <h1 class="name">{name}</h1>
     </div>
+    <TagBar tags={tags}></TagBar>
     <div class="recipe">
         <div class="time">
             <div class="icon">

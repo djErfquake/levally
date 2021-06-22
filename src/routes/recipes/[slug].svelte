@@ -1,6 +1,4 @@
 <script context="module">
-    import { onMount } from 'svelte';
-
     let recipe = null;
     let recipeIndex = -1;
 
@@ -105,7 +103,7 @@
 
 <main>
     <!-- <button class="test" on:click={addRecipe}></button> -->
-    {#if recipe != null}
+    {#if recipe}
     <Recipe recipe={recipe}></Recipe>
     {:else}
     <Loader></Loader>
