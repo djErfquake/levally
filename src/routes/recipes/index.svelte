@@ -4,6 +4,11 @@
     import RecipeCard from '../../components/recipes/RecipeCard.svelte';
     import Loader from '../../components/recipes/Loader.svelte';
 
+    import Fa from 'svelte-fa';
+    import { faFilter, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+    // const iconTheme = { primaryColor: '#00ebc7', size: '2em' };
+    const iconTheme = { primaryColor: '#fff', size: '2em' };
+
     let recipes = null;
 
     onMount(async () => {
@@ -20,6 +25,14 @@
             }
         }
 	});
+
+    function toggleFilterModal() {
+
+    }
+
+    function addRecipe() {
+        window.location = `${window.location}/add`;
+    }
     
 </script>
 
@@ -31,6 +44,8 @@
         <RecipeCard recipe={r}></RecipeCard>
         {/each}
     </div>
+    <div class="filter-button bottom-button" on:click={toggleFilterModal}><Fa icon={faFilter} {...iconTheme}/></div>
+    <div class="add-button bottom-button" on:click={addRecipe}><Fa icon={faPlusCircle} {...iconTheme}/></div>
     {:else}
     <Loader></Loader>
     {/if}
@@ -51,5 +66,22 @@
         justify-content: center;
         align-items: center;
         margin-top: 5vh;
+    }
+
+    .bottom-button {
+        position: fixed;
+        z-index: 100;
+        bottom: 3%;
+        background-color: #00ebc7;
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    .filter-button {
+        left: 3%;
+    }
+
+    .add-button {
+        right: 3%;
     }
 </style>
