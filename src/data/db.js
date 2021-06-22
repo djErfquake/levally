@@ -1,11 +1,15 @@
+// https://livebook.manning.com/book/svelte-and-sapper-in-action/chapter-17/v-4/125
+// https://node-postgres.com/features/queries
+
 import { Client } from 'pg';
+import dotenv from 'dotenv';
+dotenv.config();
 
 let pgClient = null;
 async function init() {
     if (pgClient == null) {
         pgClient = new Client({
-            // connectionString: 'postgres://callev:ArchdukeDinosaur@localhost:5432/LeVally' // local
-            connectionString: 'postgres://bvffqleuejqjsh:c2b9a63c00133c861e6f5005d7ec09a23c5075e944c684e456436064a72d3f51@ec2-54-91-188-254.compute-1.amazonaws.com:5432/d4ue1h8h4ag673',
+            connectionString: process.env.DATABASE_URL,
             ssl: {
                 rejectUnauthorized: false
             }
@@ -16,6 +20,28 @@ async function init() {
 }
 
 export default {
+    getRecipes: async function() {
+        await init();
+        if (pgClient != null) {
+            const text = 'SELECT * FROM recipes LIMIT 500';
+            const values = [recipeIndex];
+            try {
+                const res = await pgClient.query(text, values);
+                if (res.rows) {
+                    return { success: true, value: res.rows };
+                }
+                else {
+                    return { success: false, value: `error getting recipes ` };
+                }
+            }
+            catch (err) {
+                return { success: false, value: `error getting recipes ${err.stack}` };
+            }
+        }
+        else {
+            return { success: false, value: `couldn't initialize pgClient` };
+        }
+    },
     getRecipe: async function(recipeIndex) {
         await init();
         if (pgClient != null) {
