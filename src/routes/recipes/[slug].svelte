@@ -1,302 +1,159 @@
 <script context="module">
-    let recipe = {}
+    import { onMount } from 'svelte';
+    import { PostgrestClient } from '@supabase/postgrest-js';
+
+    let recipe = null;
+    let recipeIndex = -1;
+
+    const dbEndpoint = 'postgres://bvffqleuejqjsh:c2b9a63c00133c861e6f5005d7ec09a23c5075e944c684e456436064a72d3f51@ec2-54-91-188-254.compute-1.amazonaws.com:5432/d4ue1h8h4ag673';
+    let dbClient = new PostgrestClient(dbEndpoint); 
 
     export async function preload(page, session) {
 		const { slug } = page.params;
+        recipeIndex = slug;
 
-        recipe = {
-            name: 'Garlic Butter Chicken Bites',
-            desc: [
-                "Tender, juicy, bite size pieces of chicken breast are pan seared until beautifully golden brown and coated in a rich garlic and butter sauce. Does dinner get any better?",
-                "This is my something out of nothing dinner. You likely already have all of the ingredients on hand to make these and those that you don’t can be swapped for other flavors."
-            ],
-            linkUrl: 'https://www.cookingclassy.com/garlic-butter-chicken-bites/',
-            picUrl: 'https://www.cookingclassy.com/wp-content/uploads/2020/04/garlic-butter-chicken-bites-1-600x900.jpg',
-            servings: 3,
-            prepTime: 9,
-            cookTime: 6,
-            tags: [ 'chicken' ],
-            ingredients: [
-                {
-                    main: [
-                        "1 package of chicken breasts or tenders",
-                        "1 cup flour",
-                        "2 tsp italian seasoning",
-                        "1 tsp salt",
-                        "1/2 tsp pepper",
-                        "1 1/2 tbsp olive oil",
-                        "3 tbsp butter",
-                        "1 1/2 tsp garlic"
-                    ]
-                }
-            ],
-            directions: [
-                {
-                    main: [
-                        "Heat pan: Preheat a 12-inch non-stick skillet over medium-high heat.",
-                        "Dry chicken (for a better sear): Dab chicken on all sides dry with paper towels.",
-                        "Toss chicken with flour and seasonings: Sprinkle over flour and Italian seasoning, and season with desired amount of salt and pepper. Toss well to evenly coat (all flour should stick to chicken and not be left behind on cutting board, keep tossing if needed).",
-                        "Heat oil and 1 Tbsp butter in skillet: Add 1 Tbsp olive oil and 1 Tbsp butter to skillet, butter should melt quickly. Tilt pan to evenly coat.",
-                        "Sear chicken: Add chicken in an even layer, work to leave some space between pieces so they’ll brown rather than steam. Let cook until nicely golden brown on bottom, about 3 minutes then flip to opposite side and cook 2 minutes longer, or until nearly cooked through.",
-                        "Finish with butter, garlic and parsley: Add remaining 2 Tbsp butter in small pieces, garlic and parsley. Cook 1 minute longer."
-                    ]
-                }
-            ],
-            tips: [
-                "For extra herb flavor double up on the parsley. For another layer of flavor you can finish by juicing in half a lemon.",
-                "Nutrition estimate based on 3 servings. Does not include added salt."
-            ],
-            variations: [
-                "If you prefer chicken thighs those will work here too. Just go with boneless skinless and trim away visible fat, then cook about 1 minute longer."
-            ]
-        };
+        const { data, error} = await dbClient
+            .from('recipes')
+            .select();
+            // .match({id: recipeIndex});
+        console.log('data from db', data);
+        console.log('error on select', error);
 	}
+
+    onMount(async() => {
+        // const { data, error} = await dbClient
+        //     .from('recipes')
+        //     .select();
+        //     // .match({id: recipeIndex});
+        // console.log('data from db', data);
+        // console.log('error on select', error);
+
+    //     recipe = {
+    //         name: 'Garlic Butter Chicken Bites',
+    //         desc: [
+    //             "Tender, juicy, bite size pieces of chicken breast are pan seared until beautifully golden brown and coated in a rich garlic and butter sauce. Does dinner get any better?",
+    //             "This is my something out of nothing dinner. You likely already have all of the ingredients on hand to make these and those that you don’t can be swapped for other flavors."
+    //         ],
+    //         linkUrl: 'https://www.cookingclassy.com/garlic-butter-chicken-bites/',
+    //         picUrl: 'https://www.cookingclassy.com/wp-content/uploads/2020/04/garlic-butter-chicken-bites-1-600x900.jpg',
+    //         servings: 3,
+    //         prepTime: 9,
+    //         cookTime: 6,
+    //         tags: [ 'chicken' ],
+    //         ingredients: [
+    //             {
+    //                 main: [
+    //                     "1 package of chicken breasts or tenders",
+    //                     "1 cup flour",
+    //                     "2 tsp italian seasoning",
+    //                     "1 tsp salt",
+    //                     "1/2 tsp pepper",
+    //                     "1 1/2 tbsp olive oil",
+    //                     "3 tbsp butter",
+    //                     "1 1/2 tsp garlic"
+    //                 ]
+    //             }
+    //         ],
+    //         directions: [
+    //             {
+    //                 main: [
+    //                     "Heat pan: Preheat a 12-inch non-stick skillet over medium-high heat.",
+    //                     "Dry chicken (for a better sear): Dab chicken on all sides dry with paper towels.",
+    //                     "Toss chicken with flour and seasonings: Sprinkle over flour and Italian seasoning, and season with desired amount of salt and pepper. Toss well to evenly coat (all flour should stick to chicken and not be left behind on cutting board, keep tossing if needed).",
+    //                     "Heat oil and 1 Tbsp butter in skillet: Add 1 Tbsp olive oil and 1 Tbsp butter to skillet, butter should melt quickly. Tilt pan to evenly coat.",
+    //                     "Sear chicken: Add chicken in an even layer, work to leave some space between pieces so they’ll brown rather than steam. Let cook until nicely golden brown on bottom, about 3 minutes then flip to opposite side and cook 2 minutes longer, or until nearly cooked through.",
+    //                     "Finish with butter, garlic and parsley: Add remaining 2 Tbsp butter in small pieces, garlic and parsley. Cook 1 minute longer."
+    //                 ]
+    //             }
+    //         ],
+    //         tips: [
+    //             "For extra herb flavor double up on the parsley. For another layer of flavor you can finish by juicing in half a lemon.",
+    //             "Nutrition estimate based on 3 servings. Does not include added salt."
+    //         ],
+    //         variations: [
+    //             "If you prefer chicken thighs those will work here too. Just go with boneless skinless and trim away visible fat, then cook about 1 minute longer."
+    //         ]
+    //     };
+    });
+
+
+
 </script>
 <script>
-    import recipes from '../../data/recipes';
-    import parseIngredient from 'parse-ingredient';
-    import { create, all } from 'mathjs';
-    const mathjs = create(all, {number: 'Fraction'});
-    import Fa from 'svelte-fa';
-    import { faClock } from '@fortawesome/free-regular-svg-icons';
-    import { faPlusCircle, faMinusCircle } from '@fortawesome/free-solid-svg-icons';
-    const clockIconTheme = { primaryColor: '#1b2d45', size: '4em' };
-    const servingSizeIconTheme = { primaryColor: '#00ebc7', size: '2em' };
+    import Recipe from '../../components/recipes/Recipe.svelte';
+    import Loader from '../../components/recipes/Loader.svelte';
 
+    // import { Client } from 'pg';
+    // const pgClient = new Client({
+    //     // connectionString: 'postgres://callev:ArchdukeDinosaur@localhost:5432/LeVally'
+    //     connectionString: 'postgres://bvffqleuejqjsh:c2b9a63c00133c861e6f5005d7ec09a23c5075e944c684e456436064a72d3f51@ec2-54-91-188-254.compute-1.amazonaws.com:5432/d4ue1h8h4ag673',
+    //     ssl: {
+    //         rejectUnauthorized: false
+    //     }
+    // });
+    // pgClient.connect();
 
-    
-    let servingSize = recipe.servings;
-    let ingredients = recipe.ingredients.length == 1 ? recipe.ingredients[0].main : recipe.ingredients;
-    let directions = recipe.directions.length == 1 ? recipe.directions[0].main : recipe.directions;
+    function insertIntoDB() {
+        // const text = 'INSERT INTO recipes(name, desc, ingredients, directions, tips, variations, servings, prepTime, cookTime, linkUrl, picUrl, tags) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *';
+        // const values = [
+        //     recipe.name,
+        //     recipe.desc,
+        //     JSON.stringify(recipe.ingredients),
+        //     JSON.stringify(recipe.directions),
+        //     JSON.stringify(recipe.tips),
+        //     JSON.stringify(recipe.variations),
+        //     parseInt(recipe.servings),
+        //     parseInt(recipe.prepTime),
+        //     parseInt(recipe.cookTime),
+        //     recipe.linkUrl,
+        //     recipe.picUrl,
+        //     JSON.stringify(recipe.tags)
+        // ];
+        // pgClient.query(text, values, (err, res) => {
+        //     if (err) {
+        //         console.log(err.stack);
+        //     }
+        //     else {
+        //         console.log(res.rows[0]);
+        //     }
+        // });
 
-    // ingredients = ingredients.map(i => parseIngredient(i, { normalizeUOM: true })[0]);
-    ingredients = ingredients.map(i => parseIngredient(i)[0]);
-    ingredients.forEach(i => {
-        i.perServingSize = i.quantity / servingSize;
-    });
-    recalculateIngredientAmounts();
-
-    function adjustServingSize(adjustment) {
-        servingSize += adjustment;
-        recalculateIngredientAmounts();
+        doInsert();
     }
 
-    function recalculateIngredientAmounts() {
-        const allowableFractions = [0.167, 0.333, 0.667, 0.833, 1];
-
-        ingredients.forEach(i => {
-            let quantity = i.perServingSize * servingSize;
-            
-            // do fraction if not a whole number
-            if (quantity % 1 != 0) {
-                // get decimal and whole number
-                let whole = Math.floor(quantity);
-                let decimal = quantity - Math.floor(quantity);
-
-                // get closest fraction
-                let closestFraction = allowableFractions.reduce((a, i) => (Math.abs(i - decimal) < Math.abs(a - decimal) ? i : a));
-
-                // set repeating digits for formattting
-                if (closestFraction == 0.167) { closestFraction = '0.1(6)'; } // 1/6
-                else if (closestFraction == 0.333) { closestFraction = '0.(3)'; }  // 1/3
-                else if (closestFraction == 0.667) { closestFraction = '0.(6)'; } // 2/5
-                else if (closestFraction == 0.833) { closestFraction = '0.8(3)'; } // 5/6
-
-                decimal = closestFraction != 1 ? mathjs.format(mathjs.fraction(closestFraction), { fraction: 'ratio'}) : closestFraction;
-
-                if (whole > 0) {
-                    quantity = `${whole} ${decimal}`;
-                }
-                else {
-                    quantity = decimal;
-                }
+    async function doInsert() {
+        const values = [
+            {
+                name: recipe.name,
+                desc: recipe.desc,
+                ingredients: JSON.stringify(recipe.ingredients),
+                directions: JSON.stringify(recipe.directions),
+                tips: JSON.stringify(recipe.tips),
+                variations: JSON.stringify(recipe.variations),
+                servings: parseInt(recipe.servings),
+                prepTime: parseInt(recipe.prepTime),
+                cookTime: parseInt(recipe.cookTime),
+                linkUrl: recipe.linkUrl,
+                picUrl: recipe.picUrl,
+                tags: JSON.stringify(recipe.tags)
             }
-            i.quantity = quantity;
-        });
-        ingredients = ingredients;
+        ];
+        const { data, error} = await dbClient
+            .from('recipes')
+            .insert()
+            .match({id: recipeIndex});
+        console.log('insert on db', data);
+        console.log('error on insert', error);
     }
     
 </script>
 
 
 <main>
-    <div class="title">
-        <div class="cover" style="background-image: url('{recipe.picUrl}');"></div>
-        <h1 class="name">{recipe.name}</h1>
-    </div>
-    <div class="recipe">
-        <div class="time">
-            <div class="icon">
-                <Fa icon={faClock} {...clockIconTheme}/>
-            </div>
-            <div class="time-text">
-                <div>Prep: {recipe.prepTime} min</div>
-                <div>Cook: {recipe.cookTime} min</div>
-                <div class="total-time">Total: {recipe.prepTime + recipe.cookTime} min</div>
-            </div>
-        </div>
-        <div class="description section">
-            {#each recipe.desc as desc}
-            <p>{desc}</p>
-            {/each}
-        </div>
-        <div class="ingredients section">
-            <h2>Ingredients</h2>
-            <div class="serving-buttons">
-                <div class="serving-button" on:click={() => adjustServingSize(-1)}><Fa icon={faMinusCircle} {...servingSizeIconTheme}/></div>
-                <div class="serving-button" on:click={() => adjustServingSize(1)}><Fa icon={faPlusCircle} {...servingSizeIconTheme}/></div>
-            </div>
-            <p>Makes {servingSize} servings.</p>
-            <ul>
-                {#each ingredients as ingredient}
-                <li>{ingredient.quantity} 
-                    {#if ingredient.unitOfMeasure}
-                    {ingredient.unitOfMeasure}{#if ingredient.quantity != 1}s{/if}
-                    {/if}
-                    {ingredient.description}</li>
-                {/each}
-            </ul>
-        </div>
-        <div class="directions section">
-            <h2>Directions</h2>
-            <ol>
-                {#each directions as direction}
-                <li>{direction}</li>
-                {/each}
-            </ol>
-        </div>
-        {#if recipe.tips && recipe.tips.length > 0}
-        <div class="tips section">
-            <h2>Tips</h2>
-            <ul>
-                {#each recipe.tips as tip}
-                <li>{tip}</li>
-                {/each}
-            </ul>
-        </div>
-        {/if}
-        {#if recipe.variations && recipe.variations.length > 0}
-        <div class="variations section">
-            <h2>Variations</h2>
-            <ul>
-                {#each recipe.variations as variation}
-                <li>{variation}</li>
-                {/each}
-            </ul>
-        </div>
-        {/if}
-    </div>
+    {#if recipe != null}
+    <Recipe {...recipe}></Recipe>
+    {:else}
+    <Loader></Loader>
+    <div>Loading...</div>
+    {/if}
 </main>
-
-<style>
-    main {
-        font-size: 1.5em;
-    }
-
-    h2 {
-        font-size: 1.6em;
-    }
-
-    .title {
-        position: relative;
-    }
-
-    .name {
-        position: absolute;
-        bottom: 0px;
-        left: 25px;
-        font-size: 3em;
-        font-weight: 600;
-        color: #fff;
-    }
-
-    .cover {
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center;
-        background-color: #fde24f;
-        width: 100%;
-        height: 20vh;
-    }
-
-    .recipe {
-        background-color: #fffffe;
-        color: #1b2d45;
-        width: 85vw;
-        margin: auto;
-    }
-
-    .time {
-        display: flex;
-        width: 100%;
-        margin-top: 50px;
-    }
-
-    .icon {
-        width: 40%;
-        display: flex;
-        text-align: center;
-        flex-flow: column;
-        justify-content: center;
-    }
-
-    .time-text {
-        width: 60%;
-    }
-
-    .total-time {
-        font-weight: 600;
-        font-size: 1.2em;
-    }
-
-    .section {
-        margin: 50px 0px;
-    }
-
-    .serving-buttons {
-        display: flex;
-        justify-content: left;
-        padding: 0;
-    }
-
-    .serving-button {
-        margin: 0 10px;
-    }
-
-    @media only screen and (max-width: 1000px) {
-        main {
-            font-size: 3em;
-        }
-
-        .cover {
-            height: 30vh;
-        }
-
-        .name {
-            font-size: 2em;
-        }
-
-        .section {
-            margin: 100px 0px;
-        }
-    }
-
-    @media only screen and (max-width: 700px) {
-        main {
-            font-size: 1.5em;
-        }
-
-        .cover {
-            height: 30vh;
-        }
-
-        .name {
-            font-size: 1.8em;
-        }
-
-        .section {
-            margin: 40px 0px;
-        }
-    }
-    
-</style>
