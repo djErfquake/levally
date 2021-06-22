@@ -24,11 +24,23 @@
             variations: []
         };
     
-    let servingSize = recipe.servings;
-    let ingredients = recipe.ingredients.length == 1 ? recipe.ingredients[0].main : recipe.ingredients;
-    let directions = recipe.directions.length == 1 ? recipe.directions[0].main : recipe.directions;
+    let name = recipe.name;
+    let desc = JSON.parse(recipe.desc);
+    let ingredients = JSON.parse(recipe.ingredients);
+    let directions = JSON.parse(recipe.directions);
+    let tips = JSON.parse(recipe.tips);
+    let variations = JSON.parse(recipe.variations);
+    let servings = recipe.servings;
+    let prepTime = recipe.prepTime;
+    let cookTime = recipe.cookTime;
+    let linkUrl = recipe.linkUrl;
+    let picUrl = recipe.picUrl;
+    let tags = JSON.parse(recipe.tags);
 
-    // ingredients = ingredients.map(i => parseIngredient(i, { normalizeUOM: true })[0]);
+    let servingSize = servings;
+    ingredients = ingredients.length == 1 ? ingredients[0].main : ingredients;
+    directions = directions.length == 1 ? directions[0].main : directions;
+
     ingredients = ingredients.map(i => parseIngredient(i)[0]);
     ingredients.forEach(i => {
         i.perServingSize = i.quantity / servingSize;
@@ -80,8 +92,8 @@
 
 <main>
     <div class="title">
-        <div class="cover" style="background-image: url('{recipe.picUrl}');"></div>
-        <h1 class="name">{recipe.name}</h1>
+        <div class="cover" style="background-image: url('{picUrl}');"></div>
+        <h1 class="name">{name}</h1>
     </div>
     <div class="recipe">
         <div class="time">
@@ -89,14 +101,14 @@
                 <Fa icon={faClock} {...clockIconTheme}/>
             </div>
             <div class="time-text">
-                <div>Prep: {recipe.prepTime} min</div>
-                <div>Cook: {recipe.cookTime} min</div>
-                <div class="total-time">Total: {recipe.prepTime + recipe.cookTime} min</div>
+                <div>Prep: {prepTime} min</div>
+                <div>Cook: {cookTime} min</div>
+                <div class="total-time">Total: {prepTime + cookTime} min</div>
             </div>
         </div>
         <div class="description section">
-            {#each recipe.desc as desc}
-            <p>{desc}</p>
+            {#each desc as d}
+            <p>{d}</p>
             {/each}
         </div>
         <div class="ingredients section">
@@ -124,22 +136,22 @@
                 {/each}
             </ol>
         </div>
-        {#if recipe.tips && recipe.tips.length > 0}
+        {#if tips && tips.length > 0}
         <div class="tips section">
             <h2>Tips</h2>
             <ul>
-                {#each recipe.tips as tip}
-                <li>{tip}</li>
+                {#each tips as t}
+                <li>{t}</li>
                 {/each}
             </ul>
         </div>
         {/if}
-        {#if recipe.variations && recipe.variations.length > 0}
+        {#if variations && variations.length > 0}
         <div class="variations section">
             <h2>Variations</h2>
             <ul>
-                {#each recipe.variations as variation}
-                <li>{variation}</li>
+                {#each variations as v}
+                <li>{v}</li>
                 {/each}
             </ul>
         </div>

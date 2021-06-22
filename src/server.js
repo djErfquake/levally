@@ -4,16 +4,16 @@ import polka from 'polka';
 import compression from 'compression';
 import * as sapper from '@sapper/server';
 import io from 'socket.io';
+import { json } from 'body-parser';
 
 const { PORT, NODE_ENV } = process.env;
 const dev = NODE_ENV === 'development';
 const server = http.createServer();
 
-import game2r1b from './2r1b/game';
-import rpg from './rpg/initiative';
-import derby from './game/derby'
+
 
 polka({server}) // You can also use Express
+	.use(json())
 	.use(
 		compression({ threshold: 0 }),
 		sirv('static', { dev }),
@@ -23,8 +23,10 @@ polka({server}) // You can also use Express
 		if (err) console.log('error', err);
 	});
 
-
-
+// socket io
+import game2r1b from './2r1b/game';
+import rpg from './rpg/initiative';
+import derby from './game/derby'
 const GAMES = {
 	"TWOROOMS": "Two Rooms and a Boom",
 	"RPG": "RPG Initiative Tracker",

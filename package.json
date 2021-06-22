@@ -9,6 +9,7 @@
     "start": "node __sapper__/build"
   },
   "dependencies": {
+    "body-parser": "^1.19.0",
     "compression": "^1.7.1",
     "dnd5-srd": "^1.0.0",
     "js-base64": "^3.6.0",
