@@ -41,9 +41,10 @@
     ingredients = ingredients.length == 1 ? ingredients[0].main : ingredients;
     directions = directions.length == 1 ? directions[0].main : directions;
 
+    ingredients = ingredients.filter(i => i.trim() !== '');
     ingredients = ingredients.map(i => parseIngredient(i)[0]);
     ingredients.forEach(i => {
-        i.perServingSize = i.quantity / servingSize;
+        i.perServingSize = i.quantity ? i.quantity / servingSize : null;
     });
     recalculateIngredientAmounts();
 
@@ -56,6 +57,8 @@
         const allowableFractions = [0.167, 0.25, 0.333, 0.5, 0.667, 0.75, 0.833, 1];
 
         ingredients.forEach(i => {
+            if (!i.perServingSize) return;
+
             let quantity = i.perServingSize * servingSize;
             
             // do fraction if not a whole number
@@ -121,9 +124,11 @@
             <p>Makes {servingSize} servings.</p>
             <ul>
                 {#each ingredients as ingredient}
-                <li>{ingredient.quantity} 
+                <li>{#if ingredient.quantity}
+                    {ingredient.quantity} 
                     {#if ingredient.unitOfMeasure}
                     {ingredient.unitOfMeasure}{#if ingredient.quantity != 1 && !ingredient.unitOfMeasure.endsWith('s')}s{/if}
+                    {/if}
                     {/if}
                     {ingredient.description}</li>
                 {/each}
