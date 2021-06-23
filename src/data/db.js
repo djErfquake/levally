@@ -94,6 +94,39 @@ export default {
             console.log(`error adding recipe ${err.stack}`);
             return { success: false, value: `error adding recipe ${err.stack}` };
         }
+    },
+    editRecipe: async function(recipe) {
+        init();
+        const text = `UPDATE recipes SET "name"=$1, "desc"=$2, "ingredients"=$3, "directions"=$4, "tips"=$5, "variations"=$6, "servings"=$7, "prepTime"=$8, "cookTime"=$9, "linkUrl"=$10, "picUrl=$11", "tags=$12 WHERE id=$13 RETURNING *"`;
+        const values = [
+            recipe.name,
+            JSON.stringify(recipe.desc),
+            JSON.stringify(recipe.ingredients),
+            JSON.stringify(recipe.directions),
+            JSON.stringify(recipe.tips),
+            JSON.stringify(recipe.variations),
+            parseInt(recipe.servings),
+            parseInt(recipe.prepTime),
+            parseInt(recipe.cookTime),
+            recipe.linkUrl,
+            recipe.picUrl,
+            JSON.stringify(recipe.tags),
+            recipe.id
+        ];
+        try {
+            const res = await pgClient.query(text, values);
+            if (res.rows && res.rows.length == 1) {
+                return { success: true, value: res.rows[0] };
+            }
+            else {
+                console.log(`error updating recipe`);
+                return { success: false, value: `error updating recipe` };
+            }
+        }
+        catch (err) {
+            console.log(`error updating recipe ${err.stack}`);
+            return { success: false, value: `error updating recipe ${err.stack}` };
+        }
     }
 };
 

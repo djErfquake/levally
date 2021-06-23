@@ -123,7 +123,7 @@
                 {#each ingredients as ingredient}
                 <li>{ingredient.quantity} 
                     {#if ingredient.unitOfMeasure}
-                    {ingredient.unitOfMeasure}{#if ingredient.quantity != 1}s{/if}
+                    {ingredient.unitOfMeasure}{#if ingredient.quantity != 1 && !ingredient.unitOfMeasure.endsWith('s')}s{/if}
                     {/if}
                     {ingredient.description}</li>
                 {/each}

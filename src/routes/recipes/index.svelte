@@ -31,7 +31,10 @@
     }
 
     function addRecipe() {
-        window.location = `${window.location}/add`;
+        let newPage = window.location.href;
+        if (!newPage.endsWith('/')) { newPage += '/'; }
+        newPage += 'add';
+        window.location = newPage;
     }
     
 </script>

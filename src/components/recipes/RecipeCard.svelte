@@ -4,7 +4,10 @@
     export let recipe;
     
     function goToRecipe() {
-        window.location = `${window.location}/${recipe.id}`;
+        let newPage = window.location.href;
+        if (!newPage.endsWith('/')) { newPage += '/'; }
+        newPage += recipe.id;
+        window.location = newPage;
     }
 </script>
 
@@ -19,6 +22,7 @@
         width: 500px;
         height: 250px;
         border-radius: 15px;
+        margin: 20px;
 
         box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
         transition: 0.3s;
@@ -48,11 +52,18 @@
         font-weight: 600;
     }
 
+    @media only screen and (max-width: 1000px) {
+        .card {
+            width: 300px;
+        }
+    }
+
     @media only screen and (max-width: 700px) {
         .card {
             width: 300px;
             height: 150px;
             border-radius: 5px;
+            margin: 8px;
         }
 
         .cover {
