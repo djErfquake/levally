@@ -1,4 +1,5 @@
 <script>
+    import Button from './Button.svelte';
     import TagBar from './TagBar.svelte';
     import parseIngredient from 'parse-ingredient';
     import { create, all } from 'mathjs';
@@ -89,6 +90,14 @@
         });
         ingredients = ingredients;
     }
+
+    function editRecipe() {
+        let newPage = window.location.href;
+        newPage = newPage.replace(/\/\d+/g, ''); // remove recipe id
+        if (!newPage.endsWith('/')) { newPage += '/'; }
+        newPage += `edit?id=${recipe.id}`;
+        window.location = newPage;
+    }
     
 </script>
 
@@ -162,6 +171,9 @@
             </ul>
         </div>
         {/if}
+        <div class="buttons section">
+            <div class="edit-button" on:click={editRecipe}><Button text="Edit Recipe"></Button></div>
+        </div>
     </div>
 </main>
 

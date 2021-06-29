@@ -98,7 +98,7 @@ export default {
     },
     editRecipe: async function(recipe) {
         init();
-        const text = `UPDATE recipes SET "name"=$1, "desc"=$2, "ingredients"=$3, "directions"=$4, "tips"=$5, "variations"=$6, "servings"=$7, "prepTime"=$8, "cookTime"=$9, "linkUrl"=$10, "picUrl=$11", "tags=$12 WHERE id=$13 RETURNING *"`;
+        const text = `UPDATE recipes SET "name"=$1, "desc"=$2, "ingredients"=$3, "directions"=$4, "tips"=$5, "variations"=$6, "servings"=$7, "prepTime"=$8, "cookTime"=$9, "linkUrl"=$10, "picUrl"=$11, "tags"=$12 WHERE "id"=$13 RETURNING *`;
         const values = [
             recipe.name,
             JSON.stringify(recipe.desc),
