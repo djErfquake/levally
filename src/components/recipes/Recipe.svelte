@@ -180,6 +180,8 @@
 <style>
     main {
         font-size: 1.5em;
+        background-color: #fffffe;
+        color: #1b2d45;
     }
 
     h2 {
@@ -209,8 +211,6 @@
     }
 
     .recipe {
-        background-color: #fffffe;
-        color: #1b2d45;
         width: 85vw;
         margin: auto;
     }

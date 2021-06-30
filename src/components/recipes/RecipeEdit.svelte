@@ -1,22 +1,9 @@
 <script>
-    import recipes from '../../data/recipes';
+    import Recipes from '../../data/recipes';
     import Toggle from './Toggle.svelte';
 
-    export let recipe = {
-        name: '',
-        desc: '',
-        linkUrl: '',
-        picUrl: '',
-        servings: 1,
-        prepTime: 0,
-        cookTime: 0,
-        ingredients: '',
-        directions: '',
-        tips: '',
-        variations: '',
-        tags: []
-    };
-    let tags = recipes.tags.map(t => {return {name: t.name, active: recipe.tags.includes(t.name), color: t.color}});
+    export let recipe = Recipes.CreateBlankRecipe();
+    recipe.tags = Recipes.tags.map(t => {return {name: t.name, active: recipe.tags.includes(t.name), color: t.color}});
     
 </script>
 
@@ -69,7 +56,7 @@
     <div class="section">
         <h4>Tags</h4>
         <div class="tags">
-            {#each tags as tag}
+            {#each recipe.tags as tag}
             <div class="tag" style="background-color: {tag.color};">
                 <div class="tag-text">{tag.name}</div>
                 <Toggle bind:checked={tag.active}></Toggle>
