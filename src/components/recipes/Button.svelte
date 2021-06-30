@@ -1,9 +1,10 @@
 <script>
     export let text = "Button";
+    export let width = "auto";
 </script>
 
 
-<button>{@html text}</button>
+<button style="width: {width};">{@html text}</button>
 
 
 <style>
@@ -25,10 +26,8 @@
         cursor: pointer;
         transition: all .25s;
 
-        width: auto;
         font-size: 1em;
         padding: 30px;
-
     }
 
 </style>

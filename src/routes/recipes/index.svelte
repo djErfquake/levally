@@ -1,24 +1,30 @@
 <script>
     import { onMount } from 'svelte';
 
-    import RecipeCard from '../../components/recipes/RecipeCard.svelte';
+    import Recipes from '../../data/recipes.js';
     import Loader from '../../components/recipes/Loader.svelte';
+    import RecipeCard from '../../components/recipes/RecipeCard.svelte';
+    import FilterModal from '../../components/recipes/FilterModal.svelte';
 
     import Fa from 'svelte-fa';
     import { faFilter, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
-    // const iconTheme = { primaryColor: '#00ebc7', size: '2em' };
     const iconTheme = { primaryColor: '#fff', size: '2em' };
 
-    let recipes = null;
-
+    let loading = true;
+    let allRecipes = [];
+    let filters = Recipes.tags.map(t => t.name);
+    let filterModalActive = false;
+    $: filteredRecipes = allRecipes.filter(r => JSON.parse(r.tags).some(t => filters.includes(t)));
+    
     onMount(async () => {
         console.log('index page');
 		const res = await fetch(`api/recipe`);
         // console.log('got response on front-end', res);
         if (res.ok) {
             try {
-                recipes = await res.json();
-                console.log(`successfully found ${recipes.length} recipes`);
+                allRecipes = await res.json();
+                loading = false;
+                console.log(`successfully found ${allRecipes.length} recipes`);
             }
             catch (err) {
                 console.log('error parsing recipes');
@@ -27,7 +33,7 @@
 	});
 
     function toggleFilterModal() {
-
+        filterModalActive = !filterModalActive;
     }
 
     function addRecipe() {
@@ -36,21 +42,30 @@
         newPage += 'add';
         window.location = newPage;
     }
+
+    function updateFilters(event) {
+        filters = event.detail;
+    }
     
 </script>
 
 
 <main>
-    {#if recipes}
-    <div class="container">
-        {#each recipes as r}
-        <RecipeCard recipe={r}></RecipeCard>
-        {/each}
-    </div>
-    <div class="filter-button bottom-button" on:click={toggleFilterModal}><Fa icon={faFilter} {...iconTheme}/></div>
-    <div class="add-button bottom-button" on:click={addRecipe}><Fa icon={faPlusCircle} {...iconTheme}/></div>
-    {:else}
+    {#if loading}
     <Loader></Loader>
+    {:else}
+        <FilterModal bind:active={filterModalActive} on:updateFilters={updateFilters}></FilterModal>
+        {#if filteredRecipes.length == 0}
+        <div class="error-text">Sorry. No recipes with those tags.</div>
+        {:else}
+        <div class="container">
+            {#each filteredRecipes as r}
+            <RecipeCard recipe={r}></RecipeCard>
+            {/each}
+        </div>
+        {/if}
+        <div class="filter-button bottom-button" on:click={toggleFilterModal}><Fa icon={faFilter} {...iconTheme}/></div>
+        <div class="add-button bottom-button" on:click={addRecipe}><Fa icon={faPlusCircle} {...iconTheme}/></div>
     {/if}
 </main>
 
@@ -69,6 +84,7 @@
         justify-content: center;
         align-items: center;
         margin-top: 5vh;
+        margin-bottom: 12vh;
     }
 
     .bottom-button {
@@ -86,5 +102,10 @@
 
     .add-button {
         right: 3%;
+    }
+
+    .error-text {
+        font-size: 8vh;
+        margin: 3vh;
     }
 </style>

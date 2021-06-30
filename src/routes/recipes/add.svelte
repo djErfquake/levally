@@ -1,6 +1,6 @@
 <script >
     import Swal from 'sweetalert2';
-    import Recipes from '../../data/recipes.js'
+    import Recipes from '../../data/recipes.js';
     import Loader from '../../components/recipes/Loader.svelte';
     import RecipeEdit from '../../components/recipes/RecipeEdit.svelte';
     import Button from '../../components/recipes/Button.svelte';
