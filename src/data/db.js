@@ -132,12 +132,13 @@ export default {
     deleteRecipe: async function(recipeIndex) {
         init();
         if (pgClient != null) {
+            console.log(`deleting ${recipeIndex}`);
             const text = 'DELETE FROM recipes WHERE id = $1';
             const values = [recipeIndex];
             try {
                 console.log(`trying to delete recipe ${recipeIndex}`);
                 const res = await pgClient.query(text, values);
-                if (res.rows && res.rows.length == 1) {
+                if (res.rowCount == 1) {
                     return { success: true, value: `successfully deleted recipe` };
                 }
                 else {

@@ -1,5 +1,22 @@
 //https://www.happyhues.co/palettes/2
 
+/*
+TODO:
+ - randomize recipes on load
+ - recipe doesn't clear correctly upon save
+ - filter modal size isn't right on phone
+ - support for sections (besides main)
+    - ingredients
+    - directions
+    - fix recipes in db
+ - add dinner/casserole tag
+ 
+ - levally index have links to projects
+
+
+
+*/
+
 module.exports = {
     tags: [
         { name: 'chicken', color: '#ffdd59' },

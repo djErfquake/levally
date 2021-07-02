@@ -1,4 +1,13 @@
 <script>
+    /*
+        - send emails: https://www.emailjs.com/
+        - confetti effect: https://github.com/loonywizard/js-confetti
+
+
+
+    */
+
+
     import Calvin from "../components/portfolios/Calvin.svelte";
     // import Carolyn from "../components/portfolios/Carolyn.svelte";
 

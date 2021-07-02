@@ -51,6 +51,7 @@
 
     function adjustServingSize(adjustment) {
         servingSize += adjustment;
+        if (servingSize < 1) { servingSize = 1; }
         recalculateIngredientAmounts();
     }
 
