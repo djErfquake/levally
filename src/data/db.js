@@ -128,6 +128,29 @@ export default {
             console.log(`error updating recipe ${err.stack}`);
             return { success: false, value: `error updating recipe ${err.stack}` };
         }
+    },
+    deleteRecipe: async function(recipeIndex) {
+        init();
+        if (pgClient != null) {
+            const text = 'DELETE FROM recipes WHERE id = $1';
+            const values = [recipeIndex];
+            try {
+                console.log(`trying to delete recipe ${recipeIndex}`);
+                const res = await pgClient.query(text, values);
+                if (res.rows && res.rows.length == 1) {
+                    return { success: true, value: `successfully deleted recipe` };
+                }
+                else {
+                    return { success: false, value: `no recipe with id ${recipeIndex}` };
+                }
+            }
+            catch (err) {
+                return { success: false, value: `error deleting recipe ${err.stack}` };
+            }
+        }
+        else {
+            return { success: false, value: `couldn't initialize pgClient` };
+        }
     }
 };
 

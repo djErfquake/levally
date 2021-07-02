@@ -1,6 +1,7 @@
 <script>
     import { onMount } from 'svelte';
 
+    import Utilities from '../../utilities/helper.js';
     import Recipes from '../../data/recipes.js';
     import Loader from '../../components/recipes/Loader.svelte';
     import RecipeCard from '../../components/recipes/RecipeCard.svelte';
@@ -25,6 +26,7 @@
                 allRecipes = await res.json();
                 loading = false;
                 console.log(`successfully found ${allRecipes.length} recipes`);
+                Utilities.shuffleArray(allRecipes);
             }
             catch (err) {
                 console.log('error parsing recipes');

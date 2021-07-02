@@ -37,11 +37,11 @@
         }
 
         let newRecipe = Recipes.toDB(recipe);
-        update(newRecipe);
+        updateOnDB(newRecipe);
     }
     
 
-    async function update(newRecipe) {
+    async function updateOnDB(newRecipe) {
         // console.log('sending', JSON.stringify(recipe));
         const res = await fetch(`api/recipe/edit`, { 
             method: 'POST',
@@ -62,6 +62,41 @@
             }
         }
     }
+
+    function deleteRecipe() {
+        Swal.fire({
+            title: 'Are you sure you want to delete this recipe?',
+            showCancelButton: true,
+            confirmButtonText: 'Yes. Delete this recipe.'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteFromDB(recipe.id);
+            }
+        });
+    }
+
+    async function deleteFromDB(id) {
+        const res = await fetch(`api/recipe/del?recipeId=${id}`, { 
+            method: 'DELETE'
+        });
+        console.log('got response on front-end', res);
+        if (res.ok) {
+            try {
+                recipe = await res.json();
+                console.log('successfully deleted recipe', recipe.name);
+                Recipes.showSuccess(Swal, `Recipe deleted`);
+                recipe = Recipes.fromDB(recipe);
+            }
+            catch (err) {
+                console.log('error parsing recipe', err);
+                Recipes.showError(Swal, `Something went wrong. The recipe couldn't be deleted`);
+            }
+        }
+        else {
+            console.log('error deleting recipe');
+            Recipes.showError(Swal, `Something went wrong. The recipe couldn't be deleted`);
+        }
+    }
     
 </script>
 
@@ -69,8 +104,13 @@
 <main>
     {#if recipe}
     <RecipeEdit bind:recipe={recipe}></RecipeEdit>
-    <div class="add-button" on:click={saveRecipe}>
-        <Button text="Save Recipe"></Button>
+    <div class="buttons">
+        <div class="add-button button" on:click={saveRecipe}>
+            <Button text="Save Recipe"></Button>
+        </div>
+        <div class="delete-button button" on:click={deleteRecipe}>
+            <Button text="Delete Recipe"></Button>
+        </div>
     </div>
     {:else}
     <Loader></Loader>
@@ -79,10 +119,14 @@
 
 
 <style>
-    .add-button {
+    .buttons {
         display: flex;
         justify-content: center;
         align-items: center;
         margin: 30px;
+    }
+
+    .button {
+        margin: 0 50px;
     }
 </style>
