@@ -1,12 +1,12 @@
 <script>
-    import recipes from '../../data/recipes';
-
     export let tags;
 </script>
 
 <div class="container">
     {#each tags as tag}
-    <div class="section" style="background-color: {recipes.tags.find(t => t.name == tag).color};"></div>
+    {#if tag.active}
+    <div class="section" style="background-color: {tag.color};"></div>
+    {/if}
     {/each}
 </div>
 

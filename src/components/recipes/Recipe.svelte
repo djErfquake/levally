@@ -1,4 +1,5 @@
 <script>
+    import Recipes from '../../data/recipes';
     import Button from './Button.svelte';
     import TagBar from './TagBar.svelte';
     import parseIngredient from 'parse-ingredient';
@@ -25,29 +26,39 @@
             variations: []
         };
     
-    let name = recipe.name;
-    let desc = JSON.parse(recipe.desc);
-    let ingredients = JSON.parse(recipe.ingredients);
-    let directions = JSON.parse(recipe.directions);
-    let tips = JSON.parse(recipe.tips);
-    let variations = JSON.parse(recipe.variations);
-    let servings = recipe.servings;
-    let prepTime = recipe.prepTime;
-    let cookTime = recipe.cookTime;
-    let linkUrl = recipe.linkUrl;
-    let picUrl = recipe.picUrl;
-    let tags = JSON.parse(recipe.tags);
+    recipe = Recipes.fromDB(recipe);
 
-    let servingSize = servings;
-    ingredients = ingredients.length == 1 ? ingredients[0].main : ingredients;
-    directions = directions.length == 1 ? directions[0].main : directions;
-
-    ingredients = ingredients.filter(i => i.trim() !== '');
-    ingredients = ingredients.map(i => parseIngredient(i)[0]);
-    ingredients.forEach(i => {
-        i.perServingSize = i.quantity ? i.quantity / servingSize : null;
+    let servingSize = recipe.servings;
+    recipe.directions = recipe.directions.map(d => {
+        const direction = Object.entries(d);
+        const section = direction[0][0].replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
+        const list = direction[0][1].filter(r => r.trim() != '');
+        return {
+            section: section,
+            list: list
+        };
+    });
+    recipe.ingredients = recipe.ingredients.map(i => {
+        const ingredient = Object.entries(i);
+        const section = ingredient[0][0].replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
+        const list = ingredient[0][1].map(r => {
+            let parsed = parseIngredient(r)[0];
+            if (parsed.quantity) {
+                parsed.perServingSize = quantity ? quantity / servingSize : null;
+                return parsed;
+            }
+            else {
+                return { description: r };
+            }
+        });
+        
+        return {
+            section: section,
+            list: list
+        };
     });
     recalculateIngredientAmounts();
+    console.log(recipe);
 
     function adjustServingSize(adjustment) {
         servingSize += adjustment;
@@ -58,7 +69,7 @@
     function recalculateIngredientAmounts() {
         const allowableFractions = [0.167, 0.25, 0.333, 0.5, 0.667, 0.75, 0.833, 1];
 
-        ingredients.forEach(i => {
+        recipe.ingredients.forEach(i => {
             if (!i.perServingSize) return;
 
             let quantity = i.perServingSize * servingSize;
@@ -89,7 +100,7 @@
             }
             i.quantity = quantity;
         });
-        ingredients = ingredients;
+        recipe.ingredients = recipe.ingredients;
     }
 
     function editRecipe() {
@@ -105,23 +116,23 @@
 
 <main>
     <div class="title">
-        <div class="cover" style="background-image: url('{picUrl}');"></div>
-        <h1 class="name">{name}</h1>
+        <div class="cover" style="background-image: url('{recipe.picUrl}');"></div>
+        <h1 class="name">{recipe.name}</h1>
     </div>
-    <TagBar tags={tags}></TagBar>
+    <TagBar tags={recipe.tags}></TagBar>
     <div class="recipe">
         <div class="time">
             <div class="icon">
                 <Fa icon={faClock} {...clockIconTheme}/>
             </div>
             <div class="time-text">
-                <div>Prep: {prepTime} min</div>
-                <div>Cook: {cookTime} min</div>
-                <div class="total-time">Total: {prepTime + cookTime} min</div>
+                <div>Prep: {recipe.prepTime} min</div>
+                <div>Cook: {recipe.cookTime} min</div>
+                <div class="total-time">Total: {recipe.prepTime + recipe.cookTime} min</div>
             </div>
         </div>
         <div class="description section">
-            {#each desc as d}
+            {#each recipe.desc as d}
             <p>{d}</p>
             {/each}
         </div>
@@ -132,8 +143,13 @@
                 <div class="serving-button" on:click={() => adjustServingSize(1)}><Fa icon={faPlusCircle} {...servingSizeIconTheme}/></div>
             </div>
             <p>Makes {servingSize} servings.</p>
+            {#each recipe.ingredients as ingredientSection}
+            {#if ingredientSection.list.length > 0}
+            {#if ingredientSection.section != "Main"}
+            <h4>{ingredientSection.section}</h4>
+            {/if}
             <ul>
-                {#each ingredients as ingredient}
+                {#each ingredientSection.list as ingredient}
                 <li>{#if ingredient.quantity}
                     {ingredient.quantity} 
                     {#if ingredient.unitOfMeasure}
@@ -143,30 +159,43 @@
                     {ingredient.description}</li>
                 {/each}
             </ul>
+            {/if}
+            {/each}
         </div>
+        {#if recipe.directions[0].section != "Main" || recipe.directions[0].list.length > 0}
         <div class="directions section">
             <h2>Directions</h2>
             <ol>
-                {#each directions as direction}
-                <li>{direction}</li>
+                {#each recipe.directions as directionSection}
+                {#if directionSection.list.length > 0}
+                {#if directionSection.section != "Main"}
+                <h4>{directionSection.section}</h4>
+                {/if}
+                <ul>
+                    {#each directionSection.list as direction}
+                    <li>{direction}</li>
+                    {/each}
+                </ul>
+                {/if}
                 {/each}
             </ol>
         </div>
-        {#if tips && tips.length > 0}
+        {/if}
+        {#if recipe.tips && recipe.tips.length > 0}
         <div class="tips section">
             <h2>Tips</h2>
             <ul>
-                {#each tips as t}
+                {#each recipe.tips as t}
                 <li>{t}</li>
                 {/each}
             </ul>
         </div>
         {/if}
-        {#if variations && variations.length > 0}
+        {#if recipe.variations && recipe.variations.length > 0}
         <div class="variations section">
             <h2>Variations</h2>
             <ul>
-                {#each variations as v}
+                {#each recipe.variations as v}
                 <li>{v}</li>
                 {/each}
             </ul>
@@ -187,6 +216,14 @@
 
     h2 {
         font-size: 1.6em;
+    }
+
+    h4 {
+        margin-bottom: 0;
+    }
+
+    ul {
+        margin-top: 3px;
     }
 
     .title {

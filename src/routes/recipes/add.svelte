@@ -30,13 +30,21 @@
                 recipe = await res.json();
                 console.log('successfully saved recipe', recipe.name);
                 Recipes.showSuccess(Swal, `Recipe saved`);
-                recipe = Recipes.fromDB(recipe);
+                // recipe = dbToString(recipe);
+                recipe = Recipes.CreateBlankRecipe();
             }
             catch (err) {
                 console.log('error parsing recipe', err);
                 Recipes.showError(Swal, `Something went wrong. The recipe couldn't be saved`);
             }
         }
+    }
+
+    function dbToString(recipe) {
+        let newRecipe = Recipes.fromDB(recipe);
+        newRecipe.ingredients = Recipes.parseMultiPartSectionToString(recipe.ingredients);
+        newRecipe.directions = Recipes.parseMultiPartSectionToString(recipe.directions);
+        return newRecipe;
     }
     
 </script>

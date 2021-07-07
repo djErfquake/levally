@@ -5,11 +5,12 @@ export async function del(req, res) {
     const { recipeId } = req.query;
 	const result = await db.deleteRecipe(recipeId);
     if (result) {
+        console.log('delete result', result);
         if (result.success) {
             const message = result.value;
             console.log(message);
             res.setHeader('Content-Type', 'application/json');
-            res.end(result);
+            res.end(JSON.stringify(result));
         }
         else {
             return (res.statusCode=403,res.end(result.value));

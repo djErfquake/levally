@@ -18,7 +18,7 @@
             try {
                 recipe = await res.json();
                 console.log('successfully found recipe', recipe.name);
-                recipe = Recipes.fromDB(recipe);
+                recipe = dbToString(recipe);
             }
             catch (err) {
                 console.log('error parsing recipe', err);
@@ -54,7 +54,7 @@
                 recipe = await res.json();
                 console.log('successfully saved recipe', recipe.name);
                 Recipes.showSuccess(Swal, `Recipe saved`);
-                recipe = Recipes.fromDB(recipe);
+                recipe = dbToString(recipe);
             }
             catch (err) {
                 console.log('error parsing recipe', err);
@@ -85,7 +85,7 @@
                 recipe = await res.json();
                 console.log('successfully deleted recipe', recipe.name);
                 Recipes.showSuccess(Swal, `Recipe deleted`);
-                recipe = Recipes.fromDB(recipe);
+                recipe = dbToString(recipe);
             }
             catch (err) {
                 console.log('error parsing recipe', err);
@@ -96,6 +96,19 @@
             console.log('error deleting recipe');
             Recipes.showError(Swal, `Something went wrong. The recipe couldn't be deleted`);
         }
+
+        let newPage = window.location.href;
+        newPage = newPage.replace(/\/\d+/g, ''); // remove recipe id
+        if (!newPage.endsWith('/')) { newPage += '/'; }
+        newPage += `recipes`;
+        window.location = newPage;
+    }
+
+    function dbToString(recipe) {
+        let newRecipe = Recipes.fromDB(recipe);
+        newRecipe.ingredients = Recipes.parseMultiPartSectionToString(recipe.ingredients);
+        newRecipe.directions = Recipes.parseMultiPartSectionToString(recipe.directions);
+        return newRecipe;
     }
     
 </script>

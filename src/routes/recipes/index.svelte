@@ -15,7 +15,10 @@
     let allRecipes = [];
     let filters = Recipes.tags.map(t => t.name);
     let filterModalActive = false;
-    $: filteredRecipes = allRecipes.filter(r => JSON.parse(r.tags).some(t => filters.includes(t)));
+    $: filteredRecipes = allRecipes.filter(r => {
+        const tags = JSON.parse(r.tags);
+        return tags.length == 0 || tags.some(t => filters.includes(t))
+    });
     
     onMount(async () => {
         console.log('index page');
