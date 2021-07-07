@@ -3,7 +3,6 @@
     import Toggle from './Toggle.svelte';
 
     export let recipe = Recipes.CreateBlankRecipe();
-    recipe.tags = Recipes.tags.map(t => {return {name: t.name, active: recipe.tags.includes(t.name), color: t.color}});
     
 </script>
 

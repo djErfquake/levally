@@ -63,6 +63,8 @@
         justify-content: center;
         align-items: center;
         flex-wrap: wrap;
+        height: 60vh;
+        overflow-y: scroll;
     }
 
     .tag {
