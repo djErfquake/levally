@@ -117,16 +117,27 @@ module.exports = {
             directions: '',
             tips: '',
             variations: '',
-            tags: []
+            tags: tags.map(t => {return {name: t.name, active: false, color: t.color}})
         };
     },
-    fromDB: function(recipe) {
+    fromDBForRecipePage: function(recipe) {
+        let newRecipe = recipe;
+        newRecipe.desc = JSON.parse(recipe.desc);
+        newRecipe.tips = JSON.parse(recipe.tips);
+        newRecipe.variations = JSON.parse(recipe.variations);
+        newRecipe.ingredients = JSON.parse(recipe.ingredients);
+        newRecipe.directions = JSON.parse(recipe.directions);
+        const dbTags = JSON.parse(recipe.tags);
+        newRecipe.tags = tags.map(t => {return {name: t.name, active: dbTags.includes(t.name), color: t.color}});
+        return newRecipe;
+    },
+    fromDBForEditing: function(recipe) {
         let newRecipe = recipe;
         newRecipe.desc = recipe.desc == "[]" ? "" : JSON.parse(recipe.desc).reduce((a, i) => `${a}\n${i}`);
         newRecipe.tips = recipe.tips == "[]" ? "" : JSON.parse(recipe.tips).reduce((a, i) => `${a}\n${i}`);
         newRecipe.variations = recipe.variations == "[]" ? "" : JSON.parse(recipe.variations).reduce((a, i) => `${a}\n${i}`);
-        newRecipe.ingredients = JSON.parse(recipe.ingredients);
-        newRecipe.directions = JSON.parse(recipe.directions);
+        newRecipe.ingredients = parseMultiPartSectionToString(JSON.parse(recipe.ingredients));
+        newRecipe.directions = parseMultiPartSectionToString(JSON.parse(recipe.directions));
         const dbTags = JSON.parse(recipe.tags);
         newRecipe.tags = tags.map(t => {return {name: t.name, active: dbTags.includes(t.name), color: t.color}});
         return newRecipe;

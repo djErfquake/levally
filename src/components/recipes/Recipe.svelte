@@ -26,7 +26,7 @@
             variations: []
         };
     
-    recipe = Recipes.fromDB(recipe);
+    recipe = Recipes.fromDBForRecipePage(recipe);
 
     let servingSize = recipe.servings;
     recipe.directions = recipe.directions.map(d => {
@@ -44,7 +44,7 @@
         const list = ingredient[0][1].map(r => {
             let parsed = parseIngredient(r)[0];
             if (parsed.quantity) {
-                parsed.perServingSize = quantity ? quantity / servingSize : null;
+                parsed.perServingSize = parsed.quantity ? parsed.quantity / servingSize : null;
                 return parsed;
             }
             else {
