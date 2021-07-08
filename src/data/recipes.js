@@ -55,7 +55,7 @@ function parseMultiPartSectionForDB(value) {
 
         // done with section
         if (!actualLine && partName != null) {
-            parts.push({[partName]: part});
+            parts.push({[partName]: [...part]});
             partName = null;
             part.length = 0;
             continue;
@@ -74,7 +74,7 @@ function parseMultiPartSectionForDB(value) {
     }
 
     if (part.length > 0) {
-        parts.push({[partName]: part});
+        parts.push({[partName]: [...part]});
     }
 
     return parts;
