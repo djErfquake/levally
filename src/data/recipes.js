@@ -3,11 +3,6 @@
 
 /*
 TODO:
- - support for sections (besides main)
-    - ingredients
-    - directions
-    - fix recipes in db
- 
  - levally index have links to projects
 
 

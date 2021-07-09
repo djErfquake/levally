@@ -2,6 +2,8 @@
 // https://livebook.manning.com/book/svelte-and-sapper-in-action/chapter-17/v-4/125
 // https://node-postgres.com/features/queries
 
+// when db is down, check DATABSE_URL is correct in .env. check here: 'heroku config'
+
 import { Client } from 'pg';
 import dotenv from 'dotenv';
 dotenv.config();

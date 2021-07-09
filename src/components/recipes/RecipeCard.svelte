@@ -1,7 +1,9 @@
 <script>
+    import Recipes from '../../data/recipes';
     import TagBar from './TagBar.svelte';
 
     export let recipe;
+    recipe = Recipes.fromDBForRecipePage(recipe);
     
     function goToRecipe() {
         let newPage = window.location.href;
@@ -13,7 +15,7 @@
 
 <div class="card" on:click={goToRecipe}>
     <div class="cover" style="background-image: url('{recipe.picUrl}');"></div>
-    <TagBar tags={JSON.parse(recipe.tags)}></TagBar>
+    <TagBar tags={recipe.tags}></TagBar>
     <div class="name">{recipe.name}</div>
 </div>
 
