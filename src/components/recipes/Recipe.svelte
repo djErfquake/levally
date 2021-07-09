@@ -105,6 +105,10 @@
     function editRecipe() {
         Recipes.navigateToPage(`/recipes/edit?id=${recipe.id}`);
     }
+
+    function goToRecipe() {
+        window.open(recipe.linkUrl, '_blank');
+    }
     
 </script>
 
@@ -198,6 +202,9 @@
         {/if}
         <div class="buttons section">
             <div class="edit-button" on:click={editRecipe}><Button text="Edit Recipe"></Button></div>
+            {#if recipe.linkUrl}
+            <div class="goto-button" on:click={goToRecipe}><Button text="Recipe Link"></Button></div>
+            {/if}
         </div>
     </div>
 </main>
@@ -283,6 +290,17 @@
 
     .serving-button {
         margin: 0 10px;
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        margin: 30px;
+    }
+
+    .button {
+        margin: 0 50px;
     }
 
     @media only screen and (max-width: 1000px) {
