@@ -43,7 +43,7 @@
         const section = ingredient[0][0].replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
         const list = ingredient[0][1].map(r => {
             let parsed = parseIngredient(r)[0];
-            if (parsed.quantity) {
+            if (parsed && parsed.quantity) {
                 parsed.perServingSize = parsed.quantity ? parsed.quantity / servingSize : null;
                 return parsed;
             }
@@ -58,7 +58,6 @@
         };
     });
     recalculateIngredientAmounts();
-    console.log(recipe);
 
     function adjustServingSize(adjustment) {
         servingSize += adjustment;
@@ -69,7 +68,7 @@
     function recalculateIngredientAmounts() {
         const allowableFractions = [0.167, 0.25, 0.333, 0.5, 0.667, 0.75, 0.833, 1];
 
-        recipe.ingredients.forEach(i => {
+        recipe.ingredients.forEach(s => s.list.forEach(i => {
             if (!i.perServingSize) return;
 
             let quantity = i.perServingSize * servingSize;
@@ -99,16 +98,12 @@
                 }
             }
             i.quantity = quantity;
-        });
+        }));
         recipe.ingredients = recipe.ingredients;
     }
 
     function editRecipe() {
-        let newPage = window.location.href;
-        newPage = newPage.replace(/\/\d+/g, ''); // remove recipe id
-        if (!newPage.endsWith('/')) { newPage += '/'; }
-        newPage += `edit?id=${recipe.id}`;
-        window.location = newPage;
+        Recipes.navigateToPage(`/recipes/edit?id=${recipe.id}`);
     }
     
 </script>
@@ -171,11 +166,11 @@
                 {#if directionSection.section != "Main"}
                 <h4>{directionSection.section}</h4>
                 {/if}
-                <ul>
+                <ol>
                     {#each directionSection.list as direction}
                     <li>{direction}</li>
                     {/each}
-                </ul>
+                </ol>
                 {/if}
                 {/each}
             </ol>

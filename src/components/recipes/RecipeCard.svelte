@@ -3,13 +3,9 @@
     import TagBar from './TagBar.svelte';
 
     export let recipe;
-    recipe = Recipes.fromDBForRecipePage(recipe);
     
     function goToRecipe() {
-        let newPage = window.location.href;
-        if (!newPage.endsWith('/')) { newPage += '/'; }
-        newPage += recipe.id;
-        window.location = newPage;
+        Recipes.navigateToPage(`/recipes/${recipe.id}`);
     }
 </script>
 

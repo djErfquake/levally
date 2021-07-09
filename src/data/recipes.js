@@ -4,6 +4,8 @@
 /*
 TODO:
  - levally index have links to projects
+ - automatically adjust hours/mins
+ - change prep time and cook time to active and inactive times
 
 
  [{"main":["1 package of chicken breasts or tenders","1 cup flour","2 tsp italian seasoning","1 tsp salt","1/2 tsp pepper","1 1/2 tbsp olive oil","3 tbsp butter","1 1/2 tsp garlic"]}]
@@ -12,20 +14,21 @@ TODO:
 */
 
 const tags = [
-    { name: 'chicken', color: '#ffdd59' },
-    { name: 'pork', color: '#b53471' },
-    { name: 'beef', color: '#3c40c6' },
-    { name: 'fish', color: '#4bcffa' },
+    { name: 'chicken', color: '#ffC312' },
+    { name: 'pork', color: '#ed4C67' },
+    { name: 'beef', color: '#6f1e51' },
+    { name: 'fish', color: '#006266' },
+    { name: 'vegetarian', color: '#A3CB38' },
     { name: 'sauce', color: '#1e272e' },
-    { name: 'soup', color: '#ffa801' },
-    { name: 'dessert', color: '#fda7df' },
-    { name: 'drink', color: '#00d8d6' },
-    { name: 'side', color: '#05c46b' },
-    { name: 'bread', color: '#ee5a24' },
-    { name: 'breakfast', color: '#575fcf' },
-    { name: 'slow cooker', color: '#f53b57' },
-    { name: 'casserole', color: '#1b1464' },
-    { name: 'steak', color: '#ef5777' }
+    { name: 'soup', color: '#F79F1F' },
+    { name: 'dessert', color: '#FDA7DF' },
+    { name: 'casserole', color: '#1B1464' },
+    { name: 'drink', color: '#12CBC4' },
+    { name: 'breakfast', color: '#C4E538' },
+    { name: 'side', color: '#009432' },
+    { name: 'bread', color: '#EE5A24' },
+    { name: 'slow cooker', color: '#EA2027' },
+    { name: 'dinner', color: '#5758BB' }
 ];
 
 function parseMultiPartSectionForDB(value) {
@@ -81,7 +84,7 @@ function parseMultiPartSectionToString(value) {
     values.forEach(a => {
         const v = Object.entries(a);
         const partName = v[0][0];
-        stringValue += `${partName}\n`;
+        if (partName != "main") { stringValue += `${partName}\n`; }
         const partList = v[0][1];
         partList.forEach(p => {
             stringValue += `${p}\n`;
@@ -172,5 +175,10 @@ module.exports = {
             title: title,
             text: text
         });
+    },
+    navigateToPage(newPageLocation) {
+        let newPage = window.location.href;
+        newPage = newPage.replace(/\/recipes.*$/g, newPageLocation);
+        window.location = newPage;
     }
 };

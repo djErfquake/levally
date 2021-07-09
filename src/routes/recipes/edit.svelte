@@ -97,11 +97,11 @@
             Recipes.showError(Swal, `Something went wrong. The recipe couldn't be deleted`);
         }
 
-        let newPage = window.location.href;
-        newPage = newPage.replace(/\/\d+/g, ''); // remove recipe id
-        if (!newPage.endsWith('/')) { newPage += '/'; }
-        newPage += `recipes`;
-        window.location = newPage;
+        Recipes.navigateToPage(`/recipes/`);
+    }
+
+    function goToRecipe() {
+        Recipes.navigateToPage(`/recipes/${recipe.id}`);
     }
     
 </script>
@@ -113,6 +113,9 @@
     <div class="buttons">
         <div class="add-button button" on:click={saveRecipe}>
             <Button text="Save Recipe"></Button>
+        </div>
+        <div class="go-button button" on:click={goToRecipe}>
+            <Button text="Go To Recipe"></Button>
         </div>
         <div class="delete-button button" on:click={deleteRecipe}>
             <Button text="Delete Recipe"></Button>

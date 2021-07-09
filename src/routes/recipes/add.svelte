@@ -29,9 +29,10 @@
             try {
                 recipe = await res.json();
                 console.log('successfully saved recipe', recipe.name);
-                Recipes.showSuccess(Swal, `Recipe saved`);
+                Recipes.navigateToPage(`/recipes/${recipe.id}`);
+                //Recipes.showSuccess(Swal, `Recipe saved`);
                 // recipe = Recipes.fromDBForEditing(recipe);
-                recipe = Recipes.CreateBlankRecipe();
+                //recipe = Recipes.CreateBlankRecipe();
             }
             catch (err) {
                 console.log('error parsing recipe', err);

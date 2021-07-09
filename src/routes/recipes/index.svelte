@@ -15,10 +15,7 @@
     let allRecipes = [];
     let filters = Recipes.tags.map(t => t.name);
     let filterModalActive = false;
-    $: filteredRecipes = allRecipes.filter(r => {
-        const tags = JSON.parse(r.tags);
-        return tags.length == 0 || tags.some(t => filters.includes(t))
-    });
+    $: filteredRecipes = allRecipes.filter(r => r.tags.length == 0 || r.tags.some(t => t.active && filters.includes(t.name)));
     
     onMount(async () => {
         console.log('index page');
@@ -27,6 +24,7 @@
         if (res.ok) {
             try {
                 allRecipes = await res.json();
+                allRecipes = allRecipes.map(r => Recipes.fromDBForRecipePage(r));
                 loading = false;
                 console.log(`successfully found ${allRecipes.length} recipes`);
                 Utilities.shuffleArray(allRecipes);
@@ -42,10 +40,7 @@
     }
 
     function addRecipe() {
-        let newPage = window.location.href;
-        if (!newPage.endsWith('/')) { newPage += '/'; }
-        newPage += 'add';
-        window.location = newPage;
+        Recipes.navigateToPage(`/recipes/add`);
     }
 
     function updateFilters(event) {
