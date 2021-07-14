@@ -201,9 +201,9 @@
         </div>
         {/if}
         <div class="buttons section">
-            <div class="edit-button" on:click={editRecipe}><Button text="Edit Recipe"></Button></div>
+            <div class="edit-button button" on:click={editRecipe}><Button text="Edit Recipe"></Button></div>
             {#if recipe.linkUrl}
-            <div class="goto-button" on:click={goToRecipe}><Button text="Recipe Link"></Button></div>
+            <div class="goto-button button" on:click={goToRecipe}><Button text="Recipe Link"></Button></div>
             {/if}
         </div>
     </div>
