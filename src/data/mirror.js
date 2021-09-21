@@ -1,4 +1,14 @@
-module.exports = {
+import dotenv from 'dotenv';
+dotenv.config();
+
+const googleCalendarAPIClientId = process.env.GOOGLE_CALENDAR_CLIENT_ID;
+const familyCalendar = process.env.GOOGLE_CALENDAR_ID_FAMILY;
+
+export default {
+    calendar: {
+        apiClientId: googleCalendarAPIClientId,
+        ids: ['en.usa#holiday@group.v.calendar.google.com'].concat(familyCalendar)
+    },
     traffic: {
         home: "4419 Tolbert Avenue, Grove City, OH 43123",
         destinations: [
