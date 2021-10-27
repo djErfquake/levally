@@ -1,10 +1,35 @@
-module.exports = {
+let rooms = require('./rooms');
 
-  /* 
-  Monikers is pretty simple: get your friends to guess the name on a card. Each team has 60 seconds to get through as many weird names as they can.
-  In the first round, you can say anything you want. In the second, you can only use one word. And in the third, you can't say anything all all — just charades.
-  The same cards are used in each round, so by the end of the game, you've made up a bunch of hilarious jokes together.
+let initialized = false;
+
+module.exports = {
+  /*
+  Room Stuff
   */
+  init: function() {
+      if (initialized) return;
+      console.log("Initializing Monikers.");
+      initialized = true;
+  },
+  registerSocket: function(socket) {
+      socket.on('request_createRoom', function() {
+        let roomCode = rooms.createRoom();
+        socket.emit('response_createRoom', roomCode);
+      });
+
+      socket.on('request_addPlayerToRoom', function(data) {
+        rooms.joinRoom(data, socket.id);
+      });
+  },
+  removePlayer: function(socket) {
+    console.log(`removing ${socket.id}`);
+    rooms.removePlayer(socket.id);
+  },
+  /* 
+    Monikers is pretty simple: get your friends to guess the name on a card. Each team has 60 seconds to get through as many weird names as they can.
+    In the first round, you can say anything you want. In the second, you can only use one word. And in the third, you can't say anything all all — just charades.
+    The same cards are used in each round, so by the end of the game, you've made up a bunch of hilarious jokes together.
+    */
   rounds: [
     "you can say anything you want, except for the name on the card.",
     "you can only use one word.",

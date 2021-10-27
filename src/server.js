@@ -27,10 +27,12 @@ polka({server}) // You can also use Express
 import game2r1b from './2r1b/game';
 import rpg from './rpg/initiative';
 import derby from './game/derby'
+import monikers from './game/monikers'
 const GAMES = {
 	"TWOROOMS": "Two Rooms and a Boom",
 	"RPG": "RPG Initiative Tracker",
-	"DERBY": "DERBY"
+	"DERBY": "DERBY",
+	"MONIKERS": "MONIKERS"
 };
 
 let sockets = {};
@@ -41,8 +43,17 @@ io(server).on('connection', function(socket) {
 	addSocket(socket);
 	socket.on('disconnect', function() { 
 		if (socket.game) {
-			if (socket.game == GAMES.TWOROOMS) { game2r1b.removePlayer(socket); }
-			// else if (socket.game == GAMES.RPG) { rpg.removePlayer(socket); }
+			switch (socket.game) {
+				case GAMES.TWOROOMS:
+					game2r1b.removePlayer(socket);
+					break;
+				case GAMES.RPG:
+					rpg.removePlayer(socket);
+					break;
+				case GAMES.MONIKERS:
+					monikers.removePlayer(socket);
+					break;
+			}
 		} 
 		removeSocket(socket);
 	});
@@ -63,5 +74,11 @@ io(server).on('connection', function(socket) {
 		derby.init();
 		socket.game = GAMES.DERBY;
 		derby.registerSocket(socket);
+	});
+
+	socket.on('init_monikers', function() {
+		monikers.init();
+		socket.game = GAMES.MONIKERS;
+		monikers.registerSocket(socket);
 	});
 });

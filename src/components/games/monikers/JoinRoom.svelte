@@ -4,18 +4,21 @@
     import { createEventDispatcher } from 'svelte';
     const dispatch = createEventDispatcher();
     
-    function buttonClicked(button) {
-        dispatch('setGameState', button);
+    let roomCode = "";
+
+    function joinRoom() {
+        dispatch('joinRoom', roomCode.toUpperCase());
     }
 
 </script>
 
 <main class="title-container">
     <h1>Monikers</h1>
+    <div class="input-text">
+        <input maxlength="4" minLength="4" pattern="[A-Za-z]{4}" bind:value={roomCode} />
+    </div>
     <div class="buttons">
-        <div class="button" on:click={() => buttonClicked("setup")}><Button text="Play"></Button></div>
-        <div class="button" on:click={() => buttonClicked("join")}><Button text="Join"></Button></div>
-        <div class="button" on:click={() => buttonClicked("instructions")}><Button text="What?"></Button></div>
+        <div class="button" on:click={joinRoom}><Button text="Join"></Button></div>
     </div>
 </main>
 
@@ -40,5 +43,18 @@
 
     .button {
         margin-bottom: 20px;
+    }
+
+    .input-text {
+        width: 70vw;
+        font-size: 15vh;
+        margin-bottom: 5vh;
+        border-bottom: 3px solid black;
+    }
+
+    input {
+        text-transform: uppercase;
+        width: 100%;
+        text-align: center;
     }
 </style>

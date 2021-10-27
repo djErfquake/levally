@@ -12,6 +12,7 @@
 
     const settingsInfo = {
         curated: { content: "Allow players to veto some monikers before the game starts.", placement: 'top-start' },
+        createClues: { content: "Create your own clues, or get random clues", placement: 'top-start' },
         // onePhone: { content: "Share the same phone between teams. Otherwise, each player could use their own phone.", placement: 'top-start' },
         numRounds: { content: "The number of rounds to by played. Typically 3 rounds are played.", placement: 'top-start' },
         numPlayers: { content: "The total number of players across all teams.", placement: 'top-start' },
@@ -29,10 +30,17 @@
 <main>
     <h1>Setup</h1>
 
-    <div class="setting curated">
+    <!-- <div class="setting curated">
         <div class="setting-name" use:tippy={settingsInfo.curated}>Curated</div>
         <div class="setting-value">
             <Toggle bind:checked={settings.curated}></Toggle>
+        </div>
+    </div> -->
+
+    <div class="setting createClues">
+        <div class="setting-name" use:tippy={settingsInfo.createClues}>Create your own clues</div>
+        <div class="setting-value">
+            <Toggle bind:checked={settings.createClues}></Toggle>
         </div>
     </div>
 
