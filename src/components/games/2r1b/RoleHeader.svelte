@@ -1,35 +1,15 @@
 <script>
-    /*
-        https://flatuicolors.com/palette/ca
-        https://www.shapedivider.app/
-    */
-    // import TimeBar from './TimeBar.svelte';
-
     export let role;
-
-    const colors = {
-        red: '#ff6b6b',
-        blue: '#2e86de',
-        grey: '#576574',
-        green: '#1dd1a1',
-        purple: '#5f27cd',
-        black: '#222f3e',
-        pink: '#ff9ff3',
-        yellow: '#feca57'
-    };
-
 </script>
 
 <main>
-    <TimeBar start=true duration=3/>
-
-    <div class="name-color" style="background-color: {colors[role.team]};">
+    <div class="name-color" style="background-color: {role.color};">
         <div class="name">{role.name}</div>
     </div>
     
     <div class="shape-divider">
         <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-            <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" class="shape-fill" style="fill: {colors[role.team]};"></path>
+            <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" class="shape-fill" style="fill: {role.color};"></path>
         </svg>
     </div>
 </main>

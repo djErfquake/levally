@@ -99,17 +99,21 @@
         goToGameState(GAME_STATES.scores);
     }
 
-    function gameStart() {
+    function setupDone() {
         if (game.settings.createClues) {
             socket.emit('request_createRoom');
             goToGameState(GAME_STATES.addClues);
         }
         else {
-            // select the deck of cards
-            helper.shuffleArray(allCards);
-            gameDeck = allCards.slice(0, game.settings.numPlayers * game.settings.cardsPerPlayer);
-            cards = [...gameDeck];
+            gameStart();
         }
+    }
+
+    function gameStart() {
+        // select the deck of cards
+        helper.shuffleArray(allCards);
+        gameDeck = allCards.slice(0, game.settings.numPlayers * game.settings.cardsPerPlayer);
+        cards = [...gameDeck];
 
         // set a random active team
         game.teams.forEach(t => t.active = false);
@@ -174,6 +178,11 @@
         cards.push(randomCard);
     }
 
+
+    function joinRoom(data) {
+        room = data.detail;
+        socket.emit('request_addPlayerToRoom', room);
+    }
     
     socket.on('response_createRoom', function(roomCode) {
         console.log('response_createRoom', roomCode);
@@ -181,10 +190,7 @@
         socket.emit('request_addPlayerToRoom', room);
     });
 
-    function joinRoom(data) {
-        room = data.detail;
-        socket.emit('request_addPlayerToRoom', room);
-    }
+    
 
 </script>
 
@@ -197,7 +203,7 @@
     {:else if game.state == GAME_STATES.join}
     <JoinRoom on:joinRoom={joinRoom}></JoinRoom>
     {:else if game.state == GAME_STATES.setup}
-    <Setup on:gameStart={gameStart} bind:settings={game.settings} possibleNumRounds={monikers.rounds.length}></Setup>
+    <Setup on:setupDone={setupDone} bind:settings={game.settings} possibleNumRounds={monikers.rounds.length}></Setup>
     {:else if game.state == GAME_STATES.addClues}
     <ClueInput roomCode={room}></ClueInput>
     {:else if game.state == GAME_STATES.roundStart}

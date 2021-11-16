@@ -20,7 +20,7 @@
     };
 
     function playClicked() {
-        dispatch('gameStart');
+        dispatch('setupDone');
     }
     
 

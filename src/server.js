@@ -24,7 +24,7 @@ polka({server}) // You can also use Express
 	});
 
 // socket io
-import game2r1b from './2r1b/game';
+import twoRooms from './game/2r1b/twoRooms';
 import rpg from './rpg/initiative';
 import derby from './game/derby'
 import monikers from './game/monikers'
@@ -45,7 +45,7 @@ io(server).on('connection', function(socket) {
 		if (socket.game) {
 			switch (socket.game) {
 				case GAMES.TWOROOMS:
-					game2r1b.removePlayer(socket);
+					twoRooms.game.removePlayer(socket);
 					break;
 				case GAMES.RPG:
 					rpg.removePlayer(socket);
@@ -58,10 +58,10 @@ io(server).on('connection', function(socket) {
 		removeSocket(socket);
 	});
 
-	socket.on('init2R1B', function() {
-		game2r1b.init();
+	socket.on('init_2R1B', function() {
+		twoRooms.game.init();
 		socket.game = GAMES.TWOROOMS;
-		game2r1b.addPlayer(socket);
+		twoRooms.game.addPlayer(socket);
 	});
 
 	socket.on('initRPG', function() {
