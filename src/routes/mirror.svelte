@@ -8,6 +8,16 @@
     let time = {
         clock: "",
         date: "",
+        updateInterval: null,
+        start: function() {
+            if (this.updateInterval) { 
+                clearInterval(this.updateInterval);
+                u.interval = null;
+            }
+            this.update();
+            // update every second
+            this.updateInterval = setInterval(this.update, 1000);
+        },
         update: function() {
             const m = new moment();
             this.clock = m.format('h:mm A');
@@ -18,30 +28,33 @@
     };
     let traffic = Mirror.traffic;
     let weather = {
+        start: function() {
+            if (this.updateInterval) { 
+                clearInterval(this.updateInterval);
+                u.interval = null;
+            }
+            this.update();
+            // update every fifteen minutes
+            this.updateInterval = setInterval(this.update, 1000 * 60 * 15);
+        },
         update: function() {
 
         }
     };
     let calendar = {
+        ids: Mirror.calendar.ids,
+        start: function() {
+            if (this.updateInterval) { 
+                clearInterval(this.updateInterval);
+                u.interval = null;
+            }
+            this.update();
+            // update every hour
+            this.updateInterval = setInterval(this.update, 1000 * 60 * 60);
+        },
         update: function() {
 
         }
-    }
-
-
-    let updates = [
-        { function: () => { time.update(); }, duration: 1000 }, // every second
-        { function: () => { weather.update(); }, duration: 1000 * 60 * 15 }, // every fiften minutes
-        { function: () => { calendar.update(); }, duration: 1000 * 60 * 60  } // every hour
-    ];
-    
-
-    function startUpdates() {
-        updates.forEach(u => {
-            if (u.interval) { clearInterval(u.interval); u.interval = null; }
-            u.function();
-            u.interval = setInterval(u.function, u.duration);
-        });
     }
 
     if (process.browser) {
@@ -72,27 +85,48 @@
             });
         };
 
-        window.updateCalendar = function() {
-            console.log("updateCalendar");
-            let calendarRequest = gapi.client.calendar.events.list({
-                'calendarId' : calendarId,
-                'timeZone': 'America/New_York',
-                'timeMin': today.toISOString(),
-                'singleEvents': true,
-                'orderBy': 'startTime'});
-            calendarRequest.execute(function(data) {
-                console.log("calendar events", data);
-            });
+        window.initCalendar = function() {
+            console.log("initCalendar");
+            // gapi.load('client:auth2', () => {
+            //     gapi.client.init({
+            //         discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'],
+            //         clientId: Mirror.calendar.apiClientId,
+            //         scope: 'https://www.googleapis.com/auth/calendar.readonly'
+            //     }).then(function() {
+            //         // listen for sign-in state changes
+            //         gapi.auth2.getAuthInstance().isSignedIn.listen(updateGoogleSignInStatus);
+
+            //         // handle the initial sign-in state
+            //         updateGoogleSignInStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+            //     });
+            // });
+
+            // let updateGoogleSignInStatus = (isSignedIn) => {
+            //     gapi.auth2.getAuthInstance().signIn().then(() => {
+            //         /*
+            //         // get calendar list
+            //         let calendarRequest = gapi.client.calendar.calendarList.list();
+            //         calendarRequest.execute(function(data) {
+            //         let calendars = data.items;
+            //         console.log("calendar list", data);
+            //         });
+            //         */
+
+            //         updateCalendars();
+            //         calendarInterval = setInterval(updateCalendars, 10800000); // update every 3 hours
+
+            //     });
+            // };
         }
     }
 
-    startUpdates();
+    time.start();
 </script>
 
 
 <svelte:head>
     <script defer async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrJ_2S9m-lZ5jmBPHteOGVc55b4Suqirc&libraries=places&callback=initTraffic"></script>
-    <script async defer src="https://apis.google.com/js/api.js?callback=updateCalendar"> </script>
+    <script async defer src="https://apis.google.com/js/api.js" onload="initCalendar" onreadystatechange="if (this.readyState === 'complete') this.onload()"></script>
 </svelte:head>
 
 
