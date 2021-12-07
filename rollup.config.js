@@ -9,6 +9,7 @@ import babel from '@rollup/plugin-babel';
 import { terser } from 'rollup-plugin-terser';
 import config from 'sapper/config/rollup.js';
 import json from '@rollup/plugin-json'
+import alias from '@rollup/plugin-alias';
 import pkg from './package.json';
 
 const mode = process.env.NODE_ENV;
@@ -28,6 +29,10 @@ export default {
 			replace({
 				'process.browser': true,
 				'process.env.NODE_ENV': JSON.stringify(mode)
+			}),
+			alias({
+				resolve: ['.svelte'],
+				entries: [ { find: '@', replacement: path.resolve(__dirname, 'src')}]
 			}),
 			svelteSVG({
 				dev

@@ -2,9 +2,9 @@
     color palette: https://colors.lol/whacking
 
 */
-import generator from '../utilities/.js';
-import dnd from '../../rpg/dnd.js';
-import dice from '../../rpg/dice.js';
+import generator from '../utilities/generator.js';
+import dnd from './dnd.js';
+import dice from './dice.js';
 
 const turnStatuses = { READY: "READY", ACTIVE: "ACTIVE", DONE: "DONE" };
 const defaultEncounter = { characters: [] , turnId: 0 };
@@ -31,14 +31,21 @@ function createMonster(monsterId) {
     }
 }
 
-function sendUpdate() {
+function sendUpdateToSocket(socket) {
     socket.broadcast.emit('update', encounter);
 }
 
+function sendUpdateToAll() {
+    sockets.forEach(s => {
+        s.broadcast.emit('update', encounter);
+    });
+}
+
 let encounter = { ...defaultEncounter};
+let sockets = [];
 
 let initialized = false;
-module.exports = {
+export default {
     defaultEncounter: defaultEncounter,
     init: function() {
         if (initialized) return;
@@ -47,18 +54,27 @@ module.exports = {
     },
     registerSocket: function(socket) {
         socket.on('get', function() {
-            socket.emit('get', encounter);
+            sendUpdateToSocket(socket);
         });
         socket.on('add_character', function({name, initiative, hp}) {
             let newCharacter = createCharacter(name, initiative, hp);
             encounter.characters.push(newCharacter);
-            sendUpdate();
+            socket.id = newCharacter.id;
+            sockets.push(socket);
+            sendUpdateToAll();
         });
         socket.on('add_monster', function({monsterId}) {
             let newMonster = createMonster(monsterId);
             encounter.characters.push(newMonster);
-            sendUpdate();
+            sendUpdateToAll();
         });
+        sendUpdateToSocket(socket);
+    },
+    removePlayer: function(socket) {
+        const characterIndex = encounter.characters.findIndex(c => c.id == socket.id);
+        encounter.characters.splice(characterIndex, 1);
+        const socketIndex = sockets.findIndex(s => s.id == socket.id);
+        sockets.splice(socketIndex, 1);
     }
 };
 
