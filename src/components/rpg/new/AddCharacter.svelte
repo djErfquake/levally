@@ -7,9 +7,12 @@
     const dispatch = createEventDispatcher();
 
     let character = { name: '', hp: null, initiative: null };
+    let added = false;
 
     function addCharacter() {
-        dispatch('characterAdded', character);
+        if (name != '' && hp && initiative) {
+            dispatch('characterAdded', character);
+        }
     }
 
     
@@ -17,7 +20,7 @@
 
 </script>
 
-
+{#if !added}
 <div class="add_character">
     <div class="form">
         <InputText label="Name" bind:value={character.name}/>
@@ -28,6 +31,7 @@
         <Button onClick={addCharacter} text={`Add Character`} width="80%"></Button> 
     </div>
 </div>
+{/if}
 
 <style>
     .add_character {
@@ -52,7 +56,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-top: 2vh;
+        margin: 10px 0;
         width: 100%;
     }
 

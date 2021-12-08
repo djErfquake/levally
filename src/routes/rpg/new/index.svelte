@@ -8,23 +8,36 @@
     import AddCharacter from '../../../components/rpg/new/AddCharacter.svelte';
    
     let encounter = intiative.defaultEncounter;
+    let characterId = null;
 
     const socket = io();
     socket.on('update', function(data) {
+        console.log('update');
         encounter = data;
+    });
+    socket.on('character_added', function(data) {
+        console.log('character_added');
+        characterId = data;
     });
     socket.emit('initRPG');
 
-    function addCharacter() {
-
+    function addCharacter(e) {
+        socket.emit('add_character', e.detail);
     }
+
+    function updateStat(e) {
+        socket.emit('modify_stat', e.detail);
+    }
+
 </script>
 
 
 <main>
-    <InitiativeTable encounter={encounter}></InitiativeTable>
+    <InitiativeTable encounter={encounter} characterId={characterId} on:updateStat={updateStat}></InitiativeTable>
     <div class="add_elements">
-        <AddCharacter></AddCharacter>
+        {#if !characterId}
+            <AddCharacter on:characterAdded={addCharacter}></AddCharacter>
+        {/if}
     </div>
 </main>
 
@@ -33,7 +46,8 @@
         height: 100%;
 
         color: #fff;
-        background-color: #073b4c;
+        /* background-color: #073b4c; */
+        background-color: #4b355f;
 
         width: 85vw;
         margin: auto;
@@ -43,5 +57,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        margin-top: 25px;
     }
 </style>

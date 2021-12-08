@@ -1,10 +1,10 @@
 <script>
-    const dispatch = createEventDispatcher();
-    import { createEventDispatcher } from 'svelte';
-
     export let text;
     export let onClick = null;
     export let width = "auto";
+    export let fontSize = "1.5em";
+    export let hoverColor = "#06d6a0";
+    $: cssStyles = `--hover-color:${hoverColor}; --font-size:${fontSize}`;
     let hovering = false;
 
     function enter() { hovering = true; }
@@ -13,8 +13,8 @@
 </script>
 
 
-<main style="width: {width};">
-    <div class="button" class:hover="{hovering}" on:mouseenter={enter} on:mouseleave={leave} on:click={click}>{@html text}</div>
+<main style="width: {width};{cssStyles}">
+    <div class="button unselectable" class:hover="{hovering}" on:mouseenter={enter} on:mouseleave={leave} on:click={click}>{@html text}</div>
 </main>
 
 
@@ -33,12 +33,19 @@
         background-color: #118ab2;
         color: #fff;
 
-        font-size: 1.5em;
+        font-size: var(--font-size, 1.5em);
 
         width: 100%;
     }
 
     .hover {
-        background-color: #06d6a0;
+        background-color: var(--hover-color, #06d6a0);
+    }
+
+    .unselectable {
+        -webkit-user-select: none; /* Safari */        
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* IE10+/Edge */
+        user-select: none; /* Standard */
     }
 </style>

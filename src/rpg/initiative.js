@@ -8,9 +8,9 @@ import dice from './dice.js';
 
 const turnStatuses = { READY: "READY", ACTIVE: "ACTIVE", DONE: "DONE" };
 const defaultEncounter = { characters: [] , turnId: 0 };
-function createCharacter(name, initiative, hp) {
+function createCharacter(socketId, name, initiative, hp) {
     return {
-        id: generator.guid(),
+        id: socketId,
         name: name, 
         initiative: initiative,
         hp: hp,
@@ -32,13 +32,12 @@ function createMonster(monsterId) {
 }
 
 function sendUpdateToSocket(socket) {
-    socket.broadcast.emit('update', encounter);
+    // socket.broadcast.emit('update', encounter);
+    socket.emit('update', encounter);
 }
 
 function sendUpdateToAll() {
-    sockets.forEach(s => {
-        s.broadcast.emit('update', encounter);
-    });
+    sockets.forEach(s => { sendUpdateToSocket(s); });
 }
 
 let encounter = { ...defaultEncounter};
@@ -53,26 +52,35 @@ export default {
         initialized = true;
     },
     registerSocket: function(socket) {
-        socket.on('get', function() {
-            sendUpdateToSocket(socket);
-        });
-        socket.on('add_character', function({name, initiative, hp}) {
-            let newCharacter = createCharacter(name, initiative, hp);
+        socket.on('add_character', function(c) {
+            console.log('add_character', c);
+            let newCharacter = createCharacter(socket.id, c.name, c.initiative, c.hp);
             encounter.characters.push(newCharacter);
-            socket.id = newCharacter.id;
-            sockets.push(socket);
             sendUpdateToAll();
+            socket.emit('character_added', newCharacter.id);
         });
         socket.on('add_monster', function({monsterId}) {
             let newMonster = createMonster(monsterId);
             encounter.characters.push(newMonster);
             sendUpdateToAll();
         });
+        socket.on('modify_stat', function({characterId, stat, newValue}) {
+            console.log(`modifying ${characterId}'s ${stat} to ${newValue}`);
+            const characterIndex = encounter.characters.findIndex(c => c.id == characterId);
+            if (characterIndex != -1) { 
+                if ({}.hasOwnProperty.call(encounter.characters[characterIndex], stat)) {
+                    encounter.characters[characterIndex][stat] = newValue;
+                    sendUpdateToAll();
+                }
+            }
+        });
+
+        sockets.push(socket);
         sendUpdateToSocket(socket);
     },
     removePlayer: function(socket) {
         const characterIndex = encounter.characters.findIndex(c => c.id == socket.id);
-        encounter.characters.splice(characterIndex, 1);
+        if (characterIndex != -1) { encounter.characters.splice(characterIndex, 1); }
         const socketIndex = sockets.findIndex(s => s.id == socket.id);
         sockets.splice(socketIndex, 1);
     }

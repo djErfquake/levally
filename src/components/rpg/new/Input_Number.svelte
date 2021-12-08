@@ -16,7 +16,7 @@
 <style>
     input {
         border: none;
-        border-bottom: 5px solid #118ab2;
+        border-bottom: 4px solid #118ab2;
         /* min-width: 20vw; */
         padding-left: 8px;
         /* border-radius: 8px; */

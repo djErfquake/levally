@@ -1,6 +1,15 @@
 <script>
-    export let encounter;
+    import HPStat from './HPStat.svelte';
 
+    import { createEventDispatcher } from 'svelte';
+    const dispatch = createEventDispatcher();
+
+    export let encounter;
+    export let characterId;
+
+    function hpUpdated(e) {
+        dispatch('updateStat', {characterId: characterId, stat: 'hp', newValue: e.detail});
+    }
 
 </script>
 
@@ -15,10 +24,14 @@
         <div class="table_row">Waiting for Players...</div>
     {:else}
         {#each encounter.characters as c}
-        <div class="table_row">
+        <div class="table_row stat_row">
             <div class="name stat">{c.name}</div>
             <div class="initiative stat">{c.initiative}</div>
-            <div class="hp stat">{c.hp}</div>
+            {#if characterId}
+                <HPStat bind:hp={c.hp} on:hpUpdated={hpUpdated}></HPStat>
+            {:else}
+                <div class="hp stat">{c.hp}</div>
+            {/if}
         </div>
         {/each}
     {/if}
@@ -47,6 +60,10 @@
         justify-content: center;
         align-items: center;
         padding: 15px 0;
+    }
+
+    .stat_row {
+        height: 8vh;
     }
 
     .stat {
