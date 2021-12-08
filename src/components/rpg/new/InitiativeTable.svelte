@@ -6,9 +6,10 @@
 
     export let encounter;
     export let characterId;
+    export let isDm = false;
 
     function hpUpdated(e) {
-        dispatch('updateStat', {characterId: characterId, stat: 'hp', newValue: e.detail});
+        dispatch('updateStat', {characterId: e.detail.id, stat: 'hp', newValue: e.detail.value});
     }
 
 </script>
@@ -27,11 +28,18 @@
         <div class="table_row stat_row">
             <div class="name stat">{c.name}</div>
             <div class="initiative stat">{c.initiative}</div>
-            {#if characterId}
-                <HPStat bind:hp={c.hp} on:hpUpdated={hpUpdated}></HPStat>
+            {#if isDm}
+                <HPStat bind:hp={c.hp} on:hpUpdated={hpUpdated} id={c.id}></HPStat>
             {:else}
-                <div class="hp stat">{c.hp}</div>
+                {#if c.id==characterId}
+                    <HPStat bind:hp={c.hp} on:hpUpdated={hpUpdated} id={c.id}></HPStat>
+                {:else if c.monsterId}
+                    <div class="hp stat">?</div>
+                {:else}
+                    <div class="hp stat">{c.hp}</div>
+                {/if}
             {/if}
+            
         </div>
         {/each}
     {/if}

@@ -18,11 +18,11 @@ function createCharacter(socketId, name, initiative, hp) {
         conditions: []
     }
 }
-function createMonster(monsterId) {
-    const monster = dnd.monsters.find(m => m.id == monsterId);
+function createMonster(monsterId, name) {
+    const monster = dnd.monsters.find(m => m.index == monsterId);
     return {
         id: generator.guid(),
-        name: monster.name, 
+        name: name, 
         initiative: dice.rollCheck(Math.floor((monster.dexterity - 10) / 2)),
         hp: monster.hp ? dice.parseAndRollDice(monster.hp) : monster.hit_points,
         status: turnStatuses.READY,
@@ -59,15 +59,16 @@ export default {
             sendUpdateToAll();
             socket.emit('character_added', newCharacter.id);
         });
-        socket.on('add_monster', function({monsterId}) {
-            let newMonster = createMonster(monsterId);
+        socket.on('add_monster', function({id, name}) {
+            let newMonster = createMonster(id, name);
+            console.log(`adding monster ${JSON.stringify(newMonster)}`);
             encounter.characters.push(newMonster);
             sendUpdateToAll();
         });
         socket.on('modify_stat', function({characterId, stat, newValue}) {
-            console.log(`modifying ${characterId}'s ${stat} to ${newValue}`);
             const characterIndex = encounter.characters.findIndex(c => c.id == characterId);
             if (characterIndex != -1) { 
+                console.log(`modifying ${encounter.characters[characterIndex].name}'s ${stat} to ${newValue}`);
                 if ({}.hasOwnProperty.call(encounter.characters[characterIndex], stat)) {
                     encounter.characters[characterIndex][stat] = newValue;
                     sendUpdateToAll();

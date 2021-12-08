@@ -10,7 +10,7 @@
     let added = false;
 
     function addCharacter() {
-        if (name != '' && hp && initiative) {
+        if (character.name != '' && character.hp && character.initiative) {
             dispatch('characterAdded', character);
         }
     }

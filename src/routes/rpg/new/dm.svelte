@@ -4,7 +4,7 @@
 
 
 <main>
-    <Encounter isDm={false}></Encounter>
+    <Encounter isDm={true}></Encounter>
 </main>
 
 <style>

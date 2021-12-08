@@ -5,6 +5,7 @@
     const dispatch = createEventDispatcher();
 
     export let hp;
+    export let id;
 
     function add() { updateHP(hp + 1); }
     function sub() { updateHP(hp - 1); }
@@ -12,7 +13,7 @@
     const buttonFontSize = "1em";
 
     function updateHP(value) {
-        dispatch('hpUpdated', value);
+        dispatch('hpUpdated', {id: id, value: value});
     }
 
 </script>
