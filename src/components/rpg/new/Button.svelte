@@ -14,7 +14,7 @@
 
 
 <main style="width: {width};{cssStyles}">
-    <div class="button unselectable" class:hover="{hovering}" on:mouseenter={enter} on:mouseleave={leave} on:click={click}>{@html text}</div>
+    <div class="button unselectable" class:hover="{hovering}" on:mouseenter={enter} on:mouseleave={leave} on:click|stopPropagation={click}>{@html text}</div>
 </main>
 
 

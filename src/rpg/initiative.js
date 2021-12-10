@@ -2,19 +2,19 @@
     color palette: https://colors.lol/whacking
 
 */
-import generator from '../utilities/generator.js';
+import encounterHelper from './encounterHelper.js';
 import dnd from './dnd.js';
 import dice from './dice.js';
+import generator from '../utilities/generator.js';
 
-const turnStatuses = { READY: "READY", ACTIVE: "ACTIVE", DONE: "DONE" };
-const defaultEncounter = { characters: [] , turnId: 0 };
+
 function createCharacter(socketId, name, initiative, hp) {
     return {
         id: socketId,
         name: name, 
         initiative: initiative,
         hp: hp,
-        status: turnStatuses.READY,
+        status: encounterHelper.turnStatuses.READY,
         conditions: []
     }
 }
@@ -25,7 +25,7 @@ function createMonster(monsterId, name) {
         name: name, 
         initiative: dice.rollCheck(Math.floor((monster.dexterity - 10) / 2)),
         hp: monster.hp ? dice.parseAndRollDice(monster.hp) : monster.hit_points,
-        status: turnStatuses.READY,
+        status: encounterHelper.turnStatuses.READY,
         conditions: [],
         monsterId: monsterId
     }
@@ -40,12 +40,11 @@ function sendUpdateToAll() {
     sockets.forEach(s => { sendUpdateToSocket(s); });
 }
 
-let encounter = { ...defaultEncounter};
+let encounter = { ...encounterHelper.defaultEncounter};
 let sockets = [];
 
 let initialized = false;
 export default {
-    defaultEncounter: defaultEncounter,
     init: function() {
         if (initialized) return;
         console.log("Initializing RPG Initiative Tracker.");
@@ -74,6 +73,16 @@ export default {
                     sendUpdateToAll();
                 }
             }
+        });
+        socket.on('reset_round', function() {
+            encounter.characters.forEach(c => {
+                c.status = encounterHelper.turnStatuses.READY;
+            });
+            const sorted = [...encounter.characters].sort((a, b) => b.initiative - a.initiative);
+            if (sorted.length > 0) {
+                sorted[0].status = encounterHelper.turnStatuses.ACTIVE;
+            }
+            sendUpdateToAll();
         });
 
         sockets.push(socket);

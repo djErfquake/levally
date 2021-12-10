@@ -1,14 +1,14 @@
 <script>
     /* #ef476f #ffd166 #06d6a0 #118ab2 #073b4c */
     import io from "socket.io-client";
-    import intiative from '../../../rpg/initiative';
+    import encounterHelper from '../../../rpg/encounterHelper';
 
     import InitiativeTable from '../../../components/rpg/new/InitiativeTable.svelte';
     import AddCharacter from '../../../components/rpg/new/AddCharacter.svelte';
     import AddMonster from '../../../components/rpg/new/AddMonster.svelte';
    
     export let isDm = false;
-    let encounter = intiative.defaultEncounter;
+    let encounter = encounterHelper.defaultEncounter;
     let characterId = null;
 
     const socket = io();
@@ -26,19 +26,23 @@
         socket.emit('add_character', e.detail);
     }
 
+    function addMonster(e) {
+        socket.emit('add_monster', e.detail);
+    }
+    
     function updateStat(e) {
         socket.emit('modify_stat', e.detail);
     }
 
-    function addMonster(e) {
-        socket.emit('add_monster', e.detail);
+    function resetRound() {
+        socket.emit('reset_round');
     }
 
 </script>
 
 
 <main>
-    <InitiativeTable encounter={encounter} characterId={characterId} isDm={isDm} on:updateStat={updateStat}></InitiativeTable>
+    <InitiativeTable encounter={encounter} characterId={characterId} isDm={isDm} on:updateStat={updateStat} on:resetRound={resetRound}></InitiativeTable>
     <div class="add_elements">
         {#if isDm}
             <AddMonster on:monsterAdded={addMonster}></AddMonster>

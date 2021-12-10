@@ -50,6 +50,7 @@
         width: 100%;
         padding: 8px;
         margin: 5px;
+        margin-top: 15px;
     }
 
     .button {
