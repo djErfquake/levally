@@ -31,9 +31,9 @@
         flex-grow: 1;
         text-align: center;
         align-self: center;
-        width: 33%;
+        width: 15%;
         display: flex;
-        justify-content: center;
+        justify-content: space-evenly;
         align-items: center;
     }
 

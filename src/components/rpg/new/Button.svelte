@@ -4,7 +4,7 @@
     export let width = "auto";
     export let fontSize = "1.5em";
     export let hoverColor = "#06d6a0";
-    $: cssStyles = `--hover-color:${hoverColor}; --font-size:${fontSize}`;
+    $: cssStyles = `--hover-color:${hoverColor}; --font-size:${fontSize};`;
     let hovering = false;
 
     function enter() { hovering = true; }

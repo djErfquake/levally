@@ -1,6 +1,7 @@
 <script>
     import Button from './Button.svelte';
     import HPStat from './HPStat.svelte';
+    import Badges from './Badges.svelte';
     import CharacterModifier from './CharacterModifier.svelte';
 
     import encounterHelper from '../../../rpg/encounterHelper.js';
@@ -65,7 +66,21 @@
         else if (e.detail.name) {
             dispatch('updateStat', {characterId: selectedCharacterId, stat: 'name', newValue: e.detail.name});
         }
+        else if (e.detail.conditions) {
+            let char = encounter.characters.find(c => c.id == selectedCharacterId);
+            char.conditions.push(e.detail.conditions.name);
+            dispatch('updateStat', {characterId: selectedCharacterId, stat: 'conditions', newValue: char.conditions});
+        }
         selectedCharacterId = null;
+    }
+
+    function removeCondition(e) {
+        let char = encounter.characters.find(c => c.id == e.detail.id);
+        const conditionIndex = char.conditions.indexOf(e.detail.condition);
+        if (conditionIndex !== -1) {
+            char.conditions.splice(conditionIndex, 1);
+            dispatch('updateStat', {characterId: selectedCharacterId, stat: 'conditions', newValue: char.conditions});
+        }
     }
 
 </script>
@@ -77,6 +92,7 @@
         <div class="name stat">Name</div>
         <div class="description stat">Description</div>
         <div class="hp stat">Hit Points</div>
+        <div class="stat badges"></div>
     </div>
     {#if encounter.characters.length == 0}
         <div class="table_row">Waiting for Players...</div>
@@ -96,7 +112,10 @@
                 {:else}
                     <div class="hp stat">{c.hp}</div>
                 {/if}
-            {/if}  
+            {/if}
+            <div class="stat badges">
+            <Badges conditions={c.conditions} characterId={c.id} on:removeCondition={removeCondition}></Badges>
+            </div>
         </div>
         {/each}
     {/if}
@@ -167,10 +186,21 @@
         flex-grow: 1;
         text-align: center;
         align-self: center;
-        width: 33%;
     }
 
     .initiative {
         width: 5%;
+    }
+
+    .name {
+        width: 30%;
+    }
+
+    .description {
+        width: 35%;
+    }
+
+    .badges { 
+        width: 15%;
     }
 </style>

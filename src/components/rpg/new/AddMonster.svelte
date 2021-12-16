@@ -44,7 +44,7 @@
         </div>
     {/if}
     <div class="button">
-        <Button onClick={addMonster} text={`Add Monster`} width="80%"></Button> 
+        <Button onClick={addMonster} text="Add Monster" width="80%"></Button> 
     </div>
 </div>
 

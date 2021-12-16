@@ -1,10 +1,13 @@
 <script>
     export let label;
     export let value;
+    export let width = "15vw";
+
+    $: cssStyles = `--textInput-width:${width};`;
 </script>
 
 
-<div class="input">
+<div class="input" style="{cssStyles}">
     <input placeholder="{label}" type="text" bind:value={value}/>
 </div>
 
@@ -15,7 +18,7 @@
         padding-left: 8px;
         /* border-radius: 8px; */
         font-size: 1.5em;
-        width: 15vw;
+        width: var(--textInput-width, 15vw);
         margin: 0 5px;
     }
 
