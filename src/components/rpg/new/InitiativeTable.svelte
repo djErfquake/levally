@@ -1,6 +1,7 @@
 <script>
     import Button from './Button.svelte';
     import HPStat from './HPStat.svelte';
+    import CharacterModifier from './CharacterModifier.svelte';
 
     import encounterHelper from '../../../rpg/encounterHelper.js';
 
@@ -10,7 +11,8 @@
     export let encounter;
     export let characterId;
     export let isDm = false;
-    let selectedCharacter = null;
+    let selectedCharacterId = null;
+    $: selectedCharacter = encounter.characters.find(c => c.id == selectedCharacterId);
     $: initiative = [...encounter.characters].sort((a, b) => b.initiative - a.initiative);
 
     const buttonFontSize = "0.8em";
@@ -23,11 +25,11 @@
 
     function characterSelected(id) {
         if (isDm) {
-            if (id == selectedCharacter) {
-                selectedCharacter = null;
+            if (id == selectedCharacterId) {
+                selectedCharacterId = null;
                 return;
             }
-            selectedCharacter = id;
+            selectedCharacterId = id;
         }
     }
 
@@ -52,8 +54,18 @@
     }
 
     function setSelectedCharacterStatus(status) {
-        dispatch('updateStat', {characterId: selectedCharacter, stat: 'status', newValue: status});
-        selectedCharacter = null;
+        dispatch('updateStat', {characterId: selectedCharacterId, stat: 'status', newValue: status});
+        selectedCharacterId = null;
+    }
+
+    function selectedCharacterModified(e) {
+        if (e.detail.description) {
+            dispatch('updateStat', {characterId: selectedCharacterId, stat: 'description', newValue: e.detail.description});
+        }
+        else if (e.detail.name) {
+            dispatch('updateStat', {characterId: selectedCharacterId, stat: 'name', newValue: e.detail.name});
+        }
+        selectedCharacterId = null;
     }
 
 </script>
@@ -61,17 +73,19 @@
 
 <div class="table">
     <div class="table_row table_header">
+        <div class="stat initiative"></div>
         <div class="name stat">Name</div>
-        <div class="initiative stat">Initiative</div>
+        <div class="description stat">Description</div>
         <div class="hp stat">Hit Points</div>
     </div>
     {#if encounter.characters.length == 0}
         <div class="table_row">Waiting for Players...</div>
     {:else}
         {#each initiative as c}
-        <div class="table_row stat_row" class:done_row={c.status==encounterHelper.turnStatuses.DONE} class:active_row={c.status==encounterHelper.turnStatuses.ACTIVE} on:click={() => characterSelected(c.id)} class:selected_row={c.id == selectedCharacter}>
+        <div class="table_row stat_row" class:done_row={c.status==encounterHelper.turnStatuses.DONE} class:active_row={c.status==encounterHelper.turnStatuses.ACTIVE} on:click={() => characterSelected(c.id)} class:selected_row={c.id == selectedCharacterId}>
+            <div class="stat initiative ">{c.initiative}</div>
             <div class="name stat">{c.name}</div>
-            <div class="initiative stat">{c.initiative}</div>
+            <div class="description stat">{c.description}</div>
             {#if isDm}
                 <HPStat bind:hp={c.hp} on:hpUpdated={hpUpdated} id={c.id}></HPStat>
             {:else}
@@ -91,6 +105,11 @@
             <Button onClick={nextCharacter} text={`Next Player`} fontSize={buttonFontSize}></Button> 
             <Button onClick={resetRound} text={`Reset Round`} fontSize={buttonFontSize}></Button> 
         </div>
+        {#if selectedCharacterId}
+            <div class="table_footer">
+                <CharacterModifier on:modifyCharacter={selectedCharacterModified} bind:name={selectedCharacter.name} bind:description={selectedCharacter.description}></CharacterModifier>
+            </div>
+        {/if}
     {/if}
 </div>
 
@@ -149,5 +168,9 @@
         text-align: center;
         align-self: center;
         width: 33%;
+    }
+
+    .initiative {
+        width: 5%;
     }
 </style>

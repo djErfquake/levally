@@ -3,33 +3,6 @@
 
 */
 import encounterHelper from './encounterHelper.js';
-import dnd from './dnd.js';
-import dice from './dice.js';
-import generator from '../utilities/generator.js';
-
-
-function createCharacter(socketId, name, initiative, hp) {
-    return {
-        id: socketId,
-        name: name, 
-        initiative: initiative,
-        hp: hp,
-        status: encounterHelper.turnStatuses.READY,
-        conditions: []
-    }
-}
-function createMonster(monsterId, name) {
-    const monster = dnd.monsters.find(m => m.index == monsterId);
-    return {
-        id: generator.guid(),
-        name: name, 
-        initiative: dice.rollCheck(Math.floor((monster.dexterity - 10) / 2)),
-        hp: monster.hp ? dice.parseAndRollDice(monster.hp) : monster.hit_points,
-        status: encounterHelper.turnStatuses.READY,
-        conditions: [],
-        monsterId: monsterId
-    }
-}
 
 function sendUpdateToSocket(socket) {
     // socket.broadcast.emit('update', encounter);
@@ -53,13 +26,13 @@ export default {
     registerSocket: function(socket) {
         socket.on('add_character', function(c) {
             console.log('add_character', c);
-            let newCharacter = createCharacter(socket.id, c.name, c.initiative, c.hp);
+            let newCharacter = encounterHelper.createCharacter(socket.id, c.name, c.initiative, c.hp);
             encounter.characters.push(newCharacter);
             sendUpdateToAll();
             socket.emit('character_added', newCharacter.id);
         });
         socket.on('add_monster', function({id, name}) {
-            let newMonster = createMonster(id, name);
+            let newMonster = encounterHelper.createMonster(id, name);
             console.log(`adding monster ${JSON.stringify(newMonster)}`);
             encounter.characters.push(newMonster);
             sendUpdateToAll();
@@ -67,7 +40,7 @@ export default {
         socket.on('modify_stat', function({characterId, stat, newValue}) {
             const characterIndex = encounter.characters.findIndex(c => c.id == characterId);
             if (characterIndex != -1) { 
-                console.log(`modifying ${encounter.characters[characterIndex].name}'s ${stat} to ${newValue}`);
+                // console.log(`modifying ${encounter.characters[characterIndex].name}'s ${stat} to ${newValue}`);
                 if ({}.hasOwnProperty.call(encounter.characters[characterIndex], stat)) {
                     encounter.characters[characterIndex][stat] = newValue;
                     sendUpdateToAll();
@@ -99,9 +72,7 @@ export default {
 
 /*
 TODO: 
-- update urls
-- make table header row look better
-- done status
+
 
 
 */

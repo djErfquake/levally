@@ -13,11 +13,9 @@
 
     const socket = io();
     socket.on('update', function(data) {
-        console.log('update');
         encounter = data;
     });
     socket.on('character_added', function(data) {
-        console.log('character_added');
         characterId = data;
     });
     socket.emit('initRPG');
@@ -57,11 +55,7 @@
 <style>
     :global(body) {
         height: 100%;
-
-        /* color: #fff; */
-        /* background-color: #073b4c; */
         background-color: #4b355f;
-
         width: 85vw;
         margin: auto;
     }
