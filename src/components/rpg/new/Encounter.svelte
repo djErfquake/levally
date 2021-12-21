@@ -36,11 +36,15 @@
         socket.emit('reset_round');
     }
 
+    function removeCharacter(e) {
+        socket.emit('remove_character', e.detail);
+    }
+
 </script>
 
 
 <main>
-    <InitiativeTable encounter={encounter} characterId={characterId} isDm={isDm} on:updateStat={updateStat} on:resetRound={resetRound}></InitiativeTable>
+    <InitiativeTable encounter={encounter} characterId={characterId} isDm={isDm} on:updateStat={updateStat} on:removeCharacter={removeCharacter} on:resetRound={resetRound}></InitiativeTable>
     <div class="add_elements">
         {#if isDm}
             <AddMonster on:monsterAdded={addMonster}></AddMonster>

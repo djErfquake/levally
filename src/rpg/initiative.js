@@ -37,6 +37,13 @@ export default {
             encounter.characters.push(newMonster);
             sendUpdateToAll();
         });
+        socket.on('remove_character', function(characterId) {
+            const characterIndex = encounter.characters.findIndex(c => c.id == characterId);
+            if (characterIndex != -1) {
+                encounter.characters.splice(characterIndex, 1);
+                sendUpdateToAll();
+            }
+        });
         socket.on('modify_stat', function({characterId, stat, newValue}) {
             const characterIndex = encounter.characters.findIndex(c => c.id == characterId);
             if (characterIndex != -1) { 

@@ -40,6 +40,6 @@
     .hp {
         text-align: center;
         align-self: center;
-        width: 10%;
+        width: 30%;
     }
 </style>

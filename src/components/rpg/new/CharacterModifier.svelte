@@ -25,7 +25,6 @@
         if (newDescription != description) {
             dispatch('modifyCharacter', { description: newDescription });
         }
-
     }
 
     function cancel() {
@@ -34,6 +33,10 @@
 
     function conditionSelected(e) {
         dispatch('modifyCharacter', { conditions: e.detail.value });
+    }
+
+    function removeCharacter() {
+        dispatch('removeCharacter');
     }
 
 </script>
@@ -47,13 +50,16 @@
         Description
         <textarea rows="3" cols="40" bind:value={newDescription}></textarea>
     </div>
-    <div class="conditions">
+    <div class="form conditions">
         Conditions
         <Select items={conditions} containerStyles={`width: 65%; border-color: #118ab2`} on:select={conditionSelected}></Select>
     </div>
-    <div class="buttons">
+    <div class="form">
         <Button onClick={cancel} text="Cancel" fontSize={buttonFontSize}></Button> 
         <Button onClick={saveCharacter} text="Save Character" fontSize={buttonFontSize}></Button>
+    </div>
+    <div class="form">
+        <Button onClick={removeCharacter} text="Remove Character" fontSize={buttonFontSize}></Button> 
     </div>
 </div>
 
@@ -69,15 +75,6 @@
     }
 
     .form {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        padding: 8px;
-        margin: 5px;
-    }
-
-    .buttons {
         display: flex;
         justify-content: space-between;
         align-items: center;

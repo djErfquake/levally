@@ -85,6 +85,11 @@
         }
     }
 
+    function removeCharacter() {
+        dispatch('removeCharacter', selectedCharacterId);
+        selectedCharacterId = null;
+    }
+
 </script>
 
 
@@ -128,7 +133,7 @@
         </div>
         {#if selectedCharacterId}
             <div class="table_footer">
-                <CharacterModifier on:modifyCharacter={selectedCharacterModified} bind:name={selectedCharacter.name} bind:description={selectedCharacter.description}></CharacterModifier>
+                <CharacterModifier on:modifyCharacter={selectedCharacterModified} on:removeCharacter={removeCharacter} bind:name={selectedCharacter.name} bind:description={selectedCharacter.description}></CharacterModifier>
             </div>
         {/if}
     {/if}
@@ -142,7 +147,8 @@
         font-size: 2em;
         margin-top: 5vh;
         border-radius: 8px;
-        overflow: hidden;
+        /* overflow: hidden; */
+        overflow: visible;
     }
 
     .table_header {
