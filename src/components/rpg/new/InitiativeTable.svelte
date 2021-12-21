@@ -75,11 +75,13 @@
     }
 
     function removeCondition(e) {
+        if (!isDm) return;
+
         let char = encounter.characters.find(c => c.id == e.detail.id);
         const conditionIndex = char.conditions.indexOf(e.detail.condition);
         if (conditionIndex !== -1) {
             char.conditions.splice(conditionIndex, 1);
-            dispatch('updateStat', {characterId: selectedCharacterId, stat: 'conditions', newValue: char.conditions});
+            dispatch('updateStat', {characterId: e.detail.id, stat: 'conditions', newValue: char.conditions});
         }
     }
 
