@@ -39,6 +39,10 @@
         dispatch('removeCharacter');
     }
 
+    function wait() {
+        dispatch('selectedCharacterWaits');
+    }
+
 </script>
 
 
@@ -55,11 +59,12 @@
         <Select items={conditions} containerStyles={`width: 65%; border-color: #118ab2`} on:select={conditionSelected}></Select>
     </div>
     <div class="form">
-        <Button onClick={cancel} text="Cancel" fontSize={buttonFontSize}></Button> 
+        <Button onClick={removeCharacter} text="Remove Character" fontSize={buttonFontSize}></Button> 
         <Button onClick={saveCharacter} text="Save Character" fontSize={buttonFontSize}></Button>
     </div>
     <div class="form">
-        <Button onClick={removeCharacter} text="Remove Character" fontSize={buttonFontSize}></Button> 
+        <Button onClick={cancel} text="Cancel" fontSize={buttonFontSize}></Button>
+        <Button onClick={wait} text="Wait" fontSize={buttonFontSize}></Button>
     </div>
 </div>
 

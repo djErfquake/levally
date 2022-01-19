@@ -79,7 +79,9 @@ export default {
 
 /*
 TODO: 
-
+ - set initiative (include decimals)
+ - spells
+ - dice
 
 
 */

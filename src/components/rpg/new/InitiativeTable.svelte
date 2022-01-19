@@ -90,6 +90,22 @@
         selectedCharacterId = null;
     }
 
+    function selectedCharacterWaits() {
+        const sortedCharacters = [...encounter.characters].sort((a, b) => b.initiative - a.initiative);
+        const char = encounter.characters.find(c => c.id == selectedCharacterId);
+        let nextCharacterInInitiative = { id: -1, initiative: -1} ;
+        encounter.characters.forEach(c => {
+            if (c.id != char.id && c.initiative < char.initiative && c.initiative > nextCharacterInInitiative.initiative) {
+                nextCharacterInInitiative.id = c.id;
+                nextCharacterInInitiative.initiative = c.initiative;
+            }
+        });
+        if (nextCharacterInInitiative.id != -1) {
+            dispatch('updateStat', {characterId: char.id, stat: 'initiative', newValue: nextCharacterInInitiative.initiative - 0.001});
+        }
+        selectedCharacterId = null;
+    }
+
 </script>
 
 
@@ -106,7 +122,7 @@
     {:else}
         {#each initiative as c}
         <div class="table_row stat_row" class:done_row={c.status==encounterHelper.turnStatuses.DONE} class:active_row={c.status==encounterHelper.turnStatuses.ACTIVE} on:click={() => characterSelected(c.id)} class:selected_row={c.id == selectedCharacterId}>
-            <div class="stat initiative ">{c.initiative}</div>
+            <div class="stat initiative ">{Math.ceil(c.initiative)}</div>
             <div class="name stat">{c.name}</div>
             <div class="description stat">{c.description}</div>
             {#if isDm}
@@ -133,7 +149,13 @@
         </div>
         {#if selectedCharacterId}
             <div class="table_footer">
-                <CharacterModifier on:modifyCharacter={selectedCharacterModified} on:removeCharacter={removeCharacter} bind:name={selectedCharacter.name} bind:description={selectedCharacter.description}></CharacterModifier>
+                <CharacterModifier 
+                    on:modifyCharacter={selectedCharacterModified}
+                    on:removeCharacter={removeCharacter}
+                    on:selectedCharacterWaits={selectedCharacterWaits}
+                    bind:name={selectedCharacter.name}
+                    bind:description={selectedCharacter.description}
+                ></CharacterModifier>
             </div>
         {/if}
     {/if}
