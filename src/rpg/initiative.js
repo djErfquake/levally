@@ -64,6 +64,12 @@ export default {
             }
             sendUpdateToAll();
         });
+        socket.on('add_spell', function(spellId) {
+            if (!encounter.spells.includes(spellId)) {
+                encounter.spells.push(spellId);
+                sendUpdateToAll();
+            }
+        });
 
         sockets.push(socket);
         sendUpdateToSocket(socket);

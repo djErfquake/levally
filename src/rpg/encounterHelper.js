@@ -3,7 +3,7 @@ import dice from './dice.js';
 import generator from '../utilities/generator.js';
 
 const turnStatuses = { READY: "READY", ACTIVE: "ACTIVE", DONE: "DONE" };
-const defaultEncounter = { characters: [] , turnId: 0 };
+const defaultEncounter = { characters: [] , spells: [], turnId: 0 };
 function createCharacter(socketId, name, initiative, hp) {
     return {
         id: socketId,
@@ -12,7 +12,8 @@ function createCharacter(socketId, name, initiative, hp) {
         hp: hp,
         status: turnStatuses.READY,
         description: '',
-        conditions: []
+        conditions: [],
+        spells: []
     }
 }
 function createMonster(monsterId, name) {

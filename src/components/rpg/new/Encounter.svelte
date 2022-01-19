@@ -6,10 +6,13 @@
     import InitiativeTable from '../../../components/rpg/new/InitiativeTable.svelte';
     import AddCharacter from '../../../components/rpg/new/AddCharacter.svelte';
     import AddMonster from '../../../components/rpg/new/AddMonster.svelte';
+    import AddSpell from '../../../components/rpg/new/AddSpell.svelte';
+    import Spells from '../../../components/rpg/new/Spells.svelte';
    
     export let isDm = false;
     let encounter = encounterHelper.defaultEncounter;
     let characterId = null;
+    $: character = encounter.characters.find(c => c.id == characterId);
 
     const socket = io();
     socket.on('update', function(data) {
@@ -40,20 +43,28 @@
         socket.emit('remove_character', e.detail);
     }
 
+    function addSpell(e) {
+        socket.emit('add_spell', e.detail);
+    }
+
 </script>
 
 
 <main>
-    <InitiativeTable encounter={encounter} characterId={characterId} isDm={isDm} on:updateStat={updateStat} on:removeCharacter={removeCharacter} on:resetRound={resetRound}></InitiativeTable>
+    <InitiativeTable {encounter} {characterId} {isDm} on:updateStat={updateStat} on:removeCharacter={removeCharacter} on:resetRound={resetRound}></InitiativeTable>
     <div class="add_elements">
         {#if isDm}
             <AddMonster on:monsterAdded={addMonster}></AddMonster>
+            <AddSpell {character} on:updateStat={updateStat} on:addSpell={addSpell}></AddSpell>
         {:else}
             {#if !characterId}
                 <AddCharacter on:characterAdded={addCharacter}></AddCharacter>
+            {:else}
+            <AddSpell {character} on:updateStat={updateStat} on:addSpell={addSpell}></AddSpell>
             {/if}
         {/if}
     </div>
+    <Spells {encounter} {isDm} {characterId}></Spells>
 </main>
 
 <style>

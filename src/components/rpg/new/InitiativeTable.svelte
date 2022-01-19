@@ -125,17 +125,19 @@
             <div class="stat initiative ">{Math.ceil(c.initiative)}</div>
             <div class="name stat">{c.name}</div>
             <div class="description stat">{c.description}</div>
+            <div class="hp stat">
             {#if isDm}
                 <HPStat bind:hp={c.hp} on:hpUpdated={hpUpdated} id={c.id}></HPStat>
             {:else}
                 {#if c.id==characterId}
                     <HPStat bind:hp={c.hp} on:hpUpdated={hpUpdated} id={c.id}></HPStat>
                 {:else if c.monsterId}
-                    <div class="hp stat">?</div>
+                    ?
                 {:else}
-                    <div class="hp stat">{c.hp}</div>
+                    {c.hp}
                 {/if}
             {/if}
+            </div>
             <div class="stat badges">
             <Badges conditions={c.conditions} characterId={c.id} on:removeCondition={removeCondition}></Badges>
             </div>
@@ -177,6 +179,7 @@
         font-size: 1.4em;
         background-color: #118ab2;
         color: #fff;
+        border-radius: 8px 8px 0 0;
     }
 
     .table_footer {
@@ -228,6 +231,14 @@
 
     .description {
         width: 35%;
+    }
+
+    .hp {
+        width: 15%;
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: center;
     }
 
     .badges { 

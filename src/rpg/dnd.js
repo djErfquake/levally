@@ -50,6 +50,18 @@ subraces = addToList(subraces, customSubraces.dragonAncestryTypes);
 monsters = addToList(monsters, customMonsters);
 spells = addToList(spells, customSpells);
 
+// MAGIC SCHOOLS AND COLORS
+magicSchools = {
+    "Evocation": [ "#f9ca24", "#f6e58d" ],
+    "Illusion": [ "#4834d4", "#686de0" ],
+    "Necromancy": [ "#130f40", "#30336b" ],
+    "Enchantment": [ "#be2edd", "#e056fd" ],
+    "Transmutation": [ "#22a6b3", "#7ed6df" ],
+    "Abjuration": [ "#eb4d4b", "#ff7979" ],
+    "Conjuration": [ "#6ab04c", "#badc58" ],
+    "Divination": [ "#535c68", "#95afc0" ]
+};
+
 
 
 module.exports = {
@@ -73,7 +85,8 @@ module.exports = {
     subclasses: subclasses,
     subraces: subraces,
     traits: traits,
-    weaponProperties: weaponProperties
+    weaponProperties: weaponProperties,
+    magicSchools: magicSchools
 };
 
 
