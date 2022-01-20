@@ -47,6 +47,10 @@
         socket.emit('add_spell', e.detail);
     }
 
+    function removeSpell(e) {
+        socket.emit('remove_spell', e.detail);
+    }
+
 </script>
 
 
@@ -64,7 +68,7 @@
             {/if}
         {/if}
     </div>
-    <Spells {encounter} {isDm} {characterId}></Spells>
+    <Spells {encounter} {isDm} {characterId} on:removeSpell={removeSpell}></Spells>
 </main>
 
 <style>

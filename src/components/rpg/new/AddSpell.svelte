@@ -19,7 +19,7 @@
 
     function addSpell() {
         if (!selectedSpell) return;
-        
+
         if (character) {
             let characterSpells = character.spells;
             characterSpells.push(selectedSpell);
@@ -58,8 +58,7 @@
         width: 100%;
         padding: 8px;
         margin: 5px;
-        margin-top: 15px;
-        --border: 4px solid #118ab2;
+        --border: 1px solid #118ab2;
         --borderFocusColor: #118ab2;
     }
 

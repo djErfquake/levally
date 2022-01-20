@@ -52,14 +52,14 @@ spells = addToList(spells, customSpells);
 
 // MAGIC SCHOOLS AND COLORS
 magicSchools = {
-    "Evocation": [ "#f9ca24", "#f6e58d" ],
-    "Illusion": [ "#4834d4", "#686de0" ],
-    "Necromancy": [ "#130f40", "#30336b" ],
-    "Enchantment": [ "#be2edd", "#e056fd" ],
-    "Transmutation": [ "#22a6b3", "#7ed6df" ],
-    "Abjuration": [ "#eb4d4b", "#ff7979" ],
-    "Conjuration": [ "#6ab04c", "#badc58" ],
-    "Divination": [ "#535c68", "#95afc0" ]
+    "Evocation": [ "#e15f41", "#e77f67" ],
+    "Illusion": [ "#f19066", "#f3a683" ],
+    "Necromancy": [ "#574b90", "#786fa6" ],
+    "Enchantment": [ "#546de5", "#778beb" ],
+    "Transmutation": [ "#3dc1d3", "#63cdda" ],
+    "Abjuration": [ "#c44569", "#cf6a87" ],
+    "Conjuration": [ "#f5cd79", "#f7d794" ],
+    "Divination": [ "#303952", "#596275" ]
 };
 
 

@@ -70,6 +70,23 @@ export default {
                 sendUpdateToAll();
             }
         });
+        socket.on('remove_spell', function({spell, characterId}) {
+            if (characterId) {
+                const character = encounter.characters.find(c => c.id == characterId);
+                const spellIndex = character.spells.indexOf(spell);
+                if (spellIndex > -1) {
+                    character.spells.splice(spellIndex, 1);
+                    sendUpdateToAll();
+                }
+            }
+            else {
+                const spellIndex = encounter.spells.indexOf(spell);
+                if (spellIndex > -1) {
+                    encounter.spells.splice(spellIndex, 1);
+                    sendUpdateToAll();
+                }
+            }
+        });
 
         sockets.push(socket);
         sendUpdateToSocket(socket);

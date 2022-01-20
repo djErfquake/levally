@@ -1,15 +1,23 @@
 <script>
+    import { createEventDispatcher } from 'svelte';
+    const dispatch = createEventDispatcher();
+
     export let spell;
+    export let characterId;
     $: levelText = spell.level == 0 ? "Cantrip" : `Level ${spell.level}`;
     $: descriptionText = spell.higher_level ? spell.desc.concat(spell.higher_level).reduce((d, d1) => `${d}<p>${d1}</p>`) : spell.desc.reduce((d, d1) => `${d}<p>${d1}</p>`);
     $: componentsText = spell.components.join(' ');
+
+    function removeSpell() {
+        dispatch('removeSpell', { spell: spell.index, characterId: characterId });
+    }
 </script>
 
 
 <div class="spell">
     <div class="card">
         <div class="title" style="background-color: {spell.colors[0]};">
-            <div class="name">{spell.name}</div>
+            <div class="name">{spell.name}<span class="close-button" on:click={removeSpell}>✕</span></div>
             <div class="level-text">{levelText}</div>
         </div>
         <div class="description">{@html descriptionText}</div>
@@ -45,6 +53,17 @@
         margin-right: 20px;
     }
 
+    .close-button {
+        display: none;
+        position: absolute;
+        top: 5px;
+        right: 15px;
+    }
+
+    .card:hover .close-button {
+        display: block;
+    }
+
     .card {
         position: relative;
 
@@ -72,6 +91,7 @@
         align-items: center;
         border-radius: 13px 13px 0 0;
         text-align: center;
+        color: #fff;
     }
 
     .name {
